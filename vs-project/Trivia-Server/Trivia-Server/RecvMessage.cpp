@@ -1,12 +1,12 @@
 #include "RecvMessage.h"
 
-RecvMessage::RecvMessage(SOCKET sock, int messageCode)
+RecvMessage::RecvMessage(SOCKET sock, string messageCode)
 {
 	_sock = sock;
 	_messageCode = messageCode;
 }
 
-RecvMessage::RecvMessage(SOCKET sock, int messageCode, vector<string> values) : RecvMessage(sock, messageCode)
+RecvMessage::RecvMessage(SOCKET sock, string messageCode, map<string, string> values) : RecvMessage(sock, messageCode)
 {
 	_values = values;
 }
@@ -17,13 +17,13 @@ SOCKET RecvMessage::getSock()
 }
 
 
-int RecvMessage::getMessageCode()
+string RecvMessage::getMessageCode()
 {
 	return _messageCode;
 }
 
 
-vector<string>& RecvMessage::getValues()
+map<string, string>& RecvMessage::getValues()
 {
 	return _values;
 }

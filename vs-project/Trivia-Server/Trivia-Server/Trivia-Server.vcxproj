@@ -111,10 +111,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Trivia_Server.cpp" />
+    <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="RecvMessage.cpp" />
+    <ClCompile Include="TriviaServer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions.h" />
+    <ClInclude Include="Helper.h" />
+    <ClInclude Include="RecvMessage.h" />
     <ClInclude Include="TriviaServer.h" />
+    <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,21 +3,21 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
-
+#include "Functions.h"
 
 // recieves the type code of the message from socket (first byte)
 // and returns the code. if no message found in the socket returns 0 (which means the client disconnected)
-int Helper::getMessageTypeCode(SOCKET sc)
+std::string Helper::getMessageTypeCode(SOCKET sc)
 {
 	char* s = getPartFromSocket(sc, 3);
 	std::string msg(s);
 
-	if (msg == "")
-		return 0;
+	if (msg == "") {
+		return "";
+	}
 
-	int res = std::atoi(s);
-	delete s;
-	return  res;
+	trim(s);
+	return s;
 }
 
 // send data to socket
@@ -26,8 +26,7 @@ void Helper::sendData(SOCKET sc, std::string message)
 {
 	const char* data = message.c_str();
 	
-	if (send(sc, data, message.size(), 0) == INVALID_SOCKET)
-	{
+	if (send(sc, data, message.size(), 0) == INVALID_SOCKET) {
 		throw std::exception("Error while sending message to client");
 	}
 }
@@ -73,11 +72,9 @@ char* Helper::getPartFromSocket(SOCKET sc, int bytesNum, int flags)
 	return data;
 }
 
-
 std::string Helper::getPaddedNumber(int num, int digits)
 {
 	std::ostringstream ostr; 
 	ostr <<  std::setw(digits) << std::setfill('0') << num;
 	return ostr.str();
-
 }
