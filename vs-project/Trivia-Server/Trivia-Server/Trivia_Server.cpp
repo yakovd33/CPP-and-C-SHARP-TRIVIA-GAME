@@ -30,7 +30,7 @@ void Trivia_Server::server()
 	bindAndListen();
 
 	// create new thread for handling message
-	std::thread tr(&MagshDocsServer::handleRecievedMessages, this);
+	std::thread tr(&Trivia_Server::handleRecievedMessages, this);
 	tr.detach();
 
 	while (true)
@@ -73,4 +73,110 @@ void Trivia_Server::acceptClient()
 	// create new thread for client	and detach from it
 	std::thread tr(&MagshDocsServer::clientHandler, this, client_socket);
 	tr.detach();
+}
+
+
+void Trivia_Server::clientHandler(SOCKET client_socket)
+{
+	RecvMessage* currRcvMsg = nullptr;
+	try
+	{
+		// get the first message code
+		int msgCode = Helper::getMessageTypeCode(client_socket);
+
+		while (msgCode != 0 && (msgCode == MT_CLIENT_LOG_IN || msgCode == MT_CLIENT_UPDATE || msgCode == MT_CLIENT_FINISH))
+		{
+			currRcvMsg = buildRecieveMessage(client_socket, msgCode);
+			addRecievedMessage(currRcvMsg);
+
+			msgCode = Helper::getMessageTypeCode(client_socket);
+		}
+
+		currRcvMsg = buildRecieveMessage(client_socket, MT_CLIENT_EXIT);
+		addRecievedMessage(currRcvMsg);
+
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << "Exception was catch in function clientHandler. socket=" << client_socket << ", what=" << e.what() << std::endl;
+		currRcvMsg = buildRecieveMessage(client_socket, MT_CLIENT_EXIT);
+		addRecievedMessage(currRcvMsg);
+	}
+	closesocket(client_socket);
+}
+
+
+void Trivia_Server::handleRecievedMessages()
+{
+	int msgCode = 0;
+	SOCKET clientSock = 0;
+	string userName;
+	while (true)
+	{
+		try
+		{
+			unique_lock<mutex> lck(_mtxRecievedMessages);
+
+			// Wait for clients to enter the queue.
+			if (_messageHandler.empty())
+				_msgQueueCondition.wait(lck);
+
+			// in case the queue is empty.
+			if (_messageHandler.empty())
+				continue;
+
+			RecvMessage* currMessage = _messageHandler.front();
+			_messageHandler.pop();
+			lck.unlock();
+
+			// Extract the data from the tuple.
+			clientSock = currMessage->getSock();
+			msgCode = currMessage->getMessageCode();
+
+			if (msgCode == MT_CLIENT_LOG_IN)
+			{
+				userName = currMessage->getValues()[0];
+				_clients.push_back(make_pair(clientSock, userName));
+
+				TRACE("ADDED new client %d, %s to clients list", clientSock, userName.c_str());
+
+				std::string docData = _doc.read();
+				Helper::sendUpdateMessageToClient(clientSock, docData, getCurrentUser(), getNextUser(), getSocketPosition(clientSock));
+			}
+
+			else if (msgCode == MT_CLIENT_UPDATE)
+			{
+				TRACE("Recieved update message from current client");
+				string fileData = currMessage->getValues()[0];
+				_doc.write(fileData);
+				sendUpdateMessageToAllClients(fileData);
+			}
+			else if (msgCode == MT_CLIENT_FINISH)
+			{
+				TRACE("Recieved finish message from current client");
+				// move to end of the queue
+				_clients.push_back(_clients.front());
+				_clients.pop_front();
+
+				string fileData = currMessage->getValues()[0];
+				_doc.write(fileData);
+
+				sendUpdateMessageToAllClients(fileData);
+			}
+			else if (msgCode == MT_CLIENT_EXIT)
+			{
+				TRACE("Recieved exit message from client");
+				safeDeleteUser(clientSock);
+
+				std::string docData = _doc.read();
+				sendUpdateMessageToAllClients(docData);
+			}
+
+			delete currMessage;
+		}
+		catch (...)
+		{
+
+		}
+	}
 }
