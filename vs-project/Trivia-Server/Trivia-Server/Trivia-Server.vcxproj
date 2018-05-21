@@ -111,12 +111,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Pictures\פתרונות תרגול בית 13\1\RecvMessage.h" />
-    <ClInclude Include="Trivia_Server.h" />
+    <ClCompile Include="Trivia_Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Pictures\פתרונות תרגול בית 13\1\RecvMessage.cpp" />
-    <ClCompile Include="Trivia_Server.cpp" />
+    <ClInclude Include="TriviaServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
