@@ -1,6 +1,7 @@
 #pragma comment (lib, "ws2_32.lib")
 // TODO lean and mean
 #include "TriviaServer.h"
+#include "Helper.h"
 #include "WSAInitializer.h"
 #include <iostream>
 #include <fstream>
@@ -17,7 +18,7 @@ void main()
 		TRACE("Starting...");
 		// NOTICE at the end of this block the WSA will be closed 
 		WSAInitializer wsa_init;
-		MagshDocsServer md_server;
+		TriviaServer md_server;
 		md_server.serve();
 	} catch (const std::exception& e) {
 		std::cout << "Exception was thrown in function: " << e.what() << std::endl;
