@@ -114,6 +114,7 @@
     <ClCompile Include="DataBase.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="RecvMessage.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="TriviaServer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="RecievedMessage.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="TriviaServer.h" />
     <ClInclude Include="User.h" />

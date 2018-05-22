@@ -12,6 +12,7 @@
 #include "Helper.h"
 #include "DataBase.h"
 #include "User.h"
+#include "Room.h";
 #include "Validator.h"
 
 // Q: why do we need this class ?
@@ -40,6 +41,7 @@ private:
 
 	SOCKET _socket;
 	DataBase* _db;
+	map<int, Room*> _roomsList;
 	std::map<SOCKET, User*> _connectedUsers;
 	//std::map<int, Room*> _roomsList;
 	static int _roomIdSequence;
@@ -67,4 +69,5 @@ private:
 	// Message handlers
 	User* handleSignin(RecievedMessage* msg);
 	bool TriviaServer::handleSignup(RecievedMessage * msg);
+	void handleGetRooms(RecievedMessage * msg);
 };

@@ -5,7 +5,7 @@
 #include "Header.h"
 
 // using static const instead of macros 
-static const unsigned short PORT = 8826;
+static const unsigned short PORT = 8820;
 static const unsigned int IFACE = 0;
 
 TriviaServer::TriviaServer()
@@ -220,6 +220,23 @@ bool TriviaServer::handleSignup(RecievedMessage * msg) {
 	return false;
 }
 
+void TriviaServer::handleGetRooms(RecievedMessage * msg) {
+	_roomsList.insert(make_pair(1234, new Room(5, 20, 20, "room1", 1234)));
+	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
+
+	string roomsCount = to_string(_roomsList.size());
+	roomsCount = string(4 - roomsCount.length(), '0') + roomsCount; // Leading zeros
+	string message = "106" + roomsCount;
+
+	for (auto const& room : _roomsList) {
+		message += string(4 - to_string(room.first).length(), '0') + to_string(room.first); // Room id
+		message += string(2 - to_string(room.second->getName().length()).length(), '0') + to_string(room.second->getName().length()); // Room name length
+		message += room.second->getName();
+	}
+
+	sendMessageToSocket(msg->getSock(), message);
+}
+
 // remove the user from map
 void TriviaServer::safeDeleteUser(SOCKET id)
 {
@@ -272,6 +289,10 @@ void TriviaServer::handleRecievedMessages()
 				cout << "Password: " << currMessage->getValues().find("password")->second << endl;
 				cout << "Email: " << currMessage->getValues().find("email")->second << endl;
 				handleSignup(currMessage);
+			}
+
+			if (msgCode == "205") {
+				handleGetRooms(currMessage);
 			}
 
 			delete currMessage;

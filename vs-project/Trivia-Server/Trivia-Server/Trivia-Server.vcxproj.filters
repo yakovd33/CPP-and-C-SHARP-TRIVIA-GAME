@@ -42,6 +42,9 @@
     <ClCompile Include="Validator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TriviaServer.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Validator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
