@@ -6,17 +6,17 @@
 
 using namespace std;
 
-class RecvMessage
+class RecievedMessage
 {
 public:
-	RecvMessage(SOCKET sock, string messageCode);
+	RecievedMessage(SOCKET sock, string messageCode);
 
-	RecvMessage(SOCKET sock, string messageCode, map<string, string> values);
+	RecievedMessage(SOCKET sock, string messageCode, map<string, string> values);
 
 	SOCKET getSock();
 	string getMessageCode();
 
-	map<string, string> & getValues();
+	map<string, string> getValues();
 
 private:
 	SOCKET _sock;

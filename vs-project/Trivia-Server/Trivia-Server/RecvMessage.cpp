@@ -1,29 +1,29 @@
-#include "RecvMessage.h"
+#include "RecievedMessage.h"
 
-RecvMessage::RecvMessage(SOCKET sock, string messageCode)
+RecievedMessage::RecievedMessage(SOCKET sock, string messageCode)
 {
 	_sock = sock;
 	_messageCode = messageCode;
 }
 
-RecvMessage::RecvMessage(SOCKET sock, string messageCode, map<string, string> values) : RecvMessage(sock, messageCode)
+RecievedMessage::RecievedMessage(SOCKET sock, string messageCode, map<string, string> values) : RecievedMessage(sock, messageCode)
 {
 	_values = values;
 }
 
-SOCKET RecvMessage::getSock()
+SOCKET RecievedMessage::getSock()
 {
 	return _sock;
 }
 
 
-string RecvMessage::getMessageCode()
+string RecievedMessage::getMessageCode()
 {
 	return _messageCode;
 }
 
 
-map<string, string>& RecvMessage::getValues()
+map<string, string> RecievedMessage::getValues()
 {
 	return _values;
 }

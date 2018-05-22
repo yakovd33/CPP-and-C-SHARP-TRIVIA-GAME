@@ -8,7 +8,6 @@
 static const unsigned short PORT = 8826;
 static const unsigned int IFACE = 0;
 
-
 TriviaServer::TriviaServer()
 {
 	// notice that we step out to the global namespace
@@ -16,6 +15,9 @@ TriviaServer::TriviaServer()
 	_socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (_socket == INVALID_SOCKET)
 		throw std::exception(__FUNCTION__ " - socket");
+
+	// Create DataBase Instance
+	_db = new DataBase();
 }
 
 TriviaServer::~TriviaServer()
@@ -44,7 +46,6 @@ void TriviaServer::serve()
 		acceptClient();
 	}
 }
-
 
 // listen to connecting requests from clients
 // accept them, and create thread for each client
@@ -79,23 +80,24 @@ void TriviaServer::acceptClient()
 
 void TriviaServer::clientHandler(SOCKET client_socket)
 {
-	RecvMessage* currRcvMsg = nullptr;
+	RecievedMessage* currRcvMsg = nullptr;
 	try {
 		// get the first message code
 		string msgCode = "";
-		string msg = "";
 
 		//cout << "Message: " << msgCode << endl;
 
-		while (msgCode != "exit") {
+		while (msgCode != "299") {
 			msgCode = Helper::getMessageTypeCode(client_socket);
-			msg += msgCode;
 			
-			currRcvMsg = buildRecieveMessage(client_socket, msg);
-			addRecievedMessage(currRcvMsg);
+			if (msgCode != "") {
+				currRcvMsg = buildRecieveMessage(client_socket, msgCode);
+				addRecievedMessage(currRcvMsg);
+				msgCode = "";
+			}
 		}
 
-		currRcvMsg = buildRecieveMessage(client_socket, "299");
+		currRcvMsg = buildRecieveMessage(client_socket, msgCode);
 		addRecievedMessage(currRcvMsg);
 
 	} catch (const std::exception& e) {
@@ -107,7 +109,7 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 	closesocket(client_socket);
 }
 
-void TriviaServer::addRecievedMessage(RecvMessage* msg)
+void TriviaServer::addRecievedMessage(RecievedMessage* msg)
 {
 	unique_lock<mutex> lck(_mtxRecievedMessages);
 
@@ -117,23 +119,13 @@ void TriviaServer::addRecievedMessage(RecvMessage* msg)
 
 }
 
-RecvMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string msgCode)
+RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string msgCode)
 {
-	RecvMessage* msg = nullptr;
+	RecievedMessage* msg = nullptr;
 	map<string, string> values;
-	/*if (msgCode == MT_CLIENT_LOG_IN) {
-		int userSize = ;
-		string userName = Helper::getStringPartFromSocket(client_socket, userSize);
-		values.push_back(userName);
-	} else if (msgCode == MT_CLIENT_FINISH || msgCode == MT_CLIENT_UPDATE) {
-		int fileSize = Helper::getIntPartFromSocket(client_socket, 5);
-		string fileContent = Helper::getStringPartFromSocket(client_socket, fileSize);
-		values.push_back(fileContent);
-	}*/
 
 	if (msgCode == "200") {
 		// Login
-		cout << "Building login message" << endl;
 		int usernameSize = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
 		string username = Helper::getStringPartFromSocket(client_socket, usernameSize);
 		int passwordSize = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
@@ -142,22 +134,97 @@ RecvMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string msgC
 		values.insert(make_pair("password", password));
 	}
 
-	msg = new RecvMessage(client_socket, msgCode, values);
+	if (msgCode == "203") {
+		// Signup
+		int usernameSize = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		string username = Helper::getStringPartFromSocket(client_socket, usernameSize);
+		int passwordSize = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		string password = Helper::getStringPartFromSocket(client_socket, passwordSize);
+		int emailSize = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		string email = Helper::getStringPartFromSocket(client_socket, emailSize);
+		values.insert(make_pair("username", username));
+		values.insert(make_pair("password", password));
+		values.insert(make_pair("email", email));
+	}
+
+	msg = new RecievedMessage(client_socket, msgCode, values);
 	return msg;
 }
 
+void TriviaServer::sendMessageToSocket(SOCKET sock, string msg) {
+	send(sock, msg.c_str(), msg.length(), 0);
+}
 
-// remove the user from queue
+User* TriviaServer::handleSignin(RecievedMessage * msg) {
+	cout << "Handling signin" << endl;
+
+	if (!_db->isUserExists(msg->getValues().find("username")->second)) {
+		cout << "User does not exist." << endl;
+		sendMessageToSocket(msg->getSock(), "1021");
+	} else {
+		cout << "User exists." << endl;
+
+		if (_db->isUserAndPasswordMatch(msg->getValues().find("username")->second, msg->getValues().find("password")->second)) {
+			// Username and password are matching
+
+			if (_connectedUsers.find(msg->getSock()) == _connectedUsers.end()) {
+				// User is not already connected
+				_connectedUsers.insert(make_pair(msg->getSock(), new User(msg->getValues().find("username")->second, msg->getSock())));
+				cout << "User added to connected users." << endl;
+				sendMessageToSocket(msg->getSock(), "1020");
+			} else {
+				
+				cout << "User is already connected." << endl;
+				sendMessageToSocket(msg->getSock(), "1022");
+			}
+		} else {
+			sendMessageToSocket(msg->getSock(), "1021");
+			cout << "Wrong details." << endl;
+		}
+	}
+
+	return nullptr;
+}
+
+bool TriviaServer::handleSignup(RecievedMessage * msg) {
+	cout << "Handling signup" << endl;
+
+	string username = msg->getValues().find("username")->second;
+	string password = msg->getValues().find("password")->second;
+	string email = msg->getValues().find("email")->second;
+
+	if (_validator.isPasswordValid(password)) {
+		if (_validator.isUsernameValid(username)) {
+			if (!_db->isUserExists(username)) {
+				if (_db->addNewUser(username, password, email)) {
+					// Success
+					cout << "User added." << endl;
+					sendMessageToSocket(msg->getSock(), "1040");
+				} else {
+					cout << "Error.";
+					sendMessageToSocket(msg->getSock(), "1044");
+				}
+			} else {
+				cout << "User exists" << endl;
+				sendMessageToSocket(msg->getSock(), "1042");
+			}
+		} else {
+			cout << "Invalid username" << endl;
+			sendMessageToSocket(msg->getSock(), "1043");
+		}
+	} else {
+		sendMessageToSocket(msg->getSock(), "1041");
+		cout << "Invalid password" << endl;
+	}
+
+	return false;
+}
+
+// remove the user from map
 void TriviaServer::safeDeleteUser(SOCKET id)
 {
 	try {
-		for (unsigned int i = 0; i < _clients.size(); i++) {
-			if (_clients[i].first == id) {
-				TRACE("REMOVED %d, %s from clients list", id, _clients[i].second.c_str());
-				_clients.erase(_clients.begin() + i);
-
-			}
-		}
+		_connectedUsers.erase(id);
 	} catch (...) {}
 
 }
@@ -179,7 +246,7 @@ void TriviaServer::handleRecievedMessages()
 			if (_messageHandler.empty())
 				continue;
 
-			RecvMessage* currMessage = _messageHandler.front();
+			RecievedMessage* currMessage = _messageHandler.front();
 			_messageHandler.pop();
 			lck.unlock();
 
@@ -196,6 +263,15 @@ void TriviaServer::handleRecievedMessages()
 				cout << "Handling login message" << endl;
 				cout << "Username: " << currMessage->getValues().find("username")->second << endl;
 				cout << "Password: " << currMessage->getValues().find("password")->second << endl;
+				handleSignin(currMessage);
+			}
+
+			if (msgCode == "203") {
+				cout << "Handling login message" << endl;
+				cout << "Username: " << currMessage->getValues().find("username")->second << endl;
+				cout << "Password: " << currMessage->getValues().find("password")->second << endl;
+				cout << "Email: " << currMessage->getValues().find("email")->second << endl;
+				handleSignup(currMessage);
 			}
 
 			delete currMessage;
@@ -203,41 +279,4 @@ void TriviaServer::handleRecievedMessages()
 
 		}
 	}
-}
-
-
-// get current user name (the writer)
-std::string TriviaServer::getCurrentUser()
-{
-
-	if (_clients.size() < 1)
-		return "";
-
-	return _clients[0].second;
-}
-
-// get next user in queue
-std::string TriviaServer::getNextUser()
-{
-	if (_clients.size() < 2)
-		return "";
-
-	return _clients[1].second;
-}
-
-// get the position in queue of that wanted socket
-unsigned int TriviaServer::getSocketPosition(SOCKET id)
-{
-
-	for (unsigned int i = 0; i < _clients.size(); i++) {
-		if (_clients[i].first == id)
-			return i + 1;
-	}
-	return 0;
-}
-
-// get the socket of the current updater
-SOCKET TriviaServer::getCurrentThreadSocket()
-{
-	return _clients[0].first;
 }

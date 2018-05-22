@@ -16,7 +16,6 @@ std::string Helper::getMessageTypeCode(SOCKET sc)
 		return "";
 	}
 
-	trim(s);
 	return s;
 }
 
