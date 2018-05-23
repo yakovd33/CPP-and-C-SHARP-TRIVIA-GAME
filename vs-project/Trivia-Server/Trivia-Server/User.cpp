@@ -20,28 +20,24 @@ bool User::createRoom(int troomId, string roomName, int maxUsers, int questionsN
 	return false;
 }
 
-bool User::joinRoom() {
-	return true;
-
-	///////////////////
+bool User::joinRoom(int roomId) {
 	if (!this->isInRoom) {
 		this->isInRoom = true;
+		std::cout << "roooom id: " << roomId << std::endl;
+		this->roomId = roomId;
 		return true;
 	}
 
 	return false;
 }
 
-/*bool User::joinRoom(Room * newRoom) {
-	if (this->_currRoom == NULL) {
-		this->_currRoom = newRoom;
-		return true;
-	}
-
-	return false;
-}*/
+int User::getRoomId() {
+	return this->roomId;
+}
 
 void User::leaveRoom() {
+	this->isInRoom = false;
+	this->roomId = NULL;
 }
 
 int User::closeRoom() {
@@ -53,4 +49,10 @@ bool User::leaveGame() {
 }
 
 void User::clearRoom() {
+}
+
+string User::getUsername()
+{
+	//return "-------";
+	return this->_username;
 }

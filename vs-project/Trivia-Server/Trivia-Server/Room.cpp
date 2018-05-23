@@ -13,7 +13,7 @@ Room::~Room() {
 
 bool Room::joinRoom(User * user) {
 	if (this->getJoinedUsersCount() < this->getMaxUsers()) {
-		if (user->joinRoom()) {
+		if (user->joinRoom(this->getId())) {
 			// Can join
 			this->_users.push_back(user);
 			std::cout << "current users count" << this->getJoinedUsersCount() << std::endl;
@@ -22,6 +22,8 @@ bool Room::joinRoom(User * user) {
 			// Send message to users
 
 			return true;
+		} else {
+			std::cout << "errrrror" << std::endl;
 		}
 	}
 
@@ -31,8 +33,8 @@ bool Room::joinRoom(User * user) {
 void Room::leaveRoom(User * user) {
 }
 
-vector<User*> Room::getUsers() {
-	return this->_users;
+vector<User*>* Room::getUsers() {
+	return &(this->_users);
 }
 
 string Room::getUsersListMessage() {
@@ -52,7 +54,7 @@ string Room::getName() {
 }
 
 int Room::getJoinedUsersCount() {
-	return this->getUsers().size();
+	return this->getUsers()->size();
 }
 
 int Room::getMaxUsers() {

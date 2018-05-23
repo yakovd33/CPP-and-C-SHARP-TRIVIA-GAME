@@ -8,6 +8,7 @@
 #include <condition_variable>
 #include <WinSock2.h>
 #include <Windows.h>
+#include <algorithm>
 #include "RecievedMessage.h"
 #include "Helper.h"
 #include "DataBase.h"
@@ -71,6 +72,8 @@ private:
 	bool TriviaServer::handleSignup(RecievedMessage * msg);
 	void handleGetRooms(RecievedMessage * msg);
 	bool handleJoinRoom(RecievedMessage * msg);
+	void handleGetUsersInRoom(RecievedMessage * msg);
+	bool handleLeaveRoom(RecievedMessage * msg);
 
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);
