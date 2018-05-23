@@ -17,6 +17,9 @@ public:
 	int getQuestionsNo();
 	int getId();
 	string getName();
+	int getJoinedUsersCount();
+	int getMaxUsers();
+	int getQuestionTime();
 
 private:
 	vector<User*> _users;

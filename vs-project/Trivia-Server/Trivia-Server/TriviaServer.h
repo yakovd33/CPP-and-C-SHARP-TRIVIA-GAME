@@ -70,4 +70,8 @@ private:
 	User* handleSignin(RecievedMessage* msg);
 	bool TriviaServer::handleSignup(RecievedMessage * msg);
 	void handleGetRooms(RecievedMessage * msg);
+	bool handleJoinRoom(RecievedMessage * msg);
+
+	Room* getRoomById(int id);
+	User* getUserBySocket(SOCKET sock);
 };

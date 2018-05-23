@@ -18,6 +18,9 @@ TriviaServer::TriviaServer()
 
 	// Create DataBase Instance
 	_db = new DataBase();
+
+	_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
+	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
 }
 
 TriviaServer::~TriviaServer()
@@ -147,6 +150,12 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		values.insert(make_pair("email", email));
 	}
 
+	if (msgCode == "209") {
+		// Join room
+		string roomId = Helper::getStringPartFromSocket(client_socket, 4).c_str();
+		values.insert(make_pair("room_id", roomId));
+	}
+
 	msg = new RecievedMessage(client_socket, msgCode, values);
 	return msg;
 }
@@ -221,9 +230,6 @@ bool TriviaServer::handleSignup(RecievedMessage * msg) {
 }
 
 void TriviaServer::handleGetRooms(RecievedMessage * msg) {
-	_roomsList.insert(make_pair(1234, new Room(5, 20, 20, "room1", 1234)));
-	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
-
 	string roomsCount = to_string(_roomsList.size());
 	roomsCount = string(4 - roomsCount.length(), '0') + roomsCount; // Leading zeros
 	string message = "106" + roomsCount;
@@ -235,6 +241,44 @@ void TriviaServer::handleGetRooms(RecievedMessage * msg) {
 	}
 
 	sendMessageToSocket(msg->getSock(), message);
+}
+
+bool TriviaServer::handleJoinRoom(RecievedMessage * msg) {
+	int roomId = stoi(msg->getValues().find("room_id")->second);
+	Room* room = getRoomById(roomId);
+	User* user = getUserBySocket(msg->getSock());
+
+	cout << room << endl;
+	if (room) {
+		if (room->joinRoom(user)) {
+			// Success
+			string message = "1100";
+			message += string(2 - to_string(room->getQuestionsNo()).length(), '0') + to_string(room->getQuestionsNo());
+			message += string(2 - to_string(room->getQuestionTime()).length(), '0') + to_string(room->getQuestionTime());
+			sendMessageToSocket(msg->getSock(), message);
+		} else {
+			sendMessageToSocket(msg->getSock(), "1102"); // Unsuccessful join
+		}
+	} else {
+		sendMessageToSocket(msg->getSock(), "1102"); // Room does not exist
+	}
+
+	return false;
+}
+
+Room * TriviaServer::getRoomById(int id) {
+	for (auto const& room : _roomsList) {
+		if (room.first == id) {
+			return room.second;
+		}
+	}
+
+	return nullptr;
+}
+
+User * TriviaServer::getUserBySocket(SOCKET sock)
+{
+	return nullptr;
 }
 
 // remove the user from map
@@ -293,6 +337,10 @@ void TriviaServer::handleRecievedMessages()
 
 			if (msgCode == "205") {
 				handleGetRooms(currMessage);
+			}
+
+			if (msgCode == "209") {
+				handleJoinRoom(currMessage);
 			}
 
 			delete currMessage;

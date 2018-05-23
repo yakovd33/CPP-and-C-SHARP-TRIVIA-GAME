@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <WinSock2.h>
+//#include "Room.h";
 
 using std::string;
 
@@ -12,6 +13,7 @@ public:
 	//void setGame(Game* gm);
 	void clearGame();
 	bool createRoom(int troomId, string roomName, int maxUsers, int questionsNo, int questionTime);
+	bool User::joinRoom();
 	//bool joinRoom(Room* newRoom);
 	void leaveRoom();
 	int closeRoom();
@@ -19,6 +21,7 @@ public:
 	void clearRoom();
 private:
 	string _username;
+	bool isInRoom;
 	//Room* _currRoom;
 	//Game* _cirrGame;
 	SOCKET _sock;

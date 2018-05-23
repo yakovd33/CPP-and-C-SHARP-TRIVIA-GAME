@@ -3,39 +3,54 @@
 User::User(string username, SOCKET sock) {
 	this->_username = username;
 	this->_sock = sock;
+	//this->_currRoom = NULL;
+	isInRoom = false;
 }
 
-User::~User()
-{
+User::~User() {
 }
 
-void User::send(string message)
-{
+void User::send(string message) {
 }
 
-void User::clearGame()
-{
+void User::clearGame() {
 }
 
-bool User::createRoom(int troomId, string roomName, int maxUsers, int questionsNo, int questionTime)
-{
+bool User::createRoom(int troomId, string roomName, int maxUsers, int questionsNo, int questionTime) {
 	return false;
 }
 
-void User::leaveRoom()
-{
+bool User::joinRoom() {
+	return true;
+
+	///////////////////
+	if (!this->isInRoom) {
+		this->isInRoom = true;
+		return true;
+	}
+
+	return false;
 }
 
-int User::closeRoom()
-{
+/*bool User::joinRoom(Room * newRoom) {
+	if (this->_currRoom == NULL) {
+		this->_currRoom = newRoom;
+		return true;
+	}
+
+	return false;
+}*/
+
+void User::leaveRoom() {
+}
+
+int User::closeRoom() {
 	return 0;
 }
 
-bool User::leaveGame()
-{
+bool User::leaveGame() {
 	return false;
 }
 
-void User::clearRoom()
-{
+void User::clearRoom() {
 }
