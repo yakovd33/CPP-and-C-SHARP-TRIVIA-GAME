@@ -26,6 +26,7 @@ public:
 	void serve();
 
 private:
+	static int _roomIdSequence;
 
 	void bindAndListen();
 	void acceptClient();
@@ -45,7 +46,6 @@ private:
 	map<int, Room*> _roomsList;
 	std::map<SOCKET, User*> _connectedUsers;
 	//std::map<int, Room*> _roomsList;
-	static int _roomIdSequence;
 	Validator _validator;
 
 	// Queue for all clients. This way we will know who's the current writer.
@@ -74,6 +74,7 @@ private:
 	bool handleJoinRoom(RecievedMessage * msg);
 	void handleGetUsersInRoom(RecievedMessage * msg);
 	bool handleLeaveRoom(RecievedMessage * msg);
+	bool handleCreateRoom(RecievedMessage * msg);
 
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);

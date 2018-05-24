@@ -8,6 +8,8 @@
 static const unsigned short PORT = 8820;
 static const unsigned int IFACE = 0;
 
+int TriviaServer::_roomIdSequence = 1;
+
 TriviaServer::TriviaServer()
 {
 	// notice that we step out to the global namespace
@@ -19,7 +21,7 @@ TriviaServer::TriviaServer()
 	// Create DataBase Instance
 	_db = new DataBase();
 
-	_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
+	//_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
 	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
 }
 
@@ -159,6 +161,19 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		// Join room
 		string roomId = Helper::getStringPartFromSocket(client_socket, 4).c_str();
 		values.insert(make_pair("room_id", roomId));
+	}
+
+	if (msgCode == "213") {
+		int nameSize = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		string name = Helper::getStringPartFromSocket(client_socket, nameSize);
+		string playersNumber = Helper::getStringPartFromSocket(client_socket, 1);
+		string questionsNumber = Helper::getStringPartFromSocket(client_socket, 2);
+		string questionTime = Helper::getStringPartFromSocket(client_socket, 2);
+
+		values.insert(make_pair("name", name));
+		values.insert(make_pair("max_users", playersNumber));
+		values.insert(make_pair("questions_number", questionsNumber));
+		values.insert(make_pair("question_time", questionTime));
 	}
 
 	msg = new RecievedMessage(client_socket, msgCode, values);
@@ -313,6 +328,26 @@ bool TriviaServer::handleLeaveRoom(RecievedMessage * msg) {
 	return false;
 }
 
+bool TriviaServer::handleCreateRoom(RecievedMessage * msg) {
+	string name = msg->getValues().find("name")->second;
+	int maxUsers = atoi(msg->getValues().find("max_users")->second.c_str());
+	int questionTime = atoi(msg->getValues().find("question_time")->second.c_str());
+	int questionsNumber = atoi(msg->getValues().find("questions_number")->second.c_str());
+
+	User* user = getUserBySocket(msg->getSock());
+	Room* room = new Room(maxUsers, questionTime, questionsNumber, name, _roomIdSequence);
+	room->joinRoom(user);
+
+	if (_roomsList.insert(make_pair(_roomIdSequence, room)).second == false) { // Insertion failed
+		sendMessageToSocket(msg->getSock(), "1141"); // Fail
+		return false;
+	}
+
+	_roomIdSequence++;
+	sendMessageToSocket(msg->getSock(), "1140"); // Success
+	return true;
+}
+
 Room * TriviaServer::getRoomById(int id) {
 	for (auto const& room : _roomsList) {
 		if (room.first == id) {
@@ -401,6 +436,10 @@ void TriviaServer::handleRecievedMessages()
 
 			if (msgCode == "211") {
 				handleLeaveRoom(currMessage);
+			}
+
+			if (msgCode == "213") {
+				handleCreateRoom(currMessage);
 			}
 
 			delete currMessage;
