@@ -65,12 +65,38 @@ int Room::getQuestionTime() {
 	return this->_questionTime;
 }
 
+void Room::setAdmin(User * admin) {
+	this->_admin = admin;
+}
+
+bool Room::closeRoom(User* admin) {
+	if (admin == _admin) {
+		for (auto user : _users) {
+			user->leaveRoom();
+		}
+
+		sendMessage("116");
+
+		return true;
+	} else {
+		return false; // Not an admin
+	}
+}
+
 string Room::getUsersAsString(vector<User*> users, User * user) {
 	return string();
 }
 
 void Room::sendMessage(string msg) {
+	for (auto user : _users) {
+		user->send(msg);
+	}
 }
 
 void Room::sendMessage(User * user, string msg) {
+	for (auto currUser : _users) {
+		if (user == currUser) {
+			user->send(msg);
+		}
+	}
 }

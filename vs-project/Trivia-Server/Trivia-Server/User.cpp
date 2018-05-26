@@ -11,6 +11,7 @@ User::~User() {
 }
 
 void User::send(string message) {
+	::send(_sock, message.c_str(), message.length(), 0);
 }
 
 void User::clearGame() {

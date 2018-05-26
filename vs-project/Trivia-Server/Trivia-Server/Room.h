@@ -20,6 +20,8 @@ public:
 	int getJoinedUsersCount();
 	int getMaxUsers();
 	int getQuestionTime();
+	void setAdmin(User* admin);
+	bool closeRoom(User* admin);
 
 private:
 	vector<User*> _users;

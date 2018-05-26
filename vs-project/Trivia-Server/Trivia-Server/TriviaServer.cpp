@@ -193,7 +193,7 @@ User* TriviaServer::handleSignin(RecievedMessage * msg) {
 		if (_db->isUserAndPasswordMatch(msg->getValues().find("username")->second, msg->getValues().find("password")->second)) {
 			// Username and password are matching
 
-			if (_connectedUsers.find(msg->getSock()) == _connectedUsers.end()) {
+			if (!checkIfConnected(msg->getValues().find("username")->second)) {
 				_connectedUsers.insert(make_pair(msg->getSock(), new User(msg->getValues().find("username")->second, msg->getSock())));
 				sendMessageToSocket(msg->getSock(), "1020");
 			} else {
@@ -205,6 +205,17 @@ User* TriviaServer::handleSignin(RecievedMessage * msg) {
 	}
 
 	return nullptr;
+}
+
+void TriviaServer::handleSignout(RecievedMessage * msg) {
+	User* user = getUserBySocket(msg->getSock());
+	Room* room = getRoomById(user->getRoomId());
+	room->closeRoom(user);
+	room->leaveRoom(user);
+	
+	// TODO Close game
+	
+	safeDeleteUser(msg->getSock()); // Remove users from connected users
 }
 
 bool TriviaServer::handleSignup(RecievedMessage * msg) {
@@ -308,23 +319,13 @@ bool TriviaServer::handleLeaveRoom(RecievedMessage * msg) {
 		user->leaveRoom();
 		
 		if (room) {
-			cout << "current room users: " << room->getJoinedUsersCount() << endl;
-			/*for (int i = 0; i < room->getUsers()->size(); i++) {
-				cout << "user found" << endl;
-				if (room->getUsers()->at(i) == user) {
-					room->getUsers()->erase(room->getUsers()->begin() + i);
-				}
-			}*/
-
 			room->getUsers()->erase(std::remove(room->getUsers()->begin(), room->getUsers()->end(), user), room->getUsers()->end());
 			sendMessageToSocket(msg->getSock(), "1120");
 		} else {
-			cout << "room not found" << endl;
+			// Room not found
 		}
 	}
 	
-	cout << user->getUsername() << " is trying to leave room" << endl;
-
 	return false;
 }
 
@@ -336,6 +337,7 @@ bool TriviaServer::handleCreateRoom(RecievedMessage * msg) {
 
 	User* user = getUserBySocket(msg->getSock());
 	Room* room = new Room(maxUsers, questionTime, questionsNumber, name, _roomIdSequence);
+	room->setAdmin(user);
 	room->joinRoom(user);
 
 	if (_roomsList.insert(make_pair(_roomIdSequence, room)).second == false) { // Insertion failed
@@ -346,6 +348,22 @@ bool TriviaServer::handleCreateRoom(RecievedMessage * msg) {
 	_roomIdSequence++;
 	sendMessageToSocket(msg->getSock(), "1140"); // Success
 	return true;
+}
+
+bool TriviaServer::handleCloseRoom(RecievedMessage * msg) {
+	User* user = getUserBySocket(msg->getSock());
+	Room* room = getRoomById(user->getRoomId());
+
+	if (user && room) {
+		if (room->closeRoom(user)) {
+			// Remove room from list
+			_roomsList.erase(room->getId());
+			return true;
+		} else {
+			// Room or user does not exist
+			return false;
+		}
+	}
 }
 
 Room * TriviaServer::getRoomById(int id) {
@@ -368,6 +386,16 @@ User * TriviaServer::getUserBySocket(SOCKET sock) {
 	return nullptr;
 }
 
+bool TriviaServer::checkIfConnected(string username) {
+	for (auto user : _connectedUsers) {
+		if (user.second->getUsername() == username) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 // remove the user from map
 void TriviaServer::safeDeleteUser(SOCKET id)
 {
@@ -382,6 +410,9 @@ void TriviaServer::handleRecievedMessages()
 	string msgCode = "";
 	SOCKET clientSock = 0;
 	string userName;
+
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299" };
+
 	while (true) {
 		try {
 			unique_lock<mutex> lck(_mtxRecievedMessages);
@@ -402,44 +433,54 @@ void TriviaServer::handleRecievedMessages()
 			clientSock = currMessage->getSock();
 			msgCode = currMessage->getMessageCode();
 
-			if (msgCode == "299") {
-				// Client exit
-				cout << "Client exit." << endl;
-			}
+			if (std::find(std::begin(messageCodes), std::end(messageCodes), msgCode) != std::end(messageCodes)) {
+				if (msgCode == "200") {
+					cout << "Handling login message" << endl;
+					cout << "Username: " << currMessage->getValues().find("username")->second << endl;
+					cout << "Password: " << currMessage->getValues().find("password")->second << endl;
+					handleSignin(currMessage);
+				}
 
-			if (msgCode == "200") {
-				cout << "Handling login message" << endl;
-				cout << "Username: " << currMessage->getValues().find("username")->second << endl;
-				cout << "Password: " << currMessage->getValues().find("password")->second << endl;
-				handleSignin(currMessage);
-			}
+				if (msgCode == "201") {
+					handleSignout(currMessage);
+				}
 
-			if (msgCode == "203") {
-				cout << "Handling login message" << endl;
-				cout << "Username: " << currMessage->getValues().find("username")->second << endl;
-				cout << "Password: " << currMessage->getValues().find("password")->second << endl;
-				cout << "Email: " << currMessage->getValues().find("email")->second << endl;
-				handleSignup(currMessage);
-			}
+				if (msgCode == "203") {
+					cout << "Handling login message" << endl;
+					cout << "Username: " << currMessage->getValues().find("username")->second << endl;
+					cout << "Password: " << currMessage->getValues().find("password")->second << endl;
+					cout << "Email: " << currMessage->getValues().find("email")->second << endl;
+					handleSignup(currMessage);
+				}
 
-			if (msgCode == "205") {
-				handleGetRooms(currMessage);
-			}
+				if (msgCode == "205") {
+					handleGetRooms(currMessage);
+				}
 
-			if (msgCode == "209") {
-				handleJoinRoom(currMessage);
-			}
+				if (msgCode == "209") {
+					handleJoinRoom(currMessage);
+				}
 
-			if (msgCode == "207") {
-				handleGetUsersInRoom(currMessage);
-			}
+				if (msgCode == "207") {
+					handleGetUsersInRoom(currMessage);
+				}
 
-			if (msgCode == "211") {
-				handleLeaveRoom(currMessage);
-			}
+				if (msgCode == "211") {
+					handleLeaveRoom(currMessage);
+				}
 
-			if (msgCode == "213") {
-				handleCreateRoom(currMessage);
+				if (msgCode == "213") {
+					handleCreateRoom(currMessage);
+				}
+
+				if (msgCode == "215") {
+					handleCloseRoom(currMessage);
+				}
+			} else if (msgCode != "") {
+				// Unknown message code
+				msgCode = "";
+				handleSignout(currMessage);
+				cout << "unknown message code" << endl;
 			}
 
 			delete currMessage;
