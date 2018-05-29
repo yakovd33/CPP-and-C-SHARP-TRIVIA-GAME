@@ -366,6 +366,15 @@ bool TriviaServer::handleCloseRoom(RecievedMessage * msg) {
 	}
 }
 
+void TriviaServer::handleStartGame(RecievedMessage * msg) {
+	User* user = getUserBySocket(msg->getSock());
+	Room* room = getRoomById(user->getRoomId());
+
+	if (user == room->getAdmin()) {
+
+	}
+}
+
 Room * TriviaServer::getRoomById(int id) {
 	for (auto const& room : _roomsList) {
 		if (room.first == id) {
@@ -474,6 +483,10 @@ void TriviaServer::handleRecievedMessages()
 				}
 
 				if (msgCode == "215") {
+					handleCloseRoom(currMessage);
+				}
+
+				if (msgCode == "217") {
 					handleCloseRoom(currMessage);
 				}
 			} else if (msgCode != "") {

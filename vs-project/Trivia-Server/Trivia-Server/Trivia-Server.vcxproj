@@ -112,7 +112,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataBase.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="Question.cpp" />
     <ClCompile Include="RecvMessage.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="sqlite3.c" />
@@ -125,7 +127,9 @@
   <ItemGroup>
     <ClInclude Include="DataBase.h" />
     <ClInclude Include="Functions.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="Question.h" />
     <ClInclude Include="RecievedMessage.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="sqlite3.h" />

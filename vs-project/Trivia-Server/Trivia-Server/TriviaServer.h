@@ -68,6 +68,8 @@ private:
 	bool handleCreateRoom(RecievedMessage * msg);
 	bool handleCloseRoom(RecievedMessage * msg);
 
+	void handleStartGame(RecievedMessage * msg);
+
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);
 

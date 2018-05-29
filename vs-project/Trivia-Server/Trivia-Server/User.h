@@ -2,6 +2,7 @@
 #include <iostream>
 #include <WinSock2.h>
 #include <string>
+#include "Game.h"
 
 //#include "Room.h";
 
@@ -12,7 +13,7 @@ public:
 	User(string username, SOCKET sock);
 	~User();
 	void send(string message);
-	//void setGame(Game* gm);
+	void setGame(Game* gm);
 	void clearGame();
 	bool createRoom(int troomId, string roomName, int maxUsers, int questionsNo, int questionTime);
 	bool User::joinRoom(int roomId);
@@ -28,6 +29,6 @@ private:
 	bool isInRoom;
 	int roomId;
 	//Room* _currRoom;
-	//Game* _currGame;
+	Game* _currGame;
 	SOCKET _sock;
 };

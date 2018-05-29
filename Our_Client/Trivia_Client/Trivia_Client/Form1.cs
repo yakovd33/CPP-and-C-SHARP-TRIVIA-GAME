@@ -32,7 +32,6 @@ namespace Trivia_Client
 
         private void usernameBox_TextChanged(object sender, EventArgs e)
         {
-            
         }        
 
         private void passwordBox_TextChanged(object sender, EventArgs e)
@@ -42,16 +41,22 @@ namespace Trivia_Client
 
         private void passwordBox_Enter(object sender, EventArgs e)
         {
-            passwordBox.Text = "";
-            passwordBox.TabStop = true;
-            usernameBox.TabStop = true;
+            if (passwordBox.Text == "Password")
+            {
+                passwordBox.Text = "";
+                passwordBox.TabStop = true;
+                usernameBox.TabStop = true;
+            }
         }
 
         private void usernameBox_Enter(object sender, EventArgs e)
         {
-            usernameBox.Text = "";
-            passwordBox.TabStop = true;
-            usernameBox.TabStop = true;
+            if (usernameBox.Text == "Username")
+            {
+                usernameBox.Text = "";
+                passwordBox.TabStop = true;
+                usernameBox.TabStop = true;
+            }
         }
 
         private void exitBtn_MouseHover(object sender, EventArgs e)
