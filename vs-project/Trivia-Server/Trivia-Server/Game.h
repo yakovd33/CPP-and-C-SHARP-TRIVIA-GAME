@@ -1,13 +1,19 @@
 #pragma once
-#include "Question.h"
+#ifndef GAME_H
+#define GAME_H
+
+#include <iostream>
 #include <vector>
+#include <string>
 #include <map>
 #include "User.h"
+#include "Question.h"
 #include "DataBase.h"
 
 using std::vector;
 using std::map;
 
+class User;
 class Game {
 public:
 	Game(const vector<User*>& players, int questions_no, DataBase& db);
@@ -32,3 +38,5 @@ private:
 	map<string, int> _results;
 	int _currentTurnAnswers;
 };
+
+#endif

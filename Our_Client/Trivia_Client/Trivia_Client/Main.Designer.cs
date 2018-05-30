@@ -37,6 +37,7 @@
             this.SignupBtn = new System.Windows.Forms.Button();
             this.logo = new System.Windows.Forms.PictureBox();
             this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.loginFeedbackLabel = new System.Windows.Forms.Label();
             this.usernameWrap.SuspendLayout();
             this.passwordWrap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
@@ -107,6 +108,7 @@
             this.loginBtn.TabStop = false;
             this.loginBtn.Text = "Login";
             this.loginBtn.UseVisualStyleBackColor = false;
+            this.loginBtn.Click += new System.EventHandler(this.loginBtn_Click);
             // 
             // SignupBtn
             // 
@@ -151,6 +153,17 @@
             this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
             this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
             // 
+            // loginFeedbackLabel
+            // 
+            this.loginFeedbackLabel.AutoSize = true;
+            this.loginFeedbackLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.loginFeedbackLabel.Location = new System.Drawing.Point(257, 414);
+            this.loginFeedbackLabel.Name = "loginFeedbackLabel";
+            this.loginFeedbackLabel.Size = new System.Drawing.Size(35, 13);
+            this.loginFeedbackLabel.TabIndex = 7;
+            this.loginFeedbackLabel.Text = "label1";
+            this.loginFeedbackLabel.Visible = false;
+            // 
             // LogInScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -158,6 +171,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(62)))), ((int)(((byte)(71)))));
             this.ClientSize = new System.Drawing.Size(919, 596);
             this.ControlBox = false;
+            this.Controls.Add(this.loginFeedbackLabel);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.SignupBtn);
@@ -178,6 +192,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -191,6 +206,7 @@
         private System.Windows.Forms.Button SignupBtn;
         private System.Windows.Forms.PictureBox exitBtn;
         private System.Windows.Forms.PictureBox logo;
+        private System.Windows.Forms.Label loginFeedbackLabel;
     }
 }
 

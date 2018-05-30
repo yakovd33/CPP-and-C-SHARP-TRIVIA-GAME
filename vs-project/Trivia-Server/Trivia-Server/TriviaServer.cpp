@@ -98,6 +98,7 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 			if (msgCode != "") {
 				currRcvMsg = buildRecieveMessage(client_socket, msgCode);
 				addRecievedMessage(currRcvMsg);
+				cout << "Message: " << msgCode << endl;
 				msgCode = "";
 			}
 		}
@@ -210,8 +211,11 @@ User* TriviaServer::handleSignin(RecievedMessage * msg) {
 void TriviaServer::handleSignout(RecievedMessage * msg) {
 	User* user = getUserBySocket(msg->getSock());
 	Room* room = getRoomById(user->getRoomId());
-	room->closeRoom(user);
-	room->leaveRoom(user);
+	
+	if (room) {
+		room->closeRoom(user);
+		room->leaveRoom(user);
+	}
 	
 	// TODO Close game
 	

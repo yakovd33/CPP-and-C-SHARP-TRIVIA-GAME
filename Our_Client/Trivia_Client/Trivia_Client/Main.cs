@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Net.Sockets;
+using System.Net;
+using System.Text;
 
 namespace Trivia_Client
 {
@@ -17,6 +20,11 @@ namespace Trivia_Client
             int nHeightEllipse // width of ellipse
         );
 
+        TcpClient client;
+        IPEndPoint serverEndPoint;
+        NetworkStream clientStream;
+        Protocol protocol = new Protocol();
+
         public LogInScreen()
         {
             InitializeComponent();
@@ -27,6 +35,15 @@ namespace Trivia_Client
             passwordWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, passwordWrap.Width, passwordWrap.Height, 5, 5));
             loginBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, loginBtn.Width, loginBtn.Height, 5, 5));
             SignupBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, SignupBtn.Width + 1, SignupBtn.Height + 1, 5, 5));
+
+            try {
+                client = new TcpClient();
+                serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8820);
+                client.Connect(serverEndPoint);
+                clientStream = client.GetStream();
+            } catch (Exception e) {
+                Console.WriteLine(e);
+            }
         }
 
         private void usernameBox_TextChanged(object sender, EventArgs e)
@@ -82,7 +99,47 @@ namespace Trivia_Client
         {
             if (e.KeyValue == 13) // Enter
             {
-                Application.Exit(); // In the future, it might be for log in.
+                login();
+            }
+        }
+
+        protected void login() {
+            string username = usernameBox.Text;
+            string password = passwordBox.Text;
+
+            if (username != "" && username != "Username" && password != "" && password != "Password") {
+                try {
+                    string message = "200" + username.Length.ToString("D2") + username + password.Length.ToString("D2") + password;
+                    Console.WriteLine(message);
+
+                    byte[] buffer = new ASCIIEncoding().GetBytes(message);
+                    clientStream.Write(buffer, 0, message.Length);
+                    clientStream.Flush();
+
+                    // Get login response
+                    byte[] bufferIn = new byte[4];
+                    int bytesRead = clientStream.Read(bufferIn, 0, 4);
+                    string resuLtCode = new ASCIIEncoding().GetString(bufferIn);
+                    string errorMsg = protocol.getCodeErrorMsg(resuLtCode);
+
+                    if (errorMsg == "success") {
+                        // Login
+                        loginFeedbackLabel.Hide();
+                        MainLogged main = new MainLogged(client, serverEndPoint, clientStream);
+                        this.Hide();
+                        main.ShowDialog();
+                        this.Close();
+                    }
+                    else {
+                        loginFeedbackLabel.Visible = Visible;
+                        loginFeedbackLabel.Text = errorMsg;
+                    }
+                } catch (Exception e) {
+                    Console.WriteLine(e);
+                }
+            } else {
+                loginFeedbackLabel.Visible = Visible;
+                loginFeedbackLabel.Text = "Fields must not be empty.";
             }
         }
 
@@ -99,6 +156,11 @@ namespace Trivia_Client
                 Capture = false;
                 SendMessage(Handle, 0x00A1, 2, 0);
             }
+        }
+
+        private void loginBtn_Click(object sender, EventArgs e)
+        {
+            login();
         }
     }
 }

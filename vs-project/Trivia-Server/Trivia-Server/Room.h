@@ -22,7 +22,7 @@ public:
 	int getQuestionTime();
 	void setAdmin(User* admin);
 	bool closeRoom(User* admin);
-
+	User* getAdmin();
 private:
 	vector<User*> _users;
 	User* _admin;

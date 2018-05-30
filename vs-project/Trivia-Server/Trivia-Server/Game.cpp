@@ -1,7 +1,7 @@
 #include "Game.h"
 
-Game::Game(const vector<User*>& players, int questions_no, DataBase &db) {
-	this->_players = players;
+Game::Game(const vector<User*>& players, int questions_no, DataBase &db) : _db(db) {
+	//this->_players = players;
 	this->_questions_no = questions_no;
 	this->_db = db;
 }

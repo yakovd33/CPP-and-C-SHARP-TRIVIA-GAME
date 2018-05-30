@@ -83,6 +83,10 @@ bool Room::closeRoom(User* admin) {
 	}
 }
 
+User * Room::getAdmin() {
+	return this->_admin;
+}
+
 string Room::getUsersAsString(vector<User*> users, User * user) {
 	return string();
 }
