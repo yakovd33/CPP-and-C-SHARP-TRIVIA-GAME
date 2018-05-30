@@ -27,7 +27,6 @@ namespace Trivia_Client
             passwordWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, passwordWrap.Width, passwordWrap.Height, 5, 5));
             loginBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, loginBtn.Width, loginBtn.Height, 5, 5));
             SignupBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, SignupBtn.Width + 1, SignupBtn.Height + 1, 5, 5));
-            exitBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, exitBtn.Width, exitBtn.Height, exitBtn.Height, exitBtn.Width));
         }
 
         private void usernameBox_TextChanged(object sender, EventArgs e)
@@ -87,6 +86,8 @@ namespace Trivia_Client
             }
         }
 
+
+        // Window drag
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wparam, int lparam);
 

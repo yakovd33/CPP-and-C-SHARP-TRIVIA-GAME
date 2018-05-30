@@ -16,7 +16,8 @@ namespace Trivia_Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LogInScreen());
+            //Application.Run(new LogInScreen());
+            Application.Run(new MainLogged());
         }
     }
 }

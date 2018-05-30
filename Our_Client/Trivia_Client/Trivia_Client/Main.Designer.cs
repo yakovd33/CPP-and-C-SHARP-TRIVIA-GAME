@@ -47,11 +47,11 @@
             // 
             this.usernameBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
             this.usernameBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.usernameBox.Font = new System.Drawing.Font("Open Sans", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.usernameBox.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernameBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.usernameBox.Location = new System.Drawing.Point(9, 5);
+            this.usernameBox.Location = new System.Drawing.Point(9, 7);
             this.usernameBox.Name = "usernameBox";
-            this.usernameBox.Size = new System.Drawing.Size(400, 26);
+            this.usernameBox.Size = new System.Drawing.Size(400, 22);
             this.usernameBox.TabIndex = 0;
             this.usernameBox.TabStop = false;
             this.usernameBox.Text = "Username";
@@ -80,11 +80,11 @@
             // 
             this.passwordBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
             this.passwordBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.passwordBox.Font = new System.Drawing.Font("Open Sans", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordBox.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.passwordBox.Location = new System.Drawing.Point(9, 5);
+            this.passwordBox.Location = new System.Drawing.Point(9, 7);
             this.passwordBox.Name = "passwordBox";
-            this.passwordBox.Size = new System.Drawing.Size(410, 26);
+            this.passwordBox.Size = new System.Drawing.Size(410, 22);
             this.passwordBox.TabIndex = 0;
             this.passwordBox.TabStop = false;
             this.passwordBox.Text = "Password";
@@ -98,7 +98,7 @@
             this.loginBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.loginBtn.FlatAppearance.BorderSize = 0;
             this.loginBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.loginBtn.Font = new System.Drawing.Font("Open Sans Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loginBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loginBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
             this.loginBtn.Location = new System.Drawing.Point(260, 361);
             this.loginBtn.Name = "loginBtn";
@@ -117,7 +117,7 @@
             this.SignupBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.SignupBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(83)))), ((int)(((byte)(101)))));
             this.SignupBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SignupBtn.Font = new System.Drawing.Font("Open Sans Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignupBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignupBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
             this.SignupBtn.Location = new System.Drawing.Point(478, 361);
             this.SignupBtn.Name = "SignupBtn";
