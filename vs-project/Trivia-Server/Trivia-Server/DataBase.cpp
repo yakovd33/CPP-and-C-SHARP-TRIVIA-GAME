@@ -19,8 +19,8 @@ bool DataBase::isUserExists(string name) {
 
 	int rowCount = 0;
 	sqlite3_stmt *stmt;
-	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
-	rc = sqlite3_step(stmt);
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);//replcae callback's shiltot.
+	rc = sqlite3_step(stmt);//read line in answear
 
 	if (rc != SQLITE_DONE && rc != SQLITE_OK) {
 		return true;
