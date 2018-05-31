@@ -13,10 +13,11 @@
 using std::vector;
 using std::map;
 
+class DataBase;
 class User;
 class Game {
 public:
-	Game(const vector<User*>& players, int questions_no, DataBase& db);
+	Game(const vector<User*> &players, int questions_no, DataBase &db);
 	~Game();
 	void sendFirstQuestion();
 	void handleFinishGame();
@@ -31,12 +32,13 @@ public:
 
 private:
 	vector<Question*> _questions;
-	//vector<User*> _players;
+	vector<User*> _players;
 	int _questions_no;
 	int _currQuestionIndex;
 	DataBase& _db;
-	map<string, int> _results;
+	map<std::string, int> _results;
 	int _currentTurnAnswers;
+	int _id;
 };
 
 #endif

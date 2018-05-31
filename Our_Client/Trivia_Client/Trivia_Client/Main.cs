@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using System.Drawing;
 
 namespace Trivia_Client
 {
@@ -158,9 +159,14 @@ namespace Trivia_Client
             }
         }
 
-        private void loginBtn_Click(object sender, EventArgs e)
-        {
+        private void loginBtn_Click(object sender, EventArgs e) {
             login();
+        }
+
+        private void SignupBtn_Click(object sender, EventArgs e) {
+            SignupBtn.Location = new Point(SignupBtn.Location.X, SignupBtn.Location.Y + 50);
+            loginBtn.Location = new Point(loginBtn.Location.X, loginBtn.Location.Y + 50);
+            loginFeedbackLabel.Location = new Point(loginFeedbackLabel.Location.X, loginFeedbackLabel.Location.Y + 50);
         }
     }
 }

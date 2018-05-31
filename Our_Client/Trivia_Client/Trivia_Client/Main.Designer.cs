@@ -128,6 +128,7 @@
             this.SignupBtn.TabStop = false;
             this.SignupBtn.Text = "Signup";
             this.SignupBtn.UseVisualStyleBackColor = false;
+            this.SignupBtn.Click += new System.EventHandler(this.SignupBtn_Click);
             // 
             // logo
             // 

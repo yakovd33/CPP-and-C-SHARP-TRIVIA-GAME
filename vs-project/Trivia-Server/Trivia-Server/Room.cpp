@@ -33,8 +33,8 @@ bool Room::joinRoom(User * user) {
 void Room::leaveRoom(User * user) {
 }
 
-vector<User*>* Room::getUsers() {
-	return &(this->_users);
+vector<User*> Room::getUsers() {
+	return this->_users;
 }
 
 string Room::getUsersListMessage() {
@@ -54,7 +54,7 @@ string Room::getName() {
 }
 
 int Room::getJoinedUsersCount() {
-	return this->getUsers()->size();
+	return this->getUsers().size();
 }
 
 int Room::getMaxUsers() {

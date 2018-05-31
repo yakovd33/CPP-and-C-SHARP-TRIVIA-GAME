@@ -22,7 +22,7 @@ TriviaServer::TriviaServer()
 	_db = new DataBase();
 
 	//_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
-	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
+	//_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
 }
 
 TriviaServer::~TriviaServer()
@@ -301,7 +301,7 @@ void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg) {
 	if (room) {
 		string message = "108";
 		message += to_string(room->getJoinedUsersCount()); // Room users count
-		vector<User*>* users = room->getUsers();
+		vector<User*>* users = &(room->getUsers());
 
 		for (auto curUser : *users) {
 			message += string(2 - to_string(curUser->getUsername().length()).length(), '0') + to_string(curUser->getUsername().length());
@@ -323,7 +323,7 @@ bool TriviaServer::handleLeaveRoom(RecievedMessage * msg) {
 		user->leaveRoom();
 		
 		if (room) {
-			room->getUsers()->erase(std::remove(room->getUsers()->begin(), room->getUsers()->end(), user), room->getUsers()->end());
+			room->getUsers().erase(std::remove(room->getUsers().begin(), room->getUsers().end(), user), room->getUsers().end());
 			sendMessageToSocket(msg->getSock(), "1120");
 		} else {
 			// Room not found
@@ -375,7 +375,17 @@ void TriviaServer::handleStartGame(RecievedMessage * msg) {
 	Room* room = getRoomById(user->getRoomId());
 
 	if (user == room->getAdmin()) {
+		Game* game = new Game(room->getUsers(), room->getQuestionsNo(), *_db);
 
+		// Close room
+		for (auto user : room->getUsers()) {
+			user->leaveRoom();
+		}
+
+		if (room->closeRoom(user)) {
+			// Remove room from list
+			_roomsList.erase(room->getId());
+		}
 	}
 }
 

@@ -44,16 +44,28 @@ bool DataBase::isUserAndPasswordMatch(string username, string password) {
 	return false;
 }
 
-bool DataBase::addNewUser(string username, string password, string email)
-{
+bool DataBase::addNewUser(string username, string password, string email) {
 	string query = "INSERT INTO `t_users` (`username`, `password`, `email`) VALUES ('" + username + "', '" + password + "', '" + email + "')";
 
 	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
 
 	if (rc != SQLITE_OK) {
-		return false;
 		sqlite3_free(zErrMsg);
+		return false;
 	}
 
 	return true;
+}
+
+int DataBase::insertNewGame() {
+	string query = "INSERT INTO `t_games` (`status`, `start_time`, `end_time`) VALUES ('0', datetime('now'), NULL)";
+
+	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
+		sqlite3_free(zErrMsg);
+		return false;
+	}
+
+	return sqlite3_last_insert_rowid(db);
 }
