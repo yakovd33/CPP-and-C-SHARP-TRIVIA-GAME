@@ -15,6 +15,7 @@ using std::endl;
 using std::string;
 using std::vector;
 using std::stoi;
+using std::atoi;
 
 class Game;
 class Question;
@@ -29,6 +30,8 @@ public:
 	bool addNewUser(string username, string password, string email);
 	int insertNewGame();
 	vector<Question*> initQuestions(int questionsNo);
+	bool addAnswerToPlayer(int gameId, string username, int questionId, string answer, bool isCorrect, int answerTime);
+	bool updateGameStatus(int gameId);
 private:
 	sqlite3 *db;
 	char *zErrMsg = 0;

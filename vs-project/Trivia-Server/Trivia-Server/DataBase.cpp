@@ -93,3 +93,19 @@ vector<Question*> DataBase::initQuestions(int questionsNo) {
 	
 	return questions;
 }
+
+bool DataBase::addAnswerToPlayer(int gameId, string username, int questionId, string answer, bool isCorrect, int answerTime) {
+	string query = "INSERT INTO `t_players_answers` (`game_id`, `username`, `question_id`, `player_answer`, `is_correct`, `answer_time`) VALUES(" + to_string(gameId) + ", '" + username + "', " + to_string(questionId) + ", '" + answer + "', " + to_string(isCorrect) + ", " + to_string(answerTime) + ")";
+	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
+		sqlite3_free(zErrMsg);
+		return false;
+	}
+
+	return true;
+}
+
+bool DataBase::updateGameStatus(int gameId) {
+	return false;
+}

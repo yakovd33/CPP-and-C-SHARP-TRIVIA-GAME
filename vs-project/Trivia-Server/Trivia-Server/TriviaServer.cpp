@@ -22,7 +22,7 @@ TriviaServer::TriviaServer()
 	_db = new DataBase();
 
 	//_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
-	//_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
+	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
 }
 
 TriviaServer::~TriviaServer()
@@ -176,6 +176,11 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		values.insert(make_pair("question_time", questionTime));
 	}
 
+	if (msgCode == "219") {
+		values.insert(make_pair("answer_number", Helper::getStringPartFromSocket(client_socket, 1).c_str()));
+		values.insert(make_pair("answer_time", Helper::getStringPartFromSocket(client_socket, 20).c_str()));
+	}
+
 	msg = new RecievedMessage(client_socket, msgCode, values);
 	return msg;
 }
@@ -290,12 +295,14 @@ void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg) {
 	if (room) {
 		string message = "108";
 		message += to_string(room->getJoinedUsersCount()); // Room users count
-		vector<User*>* users = &(room->getUsers());
+		vector<User*> users = room->getUsers();
 
-		for (auto curUser : *users) {
+		for (auto curUser : users) {
 			message += string(2 - to_string(curUser->getUsername().length()).length(), '0') + to_string(curUser->getUsername().length());
 			message += curUser->getUsername();
 		}
+
+		cout << "message: " << message << endl;
 
 		sendMessageToSocket(msg->getSock(), message);
 	} else {
@@ -371,10 +378,11 @@ void TriviaServer::handleStartGame(RecievedMessage * msg) {
 
 			if (user == room->getAdmin()) {
 				Game* game = new Game(room->getUsers(), room->getQuestionsNo(), *_db);
-				game->sendQuestionToAllUsers();
+				game->sendFirstQuestion();
 
 				// Close room
 				for (auto user : room->getUsers()) {
+					user->setGame(game);
 					user->leaveRoom();
 				}
 
@@ -384,6 +392,26 @@ void TriviaServer::handleStartGame(RecievedMessage * msg) {
 				}
 
 				delete room;
+			}
+		}
+	}
+}
+
+void TriviaServer::handlePlayerAnswer(RecievedMessage * msg) {
+	User* user = getUserBySocket(msg->getSock());
+
+	if (user) {
+		Game* game = user->getGame();
+
+		if (game) {
+			if (!game->handleAnswerFromUser(user, atoi(msg->getValues().find("answer_number")->second.c_str()), atoi(msg->getValues().find("answer_time")->second.c_str()))) {
+				// Game over
+				for (auto user : game->getPlayers()) {
+					user->leaveGame();
+					user->clearGame();
+				}
+
+				delete game;
 			}
 		}
 	}
@@ -495,6 +523,10 @@ void TriviaServer::handleRecievedMessages()
 
 				if (msgCode == "217") {
 					handleStartGame(currMessage);
+				}
+
+				if (msgCode == "219") {
+					handlePlayerAnswer(currMessage);
 				}
 			} else if (msgCode != "") {
 				// Unknown message code

@@ -1,6 +1,7 @@
 #include "Question.h"
 
 Question::Question(int id, string question, string correctAnswer, string answer2, string answer3, string answer4) {
+	this->_id = id;
 	this->_question = question;
 	this->_correctAnswersIndex = 0;
 	this->_answers[0] = correctAnswer;

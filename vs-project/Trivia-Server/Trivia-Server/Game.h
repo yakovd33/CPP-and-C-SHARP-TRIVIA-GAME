@@ -28,6 +28,7 @@ public:
 	bool handleAnswerFromUser(User* user, int answerNo, int time);
 	bool leaveGame(User* user);
 	int getID();
+	vector<User*> getPlayers();
 
 	bool insertGameToDB();
 	void initQuestionsFromDB();

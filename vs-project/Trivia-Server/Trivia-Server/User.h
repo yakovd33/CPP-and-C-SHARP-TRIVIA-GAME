@@ -28,7 +28,9 @@ public:
 	int closeRoom();
 	bool leaveGame();
 	void clearRoom();
+	Game* getGame();
 	string getUsername();
+	SOCKET getSock();
 private:
 	string _username;
 	bool isInRoom;

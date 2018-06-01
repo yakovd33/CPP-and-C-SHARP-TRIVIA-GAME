@@ -14,7 +14,12 @@ void User::send(string message) {
 	::send(_sock, message.c_str(), message.length(), 0);
 }
 
+void User::setGame(Game * gm) {
+	this->_currGame = gm;
+}
+
 void User::clearGame() {
+	this->_currGame = NULL;
 }
 
 bool User::createRoom(int troomId, string roomName, int maxUsers, int questionsNo, int questionTime) {
@@ -51,8 +56,16 @@ bool User::leaveGame() {
 void User::clearRoom() {
 }
 
+Game * User::getGame() {
+	return this->_currGame;
+}
+
 string User::getUsername()
 {
 	//return "-------";
 	return this->_username;
+}
+
+SOCKET User::getSock() {
+	return this->_sock;
 }
