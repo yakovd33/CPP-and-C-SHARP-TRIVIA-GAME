@@ -57,17 +57,25 @@ void Game::handleFinishGame() {
 bool Game::handleNextTurn() {
 	if (this->_players.size() == 0) {
 		handleFinishGame();
-	}
+	} else {
+		cout << "_currentTurnAnswers: " << _currentTurnAnswers << endl;
+		cout << "_players.size(): " << _players.size() << endl;
+		cout << "_currQuestionIndex: " << _currQuestionIndex << endl;
 
-	if (_currentTurnAnswers >= _players.size()) {
-		// Every player has answered current question
-		_currentTurnAnswers = 0;
+		_currentTurnAnswers++;
+		if (_currentTurnAnswers >= _players.size()) {
+			cout << "next turn" << endl;
 
-		if (_currQuestionIndex >= _questions_no) {
-			// Last question
-			handleFinishGame();
-		} else {
-			sendQuestionToAllUsers();
+			// Every player has answered current question
+			_currentTurnAnswers = 0;
+
+			cout << "question index: " << _currQuestionIndex << endl;
+			if (_currQuestionIndex >= _questions_no) {
+				// Last question
+				handleFinishGame();
+			} else {
+				sendQuestionToAllUsers();
+			}
 		}
 	}
 
@@ -97,7 +105,7 @@ bool Game::handleAnswerFromUser(User * user, int answerNo, int time) {
 	_db.addAnswerToPlayer(this->getID(), user->getUsername(), this->_questions.at(questionIndex)->getId(), answer, isCorrect, time);
 
 	handleNextTurn();
-	_currentTurnAnswers++;
+	//_currentTurnAnswers++;
 
 	return true;
 }
@@ -122,12 +130,11 @@ void Game::initQuestionsFromDB() {
 }
 
 void Game::sendQuestionToAllUsers() {
-	for (auto user : _players) {
-		//Question* question = _questions.front();
-		Question* question = _questions.at(_currQuestionIndex);
-		_currQuestionIndex++;
-		//_questions.pop_back();
+	cout << "sending question to all users" << endl;
+	Question* question = _questions.at(_currQuestionIndex);
+	_currQuestionIndex++;
 
+	for (auto user : _players) {
 		string message = "118";
 		message += string(string(3 - to_string(question->getQuestion().length()).length(), '0') + to_string(question->getQuestion().length()));
 		message += question->getQuestion();

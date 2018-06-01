@@ -369,6 +369,7 @@ bool TriviaServer::handleCloseRoom(RecievedMessage * msg) {
 
 void TriviaServer::handleStartGame(RecievedMessage * msg) {
 	User* user = getUserBySocket(msg->getSock());
+	cout << "starting gameeeee" << endl;
 
 	if (user) {
 		Room* room = getRoomById(user->getRoomId());
@@ -376,20 +377,22 @@ void TriviaServer::handleStartGame(RecievedMessage * msg) {
 		if (room) {
 			cout << "user and room found" << endl;
 
+			// Close room
 			if (user == room->getAdmin()) {
 				Game* game = new Game(room->getUsers(), room->getQuestionsNo(), *_db);
-				game->sendFirstQuestion();
 
-				// Close room
 				for (auto user : room->getUsers()) {
 					user->setGame(game);
 					user->leaveRoom();
 				}
 
-				if (room->closeRoom(user)) {
+				/*if (room->closeRoom(user)) {
 					// Remove room from list
 					_roomsList.erase(room->getId());
-				}
+				}*/
+				_roomsList.erase(room->getId());
+
+				game->sendFirstQuestion();
 
 				delete room;
 			}
