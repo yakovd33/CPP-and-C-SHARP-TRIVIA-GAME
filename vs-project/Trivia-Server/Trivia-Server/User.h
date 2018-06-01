@@ -11,6 +11,8 @@
 using std::string;
 
 class Game;
+class DataBase;
+class Question;
 class User {
 public:
 	User(string username, SOCKET sock);

@@ -1,10 +1,17 @@
 #include "Game.h"
 
 Game::Game(const vector<User*>& players, int questions_no, DataBase &db) : _db(db) {
-	this->_players = players;
-	this->_questions_no = questions_no;
+
 	this->_db = db;
-	this->_id = _db.insertNewGame();
+
+	try {
+		this->_id = _db.insertNewGame();
+		this->_players = players;
+		this->_questions_no = questions_no;
+		this->_questions = _db.initQuestions(_questions_no);
+	} catch (int e) {
+		// Insertion didnt succeed
+	}
 }
 
 Game::~Game() {
@@ -45,9 +52,13 @@ void Game::sendQuestionToAllUsers() {
 		_questions.pop_back();
 
 		string message = "118";
-		message += string(3 - question->getQuestion().length(), '0') + question->getQuestion();
-		
+		message += string(string(3 - to_string(question->getQuestion().length()).length(), '0') + to_string(question->getQuestion().length()));
+		message += question->getQuestion();
 
+		for (int i = 0; i < 4; i++) {
+			message += string(3 - to_string(question->getAnswers()[i].length()).length(), '0') + to_string(question->getAnswers()[i].length());
+			message += question->getAnswers()[i];
+		}
 
 		user->send(message);
 	}

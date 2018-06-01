@@ -1,12 +1,17 @@
 #pragma once
+#ifndef QUESTION_H
+#define QUESTION_H
+
 #include <iostream>
+#include <random>
 
 using std::string;
 
-
+class Game;
+class DataBase;
 class Question {
 public:
-	Question();
+	Question(int id, string question, string correctAnswer, string answer2, string answer3, string answer4);
 	~Question();
 
 	string getQuestion();
@@ -20,3 +25,5 @@ private:
 	int _id;
 };
 
+
+#endif

@@ -24,7 +24,6 @@ bool User::createRoom(int troomId, string roomName, int maxUsers, int questionsN
 bool User::joinRoom(int roomId) {
 	if (!this->isInRoom) {
 		this->isInRoom = true;
-		std::cout << "roooom id: " << roomId << std::endl;
 		this->roomId = roomId;
 		return true;
 	}

@@ -6,15 +6,18 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <exception>
 #include "User.h"
 #include "Question.h"
 #include "DataBase.h"
 
 using std::vector;
 using std::map;
+using std::to_string;
 
 class DataBase;
 class User;
+class Question;
 class Game {
 public:
 	Game(const vector<User*> &players, int questions_no, DataBase &db);

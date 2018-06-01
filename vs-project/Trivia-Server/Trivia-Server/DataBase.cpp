@@ -19,8 +19,8 @@ bool DataBase::isUserExists(string name) {
 
 	int rowCount = 0;
 	sqlite3_stmt *stmt;
-	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);//replcae callback's shiltot.
-	rc = sqlite3_step(stmt);//read line in answear
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+	rc = sqlite3_step(stmt);
 
 	if (rc != SQLITE_DONE && rc != SQLITE_OK) {
 		return true;
@@ -68,4 +68,28 @@ int DataBase::insertNewGame() {
 	}
 
 	return sqlite3_last_insert_rowid(db);
+}
+
+vector<Question*> DataBase::initQuestions(int questionsNo) {
+	vector<Question*> questions;
+	string query = "SELECT * FROM `t_questions` WHERE `question_id` IN (SELECT `question_id` FROM `t_questions` ORDER BY RANDOM() LIMIT " + std::to_string(questionsNo) + ")";
+
+	sqlite3_stmt *stmt;
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+
+	while (sqlite3_step(stmt) == SQLITE_ROW) {
+		const unsigned char* id = sqlite3_column_text(stmt, 0);
+		string id_str = std::string(reinterpret_cast<const char*>(id));
+		Question* question = new Question(
+			stoi(id_str),
+			std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1))),
+			std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))),
+			std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))),
+			std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))),
+			std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5))));
+
+		questions.push_back(question);
+	}
+	
+	return questions;
 }
