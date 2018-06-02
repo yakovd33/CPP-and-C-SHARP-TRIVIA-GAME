@@ -22,7 +22,9 @@ TriviaServer::TriviaServer()
 	_db = new DataBase();
 
 	//_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
-	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
+	//_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
+
+	_db->getBestScores();
 }
 
 TriviaServer::~TriviaServer()
@@ -420,6 +422,15 @@ void TriviaServer::handlePlayerAnswer(RecievedMessage * msg) {
 	}
 }
 
+void TriviaServer::handleGetBestScores(RecievedMessage * msg) {
+	sendMessageToSocket(msg->getSock(), _db->getBestScores());
+}
+
+void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
+	string message = "126";
+
+}
+
 Room * TriviaServer::getRoomById(int id) {
 	for (auto const& room : _roomsList) {
 		if (room.first == id) {
@@ -530,6 +541,14 @@ void TriviaServer::handleRecievedMessages()
 
 				if (msgCode == "219") {
 					handlePlayerAnswer(currMessage);
+				}
+
+				if (msgCode == "223") {
+					handleGetBestScores(currMessage);
+				}
+
+				if (msgCode == "225") {
+					handleGetPersonalStatus(currMessage);
 				}
 			} else if (msgCode != "") {
 				// Unknown message code

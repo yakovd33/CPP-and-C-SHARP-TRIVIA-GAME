@@ -28,7 +28,6 @@ void Game::sendFirstQuestion() {
 }
 
 void Game::handleFinishGame() {
-	cout << "game finished" << endl;
 	string message = "121";
 	message += to_string(this->_players.size());
 	
@@ -36,9 +35,9 @@ void Game::handleFinishGame() {
 		message += string(2 - to_string(user->getUsername().length()).length(), '0') + to_string(user->getUsername().length());
 		message += user->getUsername();
 		message += string(2 - to_string(this->_results.find(user->getUsername())->second).length(), '0') + to_string(this->_results.find(user->getUsername())->second);
+	
+		_db.insertUserGameResult(user->getUsername(), this->getID(), this->_results.find(user->getUsername())->second);
 	}
-
-	cout << "message: " << message << endl;
 
 	for (auto user : this->_players) {
 		try {
@@ -58,18 +57,12 @@ bool Game::handleNextTurn() {
 	if (this->_players.size() == 0) {
 		handleFinishGame();
 	} else {
-		cout << "_currentTurnAnswers: " << _currentTurnAnswers << endl;
-		cout << "_players.size(): " << _players.size() << endl;
-		cout << "_currQuestionIndex: " << _currQuestionIndex << endl;
-
 		_currentTurnAnswers++;
 		if (_currentTurnAnswers >= _players.size()) {
-			cout << "next turn" << endl;
 
 			// Every player has answered current question
 			_currentTurnAnswers = 0;
 
-			cout << "question index: " << _currQuestionIndex << endl;
 			if (_currQuestionIndex >= _questions_no) {
 				// Last question
 				handleFinishGame();
@@ -89,7 +82,6 @@ bool Game::handleAnswerFromUser(User * user, int answerNo, int time) {
 
 	if (answerNo - 1 == this->_questions.at(questionIndex)->getCorrectAnswersIndex()) {
 		// Correct answer
-		cout << "correct answer" << endl;
 		isCorrect = true;
 		this->_results.find(user->getUsername())->second++;
 		msg = "1201";

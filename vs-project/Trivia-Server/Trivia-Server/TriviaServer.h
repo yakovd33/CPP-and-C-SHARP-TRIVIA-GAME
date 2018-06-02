@@ -71,6 +71,9 @@ private:
 	void handleStartGame(RecievedMessage * msg);
 	void handlePlayerAnswer(RecievedMessage * msg);
 
+	void handleGetBestScores(RecievedMessage * msg);
+	void handleGetPersonalStatus(RecievedMessage * msg);
+
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);
 

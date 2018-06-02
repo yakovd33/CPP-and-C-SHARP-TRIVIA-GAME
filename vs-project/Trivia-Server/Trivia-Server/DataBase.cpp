@@ -107,5 +107,50 @@ bool DataBase::addAnswerToPlayer(int gameId, string username, int questionId, st
 }
 
 bool DataBase::updateGameStatus(int gameId) {
-	return false;
+	string query = "UPDATE `t_games` SET `status` = 1 AND `end_time` = datetime('now') WHERE `game_id` = " + to_string(gameId);
+
+	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
+		sqlite3_free(zErrMsg);
+		return false;
+	}
+
+	return true;
+}
+
+void DataBase::insertUserGameResult(string username, int gameId, int result) {
+	string query = "INSERT INTO `t_games_results` (`game_id`, `username`, `result`) VALUES (" + to_string(gameId) + ", '" + username + "', " + to_string(result) + ")";
+	cout << "inserting result" << endl;
+	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
+		sqlite3_free(zErrMsg);
+	}
+}
+
+string DataBase::getBestScores() {
+	string message = "124";
+
+	string query = "SELECT * FROM `t_games_results` GROUP BY `username` ORDER BY `result` DESC LIMIT 3";
+
+	sqlite3_stmt *stmt;
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+	
+	int users = 0;
+
+	while (sqlite3_step(stmt) == SQLITE_ROW) {
+		users++;
+		message += string(string(2 - to_string(std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))).length()).length(), '0') + to_string(std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))).length()));
+		message += std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
+		message += string(string(6 - std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))).length(), '0') + std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))));
+	}
+
+	for (int i = 0; i < 3 - users; i++) {
+		message += "00000000";
+	}
+
+	cout << message << endl;
+
+	return message;
 }

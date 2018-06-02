@@ -32,6 +32,8 @@ public:
 	vector<Question*> initQuestions(int questionsNo);
 	bool addAnswerToPlayer(int gameId, string username, int questionId, string answer, bool isCorrect, int answerTime);
 	bool updateGameStatus(int gameId);
+	string getBestScores();
+	void insertUserGameResult(string username, int gameId, int result);
 private:
 	sqlite3 *db;
 	char *zErrMsg = 0;
