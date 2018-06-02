@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace Trivia_Client
 {
-    public partial class LogInScreen : Form
+    public partial class Signup : Form
     {
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
@@ -26,8 +26,11 @@ namespace Trivia_Client
         NetworkStream clientStream;
         Protocol protocol = new Protocol();
 
-        public LogInScreen()
-        {
+        public Signup(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream) {
+            this.client = client;
+            this.serverEndPoint = serverEndPoint;
+            this.clientStream = clientStream;
+
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
@@ -63,6 +66,7 @@ namespace Trivia_Client
                 passwordBox.Text = "";
                 passwordBox.TabStop = true;
                 usernameBox.TabStop = true;
+                emailBox.TabStop = true;
             }
         }
 
@@ -73,6 +77,18 @@ namespace Trivia_Client
                 usernameBox.Text = "";
                 passwordBox.TabStop = true;
                 usernameBox.TabStop = true;
+                emailBox.TabStop = true;
+            }
+        }
+
+        private void emailBox_Enter(object sender, EventArgs e)
+        {
+            if (emailBox.Text == "Email")
+            {
+                emailBox.Text = "";
+                passwordBox.TabStop = true;
+                usernameBox.TabStop = true;
+                emailBox.TabStop = true;
             }
         }
 
@@ -100,17 +116,18 @@ namespace Trivia_Client
         {
             if (e.KeyValue == 13) // Enter
             {
-                login();
+                signup();
             }
         }
 
-        protected void login() {
+        protected void signup() {
             string username = usernameBox.Text;
             string password = passwordBox.Text;
+            string email = emailBox.Text;
 
-            if (username != "" && username != "Username" && password != "" && password != "Password") {
+            if (username != "" && username != "Username" && password != "" && password != "Password" && password != "Email") {
                 try {
-                    string message = "200" + username.Length.ToString("D2") + username + password.Length.ToString("D2") + password;
+                    string message = "203" + username.Length.ToString("D2") + username + password.Length.ToString("D2") + password + email.Length.ToString("D2") + email;
                     Console.WriteLine(message);
 
                     byte[] buffer = new ASCIIEncoding().GetBytes(message);
@@ -124,11 +141,8 @@ namespace Trivia_Client
                     string errorMsg = protocol.getCodeErrorMsg(resuLtCode);
 
                     if (errorMsg == "success") {
-                        // Login
+                        // Signup success
                         loginFeedbackLabel.Hide();
-                        MainLogged main = new MainLogged(client, serverEndPoint, clientStream);
-                        this.Hide();
-                        main.ShowDialog();
                         this.Close();
                     }
                     else {
@@ -160,15 +174,11 @@ namespace Trivia_Client
         }
 
         private void loginBtn_Click(object sender, EventArgs e) {
-            login();
+            signup();
         }
 
         private void SignupBtn_Click(object sender, EventArgs e) {
-            this.Hide();
-            Signup signup = new Signup(client, serverEndPoint, clientStream);
-            signup.ShowDialog();
-            this.Show();
-            //this.Close();
+            this.Close();
         }
     }
 }
