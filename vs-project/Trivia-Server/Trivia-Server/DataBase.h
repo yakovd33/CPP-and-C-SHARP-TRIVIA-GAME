@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <string>
 #include "sqlite3.h"
 #include "User.h"
 #include "Question.h"
@@ -33,6 +35,7 @@ public:
 	bool addAnswerToPlayer(int gameId, string username, int questionId, string answer, bool isCorrect, int answerTime);
 	bool updateGameStatus(int gameId);
 	string getBestScores();
+	string getPersonalStatus(string username);
 	void insertUserGameResult(string username, int gameId, int result);
 private:
 	sqlite3 *db;

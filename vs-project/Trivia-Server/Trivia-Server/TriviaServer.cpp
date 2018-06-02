@@ -427,8 +427,8 @@ void TriviaServer::handleGetBestScores(RecievedMessage * msg) {
 }
 
 void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
-	string message = "126";
-
+	User* user = getUserBySocket(msg->getSock());
+	sendMessageToSocket(msg->getSock(), _db->getPersonalStatus(user->getUsername()));
 }
 
 Room * TriviaServer::getRoomById(int id) {

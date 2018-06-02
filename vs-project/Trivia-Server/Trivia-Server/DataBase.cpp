@@ -154,3 +154,80 @@ string DataBase::getBestScores() {
 
 	return message;
 }
+
+string DataBase::getPersonalStatus(string username) {
+	string message = "126";
+
+	// Num games
+	string numGamesQuery = "SELECT COUNT(*) AS `num_games` FROM `t_games_results` WHERE `username` = '" + username + "'";
+	sqlite3_stmt *numGamesStmt;
+	sqlite3_prepare_v2(db, numGamesQuery.c_str(), -1, &numGamesStmt, NULL);
+
+	if (sqlite3_step(numGamesStmt) == SQLITE_ROW) {
+		string numGames = std::string(reinterpret_cast<const char*>(sqlite3_column_text(numGamesStmt, 0)));
+
+		if (numGames != "0") {
+			message += string(string(4 - std::string(reinterpret_cast<const char*>(sqlite3_column_text(numGamesStmt, 0))).length(), '0') + std::string(reinterpret_cast<const char*>(sqlite3_column_text(numGamesStmt, 0))));
+		} else {
+			message += "0000";
+		}
+	}
+
+	// Num correct answers
+	string numCorrectAnswersQuery = "SELECT COUNT(*) AS `num_correct_answers` FROM `t_players_answers` WHERE `username` = '" + username + "' AND `is_correct`";
+	sqlite3_stmt *numCorrectAnswersStmt;
+	sqlite3_prepare_v2(db, numCorrectAnswersQuery.c_str(), -1, &numCorrectAnswersStmt, NULL);
+
+	if (sqlite3_step(numCorrectAnswersStmt) == SQLITE_ROW) {
+		string numCorrectAnswers = std::string(reinterpret_cast<const char*>(sqlite3_column_text(numCorrectAnswersStmt, 0)));
+
+		if (numCorrectAnswers != "0") {
+			message += string(string(6 - std::string(reinterpret_cast<const char*>(sqlite3_column_text(numCorrectAnswersStmt, 0))).length(), '0') + std::string(reinterpret_cast<const char*>(sqlite3_column_text(numCorrectAnswersStmt, 0))));
+		} else {
+			message += "000000";
+		}
+	}
+
+	// Num wrong answers
+	string numWrongAnswersQuery = "SELECT COUNT(*) AS `num_correct_answers` FROM `t_players_answers` WHERE `username` = '" + username + "' AND NOT `is_correct`";
+	sqlite3_stmt *numWrongAnswersStmt;
+	sqlite3_prepare_v2(db, numWrongAnswersQuery.c_str(), -1, &numWrongAnswersStmt, NULL);
+
+	if (sqlite3_step(numWrongAnswersStmt) == SQLITE_ROW) {
+		string numWrongAnswers = std::string(reinterpret_cast<const char*>(sqlite3_column_text(numCorrectAnswersStmt, 0)));
+
+		if (numWrongAnswers != "0") {
+			message += string(string(6 - std::string(reinterpret_cast<const char*>(sqlite3_column_text(numWrongAnswersStmt, 0))).length(), '0') + std::string(reinterpret_cast<const char*>(sqlite3_column_text(numWrongAnswersStmt, 0))));
+		} else {
+			message += "000000";
+		}
+	}
+
+	// Average answer time
+	string avgAnswerTimeQuery = "SELECT IFNULL(AVG(`answer_time`), 0) AS `average_time` FROM `t_players_answers` WHERE `username` = '" + username + "'";
+	sqlite3_stmt *avgAnswerTimeStmt;
+	sqlite3_prepare_v2(db, avgAnswerTimeQuery.c_str(), -1, &avgAnswerTimeStmt, NULL);
+
+	if (sqlite3_step(avgAnswerTimeStmt) == SQLITE_ROW) {
+		string avg = std::string(reinterpret_cast<const char*>(sqlite3_column_text(avgAnswerTimeStmt, 0)));
+
+		if (avg != "0") {
+			vector<string> tokens;
+			string token;
+			std::istringstream ss(avg);
+
+			// Spliting by '.' to tokens vector
+			while (std::getline(ss, token, '.')) {
+				tokens.push_back(token.substr(0, 2));
+			}
+
+			message += string(2 - tokens.at(0).length(), '0') + tokens.at(0);
+			message += string(2 - tokens.at(1).length(), '0') + tokens.at(1);
+		} else {
+			message += "0";
+		}
+	}
+
+	//message += "0550";
+	return message;
+}
