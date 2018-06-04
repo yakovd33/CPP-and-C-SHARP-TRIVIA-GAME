@@ -26,6 +26,10 @@ namespace Trivia_Client
         NetworkStream clientStream;
         Protocol protocol = new Protocol();
 
+        Timer timer1 = new Timer();
+        int opacity = 255;
+        Image original;
+
         public LogInScreen()
         {
             InitializeComponent();
@@ -44,6 +48,31 @@ namespace Trivia_Client
                 clientStream = client.GetStream();
             } catch (Exception e) {
                 Console.WriteLine(e);
+            }
+
+            Bitmap myBitmap = new Bitmap(logo.Image);
+            original = (Image)myBitmap.Clone();
+
+            timer1.Tick += tmrFadeOut_Tick;
+            timer1.Interval = 2;
+            timer1.Start();
+        }
+
+        private void tmrFadeOut_Tick (object sender, EventArgs e) {
+            Bitmap myBitmap = new Bitmap(logoCopy.Image);
+            Image img = (Image)myBitmap.Clone();
+
+            if (opacity > 0) {
+                using (Graphics g = Graphics.FromImage(img)) {
+                    Pen pen = new Pen(Color.FromArgb(opacity, logo.Parent.BackColor), img.Width);
+                    g.DrawLine(pen, -1, -1, img.Width, img.Height);
+                    g.Save();
+                }
+
+                logo.Image = img;
+                opacity -= 3;
+            } else {
+                timer1.Stop();
             }
         }
 

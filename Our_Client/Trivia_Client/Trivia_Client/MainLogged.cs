@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using System.Threading;
 
 namespace Trivia_Client
 {
@@ -33,6 +34,8 @@ namespace Trivia_Client
             this.clientStream = clientStream;
 
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
+
+            Sidebar();
         }
 
         private void exitBtn_MouseHover(object sender, EventArgs e)
@@ -77,6 +80,56 @@ namespace Trivia_Client
             byte[] buffer = new ASCIIEncoding().GetBytes("201");
             clientStream.Write(buffer, 0, 3);
             clientStream.Flush();
+        }
+
+        private void Sidebar () {
+            sidebarItem1.Click += new EventHandler(SidebarItemClick);
+            sidebarItem2.Click += new EventHandler(SidebarItemClick);
+            sidebarItem3.Click += new EventHandler(SidebarItemClick);
+            sidebarIcon1.Click += new EventHandler(SidebarItemClick);
+            sidebarIcon2.Click += new EventHandler(SidebarItemClick);
+            sidebarIcon3.Click += new EventHandler(SidebarItemClick);
+        }
+
+        private void SidebarItemClick(object sender, EventArgs e) {
+            Control ctrl = sender as Control;
+
+            Control[] sidebarItems = { sidebarItem1, sidebarItem2, sidebarItem3 };
+            for (int i = 0; i < sidebarItems.Length; i++){
+                sidebarItems[i].BackColor = System.Drawing.Color.FromArgb(1, 48, 56, 65);
+            }
+
+
+            int newY = sidebarActivePanelIndicator.Location.Y;
+            if (ctrl.Name == "sidebarItem1" || ctrl.Name == "sidebarIcon1") {
+                sidebarItem1.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = sidebarItem1.Location.Y;
+            } else if (ctrl.Name == "sidebarItem2" || ctrl.Name == "sidebarIcon2") {
+                sidebarItem2.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = sidebarItem2.Location.Y;
+            } else if (ctrl.Name == "sidebarItem3" || ctrl.Name == "sidebarIcon3") {
+                sidebarItem3.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = sidebarItem3.Location.Y;
+            }
+
+            Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
+            animate.Start(newY);
+        }
+
+        protected void animateSlidebarSelectionBar (object Y) {
+            bool isPos = (sidebarActivePanelIndicator.Location.Y < (int)Y);
+
+            for (int i = sidebarActivePanelIndicator.Location.Y; sidebarActivePanelIndicator.Location.Y != (int)Y; i++) {
+                if (isPos) {
+                    sidebarActivePanelIndicator.Invoke((MethodInvoker)delegate {
+                        sidebarActivePanelIndicator.Location = new System.Drawing.Point(sidebarActivePanelIndicator.Location.X, sidebarActivePanelIndicator.Location.Y + 1);
+                    });
+                } else {
+                    sidebarActivePanelIndicator.Invoke((MethodInvoker)delegate {
+                        sidebarActivePanelIndicator.Location = new System.Drawing.Point(sidebarActivePanelIndicator.Location.X, sidebarActivePanelIndicator.Location.Y - 1);
+                    });
+                }
+            }
         }
     }
 }

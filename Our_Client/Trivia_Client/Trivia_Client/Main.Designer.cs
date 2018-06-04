@@ -38,10 +38,12 @@
             this.logo = new System.Windows.Forms.PictureBox();
             this.exitBtn = new System.Windows.Forms.PictureBox();
             this.loginFeedbackLabel = new System.Windows.Forms.Label();
+            this.logoCopy = new System.Windows.Forms.PictureBox();
             this.usernameWrap.SuspendLayout();
             this.passwordWrap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).BeginInit();
             this.SuspendLayout();
             // 
             // usernameBox
@@ -165,6 +167,16 @@
             this.loginFeedbackLabel.Text = "label1";
             this.loginFeedbackLabel.Visible = false;
             // 
+            // logoCopy
+            // 
+            this.logoCopy.Image = global::Trivia_Client.Properties.Resources.logo;
+            this.logoCopy.Location = new System.Drawing.Point(377, 180);
+            this.logoCopy.Name = "logoCopy";
+            this.logoCopy.Size = new System.Drawing.Size(165, 46);
+            this.logoCopy.TabIndex = 8;
+            this.logoCopy.TabStop = false;
+            this.logoCopy.Visible = false;
+            // 
             // LogInScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +184,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(62)))), ((int)(((byte)(71)))));
             this.ClientSize = new System.Drawing.Size(919, 596);
             this.ControlBox = false;
+            this.Controls.Add(this.logoCopy);
             this.Controls.Add(this.loginFeedbackLabel);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.exitBtn);
@@ -192,6 +205,7 @@
             this.passwordWrap.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,6 +222,7 @@
         private System.Windows.Forms.PictureBox exitBtn;
         private System.Windows.Forms.PictureBox logo;
         private System.Windows.Forms.Label loginFeedbackLabel;
+        private System.Windows.Forms.PictureBox logoCopy;
     }
 }
 
