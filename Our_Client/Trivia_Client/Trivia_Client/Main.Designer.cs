@@ -35,15 +35,17 @@
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.loginBtn = new System.Windows.Forms.Button();
             this.SignupBtn = new System.Windows.Forms.Button();
-            this.logo = new System.Windows.Forms.PictureBox();
-            this.exitBtn = new System.Windows.Forms.PictureBox();
             this.loginFeedbackLabel = new System.Windows.Forms.Label();
             this.logoCopy = new System.Windows.Forms.PictureBox();
+            this.logo = new System.Windows.Forms.PictureBox();
+            this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.showPassBtn = new System.Windows.Forms.PictureBox();
             this.usernameWrap.SuspendLayout();
             this.passwordWrap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).BeginInit();
             this.SuspendLayout();
             // 
             // usernameBox
@@ -73,6 +75,7 @@
             // passwordWrap
             // 
             this.passwordWrap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.passwordWrap.Controls.Add(this.showPassBtn);
             this.passwordWrap.Controls.Add(this.passwordBox);
             this.passwordWrap.Location = new System.Drawing.Point(259, 310);
             this.passwordWrap.Name = "passwordWrap";
@@ -132,6 +135,27 @@
             this.SignupBtn.UseVisualStyleBackColor = false;
             this.SignupBtn.Click += new System.EventHandler(this.SignupBtn_Click);
             // 
+            // loginFeedbackLabel
+            // 
+            this.loginFeedbackLabel.AutoSize = true;
+            this.loginFeedbackLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.loginFeedbackLabel.Location = new System.Drawing.Point(257, 414);
+            this.loginFeedbackLabel.Name = "loginFeedbackLabel";
+            this.loginFeedbackLabel.Size = new System.Drawing.Size(35, 13);
+            this.loginFeedbackLabel.TabIndex = 7;
+            this.loginFeedbackLabel.Text = "label1";
+            this.loginFeedbackLabel.Visible = false;
+            // 
+            // logoCopy
+            // 
+            this.logoCopy.Image = global::Trivia_Client.Properties.Resources.logo;
+            this.logoCopy.Location = new System.Drawing.Point(377, 180);
+            this.logoCopy.Name = "logoCopy";
+            this.logoCopy.Size = new System.Drawing.Size(165, 46);
+            this.logoCopy.TabIndex = 8;
+            this.logoCopy.TabStop = false;
+            this.logoCopy.Visible = false;
+            // 
             // logo
             // 
             this.logo.Image = global::Trivia_Client.Properties.Resources.logo;
@@ -156,26 +180,18 @@
             this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
             this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
             // 
-            // loginFeedbackLabel
+            // showPassBtn
             // 
-            this.loginFeedbackLabel.AutoSize = true;
-            this.loginFeedbackLabel.ForeColor = System.Drawing.Color.Maroon;
-            this.loginFeedbackLabel.Location = new System.Drawing.Point(257, 414);
-            this.loginFeedbackLabel.Name = "loginFeedbackLabel";
-            this.loginFeedbackLabel.Size = new System.Drawing.Size(35, 13);
-            this.loginFeedbackLabel.TabIndex = 7;
-            this.loginFeedbackLabel.Text = "label1";
-            this.loginFeedbackLabel.Visible = false;
-            // 
-            // logoCopy
-            // 
-            this.logoCopy.Image = global::Trivia_Client.Properties.Resources.logo;
-            this.logoCopy.Location = new System.Drawing.Point(377, 180);
-            this.logoCopy.Name = "logoCopy";
-            this.logoCopy.Size = new System.Drawing.Size(165, 46);
-            this.logoCopy.TabIndex = 8;
-            this.logoCopy.TabStop = false;
-            this.logoCopy.Visible = false;
+            this.showPassBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.showPassBtn.Image = global::Trivia_Client.Properties.Resources.eye;
+            this.showPassBtn.Location = new System.Drawing.Point(387, 7);
+            this.showPassBtn.Name = "showPassBtn";
+            this.showPassBtn.Size = new System.Drawing.Size(22, 22);
+            this.showPassBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.showPassBtn.TabIndex = 9;
+            this.showPassBtn.TabStop = false;
+            this.showPassBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseDown);
+            this.showPassBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseUp);
             // 
             // LogInScreen
             // 
@@ -203,9 +219,10 @@
             this.usernameWrap.PerformLayout();
             this.passwordWrap.ResumeLayout(false);
             this.passwordWrap.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,6 +240,7 @@
         private System.Windows.Forms.PictureBox logo;
         private System.Windows.Forms.Label loginFeedbackLabel;
         private System.Windows.Forms.PictureBox logoCopy;
+        private System.Windows.Forms.PictureBox showPassBtn;
     }
 }
 

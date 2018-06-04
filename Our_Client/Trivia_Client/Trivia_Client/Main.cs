@@ -199,5 +199,15 @@ namespace Trivia_Client
             this.Show();
             //this.Close();
         }
+
+        private void showPassBtn_MouseDown(object sender, MouseEventArgs e) {
+            passwordBox.PasswordChar = '\0';
+        }
+
+        private void showPassBtn_MouseUp(object sender, MouseEventArgs e) {
+            if (passwordBox.Text != "Password") {
+                passwordBox.PasswordChar = '•';
+            }
+        }
     }
 }
