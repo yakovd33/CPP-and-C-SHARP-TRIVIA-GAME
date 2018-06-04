@@ -4,6 +4,11 @@
 #include <string>
 #include "Header.h"
 
+//#include "stdafx.h"
+
+#include "easendmailobj.tlh"
+using namespace EASendMailObjLib;
+
 // using static const instead of macros 
 static const unsigned short PORT = 8820;
 static const unsigned int IFACE = 0;
@@ -183,8 +188,69 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		values.insert(make_pair("answer_time", Helper::getStringPartFromSocket(client_socket, 20).c_str()));
 	}
 
+	if (msgCode == "666")//forgot password
+	{
+		int emailLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		values.insert(make_pair("email", Helper::getStringPartFromSocket(client_socket, emailLength).c_str()));
+	}
 	msg = new RecievedMessage(client_socket, msgCode, values);
 	return msg;
+}
+
+void TriviaServer::handleForgot_pass(RecievedMessage * msg)
+{
+	/*if (!exit) {
+		sendMessageToSocket(msg->getSock(), "667");
+	}
+	*/
+	::CoInitialize(NULL);
+
+	IMailPtr oSmtp = NULL;
+	oSmtp.CreateInstance("EASendMailObj.Mail");
+	oSmtp->LicenseCode = ("TryIt");
+	
+	cout << " ***** " << msg->getMessageCode() << " ****** " << endl;
+	// user gmail email address
+	oSmtp->FromAddr = ("lolpirt2@gmail.com");//meeeeeeee
+	oSmtp->AddRecipientEx(_T(msg->getValues().find("email")->second.c_str()), 0);//meeeee
+													//email subject
+	oSmtp->Subject = ("Trivia++ notification: pass reset");
+	// Set email body
+	oSmtp->BodyText = ("this is a test email sent from Visual C++ project with Gmail");
+	// Gmail SMTP server address
+	oSmtp->ServerAddr = ("smtp.gmail.com");
+
+	// If you want to use direct SSL 465 port,
+	// Please add this line, otherwise TLS will be used.
+	// oSmtp->ServerPort = 465;
+
+	// Set 25 or 587 SMTP port
+	oSmtp->ServerPort = 587;
+
+	// detect SSL/TLS automatically
+	oSmtp->SSL_init();
+
+	// Gmail user authentication should use your
+	// Gmail email address as the user name.
+	// For example: your email is "gmailid@gmail.com", then the user should be "gmailid@gmail.com"
+	oSmtp->UserName = ("lolpirt2@gmail.com");
+	oSmtp->Password = ("lolpirt.3692");
+
+	cout << ("Start to send email via gmail account ...\r\n") << endl;
+
+	if (oSmtp->SendMail() == 0)
+	{
+		cout << "email was sent successfully!\r\n"<< endl;
+	}
+	else
+	{
+		cout << "failed to send email with the following error: %s\r\n" <<
+		(const TCHAR*)oSmtp->GetLastErrDescription()<< endl;
+	}
+
+	if (oSmtp != NULL)
+		oSmtp.Release();
+	//system("PAUSE"); 
 }
 
 void TriviaServer::sendMessageToSocket(SOCKET sock, string msg) {
@@ -476,7 +542,7 @@ void TriviaServer::handleRecievedMessages()
 	SOCKET clientSock = 0;
 	string userName;
 
-	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299" };
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666" };
 
 	while (true) {
 		try {
@@ -550,6 +616,11 @@ void TriviaServer::handleRecievedMessages()
 
 					if (msgCode == "225") {
 						handleGetPersonalStatus(currMessage);
+					}
+
+					if (msgCode == "666")
+					{
+						handleForgot_pass(currMessage);
 					}
 				} else if (msgCode != "") {
 					// Unknown message code

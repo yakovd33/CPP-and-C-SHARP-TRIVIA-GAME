@@ -90,4 +90,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="easendmailobj.tlh">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="easendmailobj.tli">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
 using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
 
 namespace Trivia_Client
 {
@@ -208,6 +208,14 @@ namespace Trivia_Client
             if (passwordBox.Text != "Password") {
                 passwordBox.PasswordChar = '•';
             }
+        }
+
+        private void pass_reset_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Pass_Reset_Screen PRS = new Pass_Reset_Screen(client, serverEndPoint, clientStream);
+            PRS.ShowDialog();
+            this.Show();
         }
     }
 }

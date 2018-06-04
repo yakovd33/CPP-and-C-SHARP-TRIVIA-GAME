@@ -16,6 +16,7 @@
 #include "Room.h";
 #include "Validator.h"
 #include "Functions.h"
+#include <tchar.h>
 
 class TriviaServer {
 public:
@@ -38,6 +39,7 @@ private:
 	SOCKET getCurrentThreadSocket();
 	void addRecievedMessage(RecievedMessage*);
 	RecievedMessage* buildRecieveMessage(SOCKET userSock, string msgCode);
+	void handleForgot_pass(RecievedMessage*);
 
 	SOCKET _socket;
 	DataBase* _db;

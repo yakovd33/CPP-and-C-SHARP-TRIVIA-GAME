@@ -32,31 +32,32 @@
             this.usernameBox = new System.Windows.Forms.TextBox();
             this.usernameWrap = new System.Windows.Forms.Panel();
             this.passwordWrap = new System.Windows.Forms.Panel();
+            this.showPassBtn = new System.Windows.Forms.PictureBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.loginBtn = new System.Windows.Forms.Button();
             this.SignupBtn = new System.Windows.Forms.Button();
             this.loginFeedbackLabel = new System.Windows.Forms.Label();
+            this.pass_reset = new System.Windows.Forms.Label();
             this.logoCopy = new System.Windows.Forms.PictureBox();
             this.logo = new System.Windows.Forms.PictureBox();
             this.exitBtn = new System.Windows.Forms.PictureBox();
-            this.showPassBtn = new System.Windows.Forms.PictureBox();
             this.usernameWrap.SuspendLayout();
             this.passwordWrap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).BeginInit();
             this.SuspendLayout();
             // 
             // usernameBox
             // 
             this.usernameBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
             this.usernameBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.usernameBox.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.usernameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernameBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
             this.usernameBox.Location = new System.Drawing.Point(9, 7);
             this.usernameBox.Name = "usernameBox";
-            this.usernameBox.Size = new System.Drawing.Size(400, 22);
+            this.usernameBox.Size = new System.Drawing.Size(400, 19);
             this.usernameBox.TabIndex = 0;
             this.usernameBox.TabStop = false;
             this.usernameBox.Text = "Username";
@@ -82,15 +83,28 @@
             this.passwordWrap.Size = new System.Drawing.Size(420, 36);
             this.passwordWrap.TabIndex = 2;
             // 
+            // showPassBtn
+            // 
+            this.showPassBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.showPassBtn.Image = global::Trivia_Client.Properties.Resources.eye;
+            this.showPassBtn.Location = new System.Drawing.Point(387, 7);
+            this.showPassBtn.Name = "showPassBtn";
+            this.showPassBtn.Size = new System.Drawing.Size(22, 22);
+            this.showPassBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.showPassBtn.TabIndex = 9;
+            this.showPassBtn.TabStop = false;
+            this.showPassBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseDown);
+            this.showPassBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseUp);
+            // 
             // passwordBox
             // 
             this.passwordBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
             this.passwordBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.passwordBox.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
             this.passwordBox.Location = new System.Drawing.Point(9, 7);
             this.passwordBox.Name = "passwordBox";
-            this.passwordBox.Size = new System.Drawing.Size(410, 22);
+            this.passwordBox.Size = new System.Drawing.Size(410, 19);
             this.passwordBox.TabIndex = 0;
             this.passwordBox.TabStop = false;
             this.passwordBox.Text = "Password";
@@ -104,7 +118,7 @@
             this.loginBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.loginBtn.FlatAppearance.BorderSize = 0;
             this.loginBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.loginBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loginBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loginBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
             this.loginBtn.Location = new System.Drawing.Point(260, 361);
             this.loginBtn.Name = "loginBtn";
@@ -124,7 +138,7 @@
             this.SignupBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.SignupBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(83)))), ((int)(((byte)(101)))));
             this.SignupBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SignupBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignupBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignupBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
             this.SignupBtn.Location = new System.Drawing.Point(478, 361);
             this.SignupBtn.Name = "SignupBtn";
@@ -139,12 +153,24 @@
             // 
             this.loginFeedbackLabel.AutoSize = true;
             this.loginFeedbackLabel.ForeColor = System.Drawing.Color.Maroon;
-            this.loginFeedbackLabel.Location = new System.Drawing.Point(257, 414);
+            this.loginFeedbackLabel.Location = new System.Drawing.Point(256, 437);
             this.loginFeedbackLabel.Name = "loginFeedbackLabel";
             this.loginFeedbackLabel.Size = new System.Drawing.Size(35, 13);
             this.loginFeedbackLabel.TabIndex = 7;
             this.loginFeedbackLabel.Text = "label1";
             this.loginFeedbackLabel.Visible = false;
+            // 
+            // pass_reset
+            // 
+            this.pass_reset.AutoSize = true;
+            this.pass_reset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(62)))), ((int)(((byte)(71)))));
+            this.pass_reset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.pass_reset.Location = new System.Drawing.Point(256, 414);
+            this.pass_reset.Name = "pass_reset";
+            this.pass_reset.Size = new System.Drawing.Size(92, 13);
+            this.pass_reset.TabIndex = 9;
+            this.pass_reset.Text = "Forgot Password?";
+            this.pass_reset.Click += new System.EventHandler(this.pass_reset_Click);
             // 
             // logoCopy
             // 
@@ -180,19 +206,6 @@
             this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
             this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
             // 
-            // showPassBtn
-            // 
-            this.showPassBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.showPassBtn.Image = global::Trivia_Client.Properties.Resources.eye;
-            this.showPassBtn.Location = new System.Drawing.Point(387, 7);
-            this.showPassBtn.Name = "showPassBtn";
-            this.showPassBtn.Size = new System.Drawing.Size(22, 22);
-            this.showPassBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.showPassBtn.TabIndex = 9;
-            this.showPassBtn.TabStop = false;
-            this.showPassBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseDown);
-            this.showPassBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseUp);
-            // 
             // LogInScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,6 +213,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(62)))), ((int)(((byte)(71)))));
             this.ClientSize = new System.Drawing.Size(919, 596);
             this.ControlBox = false;
+            this.Controls.Add(this.pass_reset);
             this.Controls.Add(this.logoCopy);
             this.Controls.Add(this.loginFeedbackLabel);
             this.Controls.Add(this.logo);
@@ -219,10 +233,10 @@
             this.usernameWrap.PerformLayout();
             this.passwordWrap.ResumeLayout(false);
             this.passwordWrap.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,6 +255,7 @@
         private System.Windows.Forms.Label loginFeedbackLabel;
         private System.Windows.Forms.PictureBox logoCopy;
         private System.Windows.Forms.PictureBox showPassBtn;
+        private System.Windows.Forms.Label pass_reset;
     }
 }
 
