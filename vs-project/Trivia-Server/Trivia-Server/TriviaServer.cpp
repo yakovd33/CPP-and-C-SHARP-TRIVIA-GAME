@@ -495,66 +495,68 @@ void TriviaServer::handleRecievedMessages()
 			lck.unlock();
 
 			// Extract the data from the tuple.
-			clientSock = currMessage->getSock();
-			msgCode = currMessage->getMessageCode();
+			if (currMessage != NULL) {
+				clientSock = currMessage->getSock();
+				msgCode = currMessage->getMessageCode();
 
-			if (std::find(std::begin(messageCodes), std::end(messageCodes), msgCode) != std::end(messageCodes)) { // Checks if message code exists in protocol
-				if (msgCode == "200") {
-					handleSignin(currMessage);
-				}
+				if (std::find(std::begin(messageCodes), std::end(messageCodes), msgCode) != std::end(messageCodes)) { // Checks if message code exists in protocol
+					if (msgCode == "200") {
+						handleSignin(currMessage);
+					}
 
-				if (msgCode == "201") {
-					handleSignout(currMessage);
-				}
+					if (msgCode == "201") {
+						handleSignout(currMessage);
+					}
 
-				if (msgCode == "203") {
-					handleSignup(currMessage);
-				}
+					if (msgCode == "203") {
+						handleSignup(currMessage);
+					}
 
-				if (msgCode == "205") {
-					handleGetRooms(currMessage);
-				}
+					if (msgCode == "205") {
+						handleGetRooms(currMessage);
+					}
 
-				if (msgCode == "209") {
-					handleJoinRoom(currMessage);
-				}
+					if (msgCode == "209") {
+						handleJoinRoom(currMessage);
+					}
 
-				if (msgCode == "207") {
-					handleGetUsersInRoom(currMessage);
-				}
+					if (msgCode == "207") {
+						handleGetUsersInRoom(currMessage);
+					}
 
-				if (msgCode == "211") {
-					handleLeaveRoom(currMessage);
-				}
+					if (msgCode == "211") {
+						handleLeaveRoom(currMessage);
+					}
 
-				if (msgCode == "213") {
-					handleCreateRoom(currMessage);
-				}
+					if (msgCode == "213") {
+						handleCreateRoom(currMessage);
+					}
 
-				if (msgCode == "215") {
-					handleCloseRoom(currMessage);
-				}
+					if (msgCode == "215") {
+						handleCloseRoom(currMessage);
+					}
 
-				if (msgCode == "217") {
-					handleStartGame(currMessage);
-				}
+					if (msgCode == "217") {
+						handleStartGame(currMessage);
+					}
 
-				if (msgCode == "219") {
-					handlePlayerAnswer(currMessage);
-				}
+					if (msgCode == "219") {
+						handlePlayerAnswer(currMessage);
+					}
 
-				if (msgCode == "223") {
-					handleGetBestScores(currMessage);
-				}
+					if (msgCode == "223") {
+						handleGetBestScores(currMessage);
+					}
 
-				if (msgCode == "225") {
-					handleGetPersonalStatus(currMessage);
+					if (msgCode == "225") {
+						handleGetPersonalStatus(currMessage);
+					}
+				} else if (msgCode != "") {
+					// Unknown message code
+					cout << "unknown message code: " << msgCode << endl;
+					msgCode = "";
+					//handleSignout(currMessage);
 				}
-			} else if (msgCode != "") {
-				// Unknown message code
-				cout << "unknown message code: " << msgCode << endl;
-				msgCode = "";
-				//handleSignout(currMessage);
 			}
 
 			delete currMessage;
