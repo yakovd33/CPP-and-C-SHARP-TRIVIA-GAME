@@ -30,30 +30,33 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainLogged));
             this.panel2 = new System.Windows.Forms.Panel();
-            this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.sidebarActivePanelIndicator = new System.Windows.Forms.Panel();
             this.sidebar = new System.Windows.Forms.Panel();
             this.sidebarItem3 = new System.Windows.Forms.Panel();
-            this.sidebarIcon3 = new System.Windows.Forms.PictureBox();
             this.sidebarItem2 = new System.Windows.Forms.Panel();
-            this.sidebarIcon2 = new System.Windows.Forms.PictureBox();
             this.sidebarItem1 = new System.Windows.Forms.Panel();
-            this.sidebarActivePanelIndicator = new System.Windows.Forms.Panel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.sidebarIcon3 = new System.Windows.Forms.PictureBox();
+            this.sidebarIcon2 = new System.Windows.Forms.PictureBox();
             this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             this.sidebar.SuspendLayout();
             this.sidebarItem3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon3)).BeginInit();
             this.sidebarItem2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon2)).BeginInit();
             this.sidebarItem1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.pictureBox3);
             this.panel2.Controls.Add(this.sidebarActivePanelIndicator);
             this.panel2.Controls.Add(this.exitBtn);
             this.panel2.Controls.Add(this.sidebar);
@@ -63,20 +66,13 @@
             this.panel2.Size = new System.Drawing.Size(919, 596);
             this.panel2.TabIndex = 8;
             // 
-            // exitBtn
+            // sidebarActivePanelIndicator
             // 
-            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
-            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitBtn.Location = new System.Drawing.Point(877, 12);
-            this.exitBtn.Name = "exitBtn";
-            this.exitBtn.Size = new System.Drawing.Size(30, 30);
-            this.exitBtn.TabIndex = 6;
-            this.exitBtn.TabStop = false;
-            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
-            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
+            this.sidebarActivePanelIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(210)))), ((int)(((byte)(139)))));
+            this.sidebarActivePanelIndicator.Location = new System.Drawing.Point(0, 79);
+            this.sidebarActivePanelIndicator.Name = "sidebarActivePanelIndicator";
+            this.sidebarActivePanelIndicator.Size = new System.Drawing.Size(5, 57);
+            this.sidebarActivePanelIndicator.TabIndex = 7;
             // 
             // sidebar
             // 
@@ -100,16 +96,6 @@
             this.sidebarItem3.Size = new System.Drawing.Size(65, 57);
             this.sidebarItem3.TabIndex = 9;
             // 
-            // sidebarIcon3
-            // 
-            this.sidebarIcon3.Image = global::Trivia_Client.Properties.Resources.gear;
-            this.sidebarIcon3.Location = new System.Drawing.Point(24, 15);
-            this.sidebarIcon3.Name = "sidebarIcon3";
-            this.sidebarIcon3.Size = new System.Drawing.Size(25, 25);
-            this.sidebarIcon3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.sidebarIcon3.TabIndex = 7;
-            this.sidebarIcon3.TabStop = false;
-            // 
             // sidebarItem2
             // 
             this.sidebarItem2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
@@ -119,16 +105,6 @@
             this.sidebarItem2.Name = "sidebarItem2";
             this.sidebarItem2.Size = new System.Drawing.Size(65, 57);
             this.sidebarItem2.TabIndex = 8;
-            // 
-            // sidebarIcon2
-            // 
-            this.sidebarIcon2.Image = global::Trivia_Client.Properties.Resources.gear;
-            this.sidebarIcon2.Location = new System.Drawing.Point(24, 14);
-            this.sidebarIcon2.Name = "sidebarIcon2";
-            this.sidebarIcon2.Size = new System.Drawing.Size(25, 25);
-            this.sidebarIcon2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.sidebarIcon2.TabIndex = 7;
-            this.sidebarIcon2.TabStop = false;
             // 
             // sidebarItem1
             // 
@@ -140,13 +116,50 @@
             this.sidebarItem1.Size = new System.Drawing.Size(65, 57);
             this.sidebarItem1.TabIndex = 2;
             // 
-            // sidebarActivePanelIndicator
+            // pictureBox3
             // 
-            this.sidebarActivePanelIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(210)))), ((int)(((byte)(139)))));
-            this.sidebarActivePanelIndicator.Location = new System.Drawing.Point(0, 79);
-            this.sidebarActivePanelIndicator.Name = "sidebarActivePanelIndicator";
-            this.sidebarActivePanelIndicator.Size = new System.Drawing.Size(5, 57);
-            this.sidebarActivePanelIndicator.TabIndex = 7;
+            this.pictureBox3.Image = global::Trivia_Client.Properties.Resources.magshimim;
+            this.pictureBox3.Location = new System.Drawing.Point(784, 547);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(114, 29);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 8;
+            this.pictureBox3.TabStop = false;
+            // 
+            // exitBtn
+            // 
+            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
+            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitBtn.Location = new System.Drawing.Point(877, 12);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(30, 30);
+            this.exitBtn.TabIndex = 6;
+            this.exitBtn.TabStop = false;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
+            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
+            // 
+            // sidebarIcon3
+            // 
+            this.sidebarIcon3.Image = global::Trivia_Client.Properties.Resources.gear;
+            this.sidebarIcon3.Location = new System.Drawing.Point(24, 15);
+            this.sidebarIcon3.Name = "sidebarIcon3";
+            this.sidebarIcon3.Size = new System.Drawing.Size(25, 25);
+            this.sidebarIcon3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sidebarIcon3.TabIndex = 7;
+            this.sidebarIcon3.TabStop = false;
+            // 
+            // sidebarIcon2
+            // 
+            this.sidebarIcon2.Image = global::Trivia_Client.Properties.Resources.gear;
+            this.sidebarIcon2.Location = new System.Drawing.Point(24, 14);
+            this.sidebarIcon2.Name = "sidebarIcon2";
+            this.sidebarIcon2.Size = new System.Drawing.Size(25, 25);
+            this.sidebarIcon2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sidebarIcon2.TabIndex = 7;
+            this.sidebarIcon2.TabStop = false;
             // 
             // sidebarIcon1
             // 
@@ -187,13 +200,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainLogged";
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             this.sidebar.ResumeLayout(false);
             this.sidebarItem3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon3)).EndInit();
             this.sidebarItem2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon2)).EndInit();
             this.sidebarItem1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -212,5 +226,6 @@
         private System.Windows.Forms.Panel sidebarItem2;
         private System.Windows.Forms.PictureBox sidebarIcon2;
         private System.Windows.Forms.Panel sidebarActivePanelIndicator;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }

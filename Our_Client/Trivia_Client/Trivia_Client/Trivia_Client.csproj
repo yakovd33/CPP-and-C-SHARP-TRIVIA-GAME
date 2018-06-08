@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Pictures [Resources]\magshimim.png" />
     <None Include="Pictures [Resources]\eye.png" />
     <None Include="Pictures [Resources]\gear.png" />
     <None Include="Pictures [Resources]\io.png" />

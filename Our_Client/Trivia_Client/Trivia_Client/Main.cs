@@ -56,6 +56,10 @@ namespace Trivia_Client
             timer1.Tick += tmrFadeOut_Tick;
             timer1.Interval = 2;
             timer1.Start();
+
+            usernameBox.Text = "assaf";
+            passwordBox.Text = "123456";
+            //login();
         }
 
         private void tmrFadeOut_Tick (object sender, EventArgs e) {

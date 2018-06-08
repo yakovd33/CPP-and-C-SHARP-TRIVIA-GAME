@@ -48,8 +48,8 @@ namespace Trivia_Client
             exitBtn.BackgroundImage = Trivia_Client.Properties.Resources.exitButton;
         }
 
-        private void exitBtn_Click(object sender, EventArgs e)
-        {
+        private void exitBtn_Click(object sender, EventArgs e) {
+            sendMessageToServer("299");
             Application.Exit();
         }
 
@@ -130,6 +130,20 @@ namespace Trivia_Client
                     });
                 }
             }
+        }
+
+        private void sendMessageToServer (string message) {
+            byte[] buffer = new ASCIIEncoding().GetBytes(message);
+            clientStream.Write(buffer, 0, message.Length);
+            clientStream.Flush();
+        }
+
+        private string getResultFromServer (int bytes) {
+            byte[] bufferIn = new byte[bytes];
+            int bytesRead = clientStream.Read(bufferIn, 0, bytes);
+            string result = new ASCIIEncoding().GetString(bufferIn);
+
+            return result;
         }
     }
 }
