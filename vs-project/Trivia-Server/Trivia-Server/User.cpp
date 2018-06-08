@@ -50,7 +50,7 @@ int User::closeRoom() {
 }
 
 bool User::leaveGame() {
-	return false;
+	return this->_currGame->leaveGame(this);
 }
 
 void User::clearRoom() {

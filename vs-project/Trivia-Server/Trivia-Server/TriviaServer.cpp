@@ -393,8 +393,8 @@ bool TriviaServer::handleLeaveRoom(RecievedMessage * msg) {
 			// Room not found
 		}
 	}
-	
-	return false;
+
+return false;
 }
 
 bool TriviaServer::handleCreateRoom(RecievedMessage * msg) {
@@ -484,6 +484,17 @@ void TriviaServer::handlePlayerAnswer(RecievedMessage * msg) {
 
 				delete game;
 			}
+		}
+	}
+}
+
+void TriviaServer::handleLeaveGame(RecievedMessage * msg) {
+	User* user = getUserBySocket(msg->getSock());
+	Game* game = user->getGame();
+
+	if (user && game) {
+		if (user->leaveGame()) {
+			delete game;
 		}
 	}
 }
@@ -608,6 +619,11 @@ void TriviaServer::handleRecievedMessages()
 
 					if (msgCode == "219") {
 						handlePlayerAnswer(currMessage);
+					}
+
+					if (msgCode == "222") {
+						cout << "leaving room" << endl;
+						handleLeaveGame(currMessage);
 					}
 
 					if (msgCode == "223") {

@@ -103,7 +103,10 @@ bool Game::handleAnswerFromUser(User * user, int answerNo, int time) {
 }
 
 bool Game::leaveGame(User * user) {
-	return false;
+	this->_players.erase(std::remove(this->_players.begin(), this->_players.end(), user), this->_players.end());
+	this->handleNextTurn();
+
+	return true; // TODO check if game has ended
 }
 
 int Game::getID() {

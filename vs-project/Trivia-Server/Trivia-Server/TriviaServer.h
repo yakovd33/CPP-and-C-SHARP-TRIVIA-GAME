@@ -72,6 +72,7 @@ private:
 
 	void handleStartGame(RecievedMessage * msg);
 	void handlePlayerAnswer(RecievedMessage * msg);
+	void handleLeaveGame(RecievedMessage * msg);
 
 	void handleGetBestScores(RecievedMessage * msg);
 	void handleGetPersonalStatus(RecievedMessage * msg);
