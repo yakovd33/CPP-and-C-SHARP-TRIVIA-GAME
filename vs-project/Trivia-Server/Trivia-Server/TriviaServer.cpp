@@ -266,7 +266,6 @@ User* TriviaServer::handleSignin(RecievedMessage * msg) {
 				// Successful Login
 				_connectedUsers.insert(make_pair(msg->getSock(), new User(msg->getValues().find("username")->second, msg->getSock())));
 				sendMessageToSocket(msg->getSock(), "1020");
-				sendMessageToSocket(msg->getSock(), "1893142313841838912");
 			} else {
 				sendMessageToSocket(msg->getSock(), "1022"); // User is already connected
 			}
