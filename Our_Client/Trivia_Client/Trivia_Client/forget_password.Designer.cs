@@ -28,16 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pass_Reset_Screen));
             this.emailBox = new System.Windows.Forms.TextBox();
             this.usernameWrap = new System.Windows.Forms.Panel();
             this.loginBtn = new System.Windows.Forms.Button();
             this.logo = new System.Windows.Forms.PictureBox();
-            this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.exitPanel = new System.Windows.Forms.PictureBox();
             this.logoCopy = new System.Windows.Forms.PictureBox();
+            this.exitBtn = new System.Windows.Forms.PictureBox();
             this.usernameWrap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             this.SuspendLayout();
             // 
             // emailBox
@@ -89,19 +92,19 @@
             this.logo.TabIndex = 6;
             this.logo.TabStop = false;
             // 
-            // exitBtn
+            // exitPanel
             // 
-            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitBtn.Location = new System.Drawing.Point(877, 12);
-            this.exitBtn.Name = "exitBtn";
-            this.exitBtn.Size = new System.Drawing.Size(30, 30);
-            this.exitBtn.TabIndex = 5;
-            this.exitBtn.TabStop = false;
-            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
-            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
+            this.exitPanel.BackColor = System.Drawing.Color.Transparent;
+            this.exitPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exitPanel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitPanel.Location = new System.Drawing.Point(877, 12);
+            this.exitPanel.Name = "exitPanel";
+            this.exitPanel.Size = new System.Drawing.Size(30, 30);
+            this.exitPanel.TabIndex = 5;
+            this.exitPanel.TabStop = false;
+            this.exitPanel.Click += new System.EventHandler(this.exitBtn_Click);
+            this.exitPanel.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
+            this.exitPanel.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
             // 
             // logoCopy
             // 
@@ -113,6 +116,19 @@
             this.logoCopy.TabStop = false;
             this.logoCopy.Visible = false;
             // 
+            // exitBtn
+            // 
+            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
+            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitBtn.Location = new System.Drawing.Point(877, 12);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(30, 30);
+            this.exitBtn.TabIndex = 9;
+            this.exitBtn.TabStop = false;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            // 
             // Pass_Reset_Screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -120,9 +136,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(62)))), ((int)(((byte)(71)))));
             this.ClientSize = new System.Drawing.Size(919, 596);
             this.ControlBox = false;
+            this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.logoCopy);
             this.Controls.Add(this.logo);
-            this.Controls.Add(this.exitBtn);
+            this.Controls.Add(this.exitPanel);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.usernameWrap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -133,8 +150,9 @@
             this.usernameWrap.ResumeLayout(false);
             this.usernameWrap.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -144,9 +162,10 @@
         private System.Windows.Forms.TextBox emailBox;
         private System.Windows.Forms.Panel usernameWrap;
         private System.Windows.Forms.Button loginBtn;
-        private System.Windows.Forms.PictureBox exitBtn;
+        private System.Windows.Forms.PictureBox exitPanel;
         private System.Windows.Forms.PictureBox logo;
         private System.Windows.Forms.PictureBox logoCopy;
+        private System.Windows.Forms.PictureBox exitBtn;
     }
 }
 

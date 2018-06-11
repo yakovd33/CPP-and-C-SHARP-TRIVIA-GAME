@@ -62,12 +62,12 @@ namespace Trivia_Client
 
         private void exitBtn_MouseHover(object sender, EventArgs e)
         {
-            exitBtn.BackgroundImage = Trivia_Client.Properties.Resources.exitButtonHover;
+            exitPanel.BackgroundImage = Trivia_Client.Properties.Resources.exitButtonHover;
         }
 
         private void exitBtn_MouseLeave(object sender, EventArgs e)
         {
-            exitBtn.BackgroundImage = Trivia_Client.Properties.Resources.exitButton;
+            exitPanel.BackgroundImage = Trivia_Client.Properties.Resources.exitButton;
         }
 
         private void exitBtn_Click(object sender, EventArgs e)
@@ -125,6 +125,5 @@ namespace Trivia_Client
             //this.Hide();
             //this.Show();
         }
-        
     }
 }

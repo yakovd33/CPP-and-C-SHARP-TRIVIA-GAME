@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Pictures [Resources]\createRoom.png" />
     <None Include="Pictures [Resources]\pp.jpg" />
     <None Include="Pictures [Resources]\online.png" />
     <None Include="Pictures [Resources]\magshimim.png" />

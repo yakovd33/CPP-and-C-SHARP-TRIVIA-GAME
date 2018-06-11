@@ -37,6 +37,12 @@ namespace Trivia_Client
 
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
 
+            roomNameWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, roomNameWrap.Width, roomNameWrap.Height, 5, 5));
+            numPlayersWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, numPlayersWrap.Width, numPlayersWrap.Height, 5, 5));
+            numQuestWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, numQuestWrap.Width, numQuestWrap.Height, 5, 5));
+            questionsTimeWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, questionsTimeWrap.Width, questionsTimeWrap.Height, 5, 5));
+            createRoomBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, createRoomBtn.Width, createRoomBtn.Height, 5, 5));
+
             mainProfilePicture.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, mainProfilePicture.Width, mainProfilePicture.Height, 49, 49));
             Sidebar();
 
@@ -70,7 +76,7 @@ namespace Trivia_Client
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            if (e.Y <= 50)
+            if (e.Y <= 50 && e.X >= 63)
             {
                 Capture = false;
                 SendMessage(Handle, 0x00A1, 2, 0);
@@ -95,17 +101,23 @@ namespace Trivia_Client
         private void Sidebar()
         {
             sidebarItem1.Click += new EventHandler(SidebarItemClick);
-            sidebarItem2.Click += new EventHandler(SidebarItemClick);
+            createRoomItem.Click += new EventHandler(SidebarItemClick);
+            createRoomIcon.Click += new EventHandler(SidebarItemClick);
+            creRoomPanel.Hide();
+            createRoomItem.Enter += new EventHandler(createRoomItem_Enter);
+            createRoomIcon.Click += new EventHandler(createRoomItem_Enter);
+            
+
             sidebarItem3.Click += new EventHandler(SidebarItemClick);
             sidebarIcon1.Click += new EventHandler(SidebarItemClick);
-            sidebarIcon2.Click += new EventHandler(SidebarItemClick);
             sidebarIcon3.Click += new EventHandler(SidebarItemClick);            
         }
 
-        private void SidebarItemClick(object sender, EventArgs e) {
+        private void SidebarItemClick(object sender, EventArgs e)
+        {
             Control ctrl = sender as Control;
 
-            Control[] sidebarItems = { sidebarItem1, sidebarItem2, sidebarItem3 };
+            Control[] sidebarItems = { sidebarItem1, createRoomItem, sidebarItem3 };
             for (int i = 0; i < sidebarItems.Length; i++){
                 sidebarItems[i].BackColor = System.Drawing.Color.FromArgb(1, 48, 56, 65);
             }
@@ -115,9 +127,9 @@ namespace Trivia_Client
             if (ctrl.Name == "sidebarItem1" || ctrl.Name == "sidebarIcon1") {
                 sidebarItem1.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = sidebarItem1.Location.Y;
-            } else if (ctrl.Name == "sidebarItem2" || ctrl.Name == "sidebarIcon2") {
-                sidebarItem2.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
-                newY = sidebarItem2.Location.Y;
+            } else if (ctrl.Name == "createRoomItem" || ctrl.Name == "createRoomIcon") {
+                createRoomItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = createRoomItem.Location.Y;
             } else if (ctrl.Name == "sidebarItem3" || ctrl.Name == "sidebarIcon3") {
                 sidebarItem3.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = sidebarItem3.Location.Y;
@@ -126,6 +138,7 @@ namespace Trivia_Client
             Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
             animate.Start(newY);
         }
+
 
         protected void animateSlidebarSelectionBar (object Y) {
             bool isPos = (sidebarActivePanelIndicator.Location.Y < (int)Y);
@@ -214,6 +227,130 @@ namespace Trivia_Client
 
             string message = "381" + url.Length.ToString("D3") + url;
             sendMessageToServer(message);
+        }
+
+        private void profilePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void roomNameBox_Enter(object sender, EventArgs e)
+        {
+            if (roomNameBox.Text == "Room Name")
+            {
+                roomNameBox.Text = "";
+                roomNameBox.TabStop = true;
+                numPlayersBox.TabStop = true;
+                numQuestBox.TabStop = true;
+                questionsTimeBox.TabStop = true;
+            }
+        }
+
+        private void numPlayersBox_Enter(object sender, EventArgs e)
+        {
+            if (numPlayersBox.Text == "No. Players")
+            {
+                numPlayersBox.Text = "";
+                numPlayersBox.TabStop = true;
+                roomNameBox.TabStop = true;
+                numQuestBox.TabStop = true;
+                questionsTimeBox.TabStop = true;
+            }
+        }
+
+        private void numQuestBox_Enter(object sender, EventArgs e)
+        {
+            if (numQuestBox.Text == "No. Questions")
+            {
+                numQuestBox.Text = "";
+                numQuestBox.TabStop = true;
+                roomNameBox.TabStop = true;
+                numPlayersBox.TabStop = true;
+                questionsTimeBox.TabStop = true;
+            }
+        }
+
+        private void questionsTimeBox_Enter(object sender, EventArgs e)
+        {
+            if (questionsTimeBox.Text == "Time Per Question")
+            {
+                questionsTimeBox.Text = "";
+                questionsTimeBox.TabStop = true;
+                roomNameBox.TabStop = true;
+                numPlayersBox.TabStop = true;
+                numQuestBox.TabStop = true;
+            }
+        }
+
+        protected void createRoom()
+        {
+            string roomName = roomNameBox.Text;
+            string numPlayers = numPlayersBox.Text;
+            string numQuest = numQuestBox.Text;
+            string questionsTime = questionsTimeBox.Text;
+
+            if (roomName != "" && numPlayers != "" && numQuest != "" && questionsTime != "" &&
+                roomName != "Room Name" && numPlayers != "No. Players" && numQuest != "No. Questions" && questionsTime != "Time Per Question")
+            {
+                try
+                {
+                    int questionsNum = Convert.ToInt32(numQuest);
+                    int timeQuestions = Convert.ToInt32(questionsTime);
+                    string message = "213" + roomName.Length.ToString("D2") + roomName + numPlayers
+                        + questionsNum.ToString("D2") + timeQuestions.ToString("D2"); //D2 for 2 decimal digits format.
+                    Console.WriteLine(message);
+                    sendMessageToServer(message);
+                    string resultCode = getResultFromServer(4);
+                    string errorMsg = protocol.getCodeErrorMsg(resultCode);
+                    if (errorMsg == "success")
+                    {
+                        // Login
+                        CreateRoomFeedbackLabel.Hide();
+                    }
+                    else
+                    {
+                        CreateRoomFeedbackLabel.Visible = Visible;
+                        CreateRoomFeedbackLabel.Text = errorMsg;
+                    }
+
+
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            else
+            {
+                CreateRoomFeedbackLabel.Visible = Visible;
+                CreateRoomFeedbackLabel.Text = "Fields must not be empty.";
+            }
+        }
+
+        private void createRoomBtn_Click(object sender, EventArgs e)
+        {
+            createRoom();
+        }
+
+        private void questionsTimeBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13) // Enter
+            {
+                createRoom();
+            }
+        }
+
+        private void createRoomItem_Enter(object sender, EventArgs e)
+        {
+            Console.WriteLine("enter");
+            creRoomPanel.Show();
+            //creRoomPanel.Visible = Visible;
+        }
+
+        private void createRoomItem_Leave(object sender, EventArgs e)
+        {
+            creRoomPanel.Hide();
         }
     }
 }

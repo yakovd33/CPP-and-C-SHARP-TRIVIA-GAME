@@ -155,9 +155,9 @@
             this.loginFeedbackLabel.ForeColor = System.Drawing.Color.Maroon;
             this.loginFeedbackLabel.Location = new System.Drawing.Point(256, 437);
             this.loginFeedbackLabel.Name = "loginFeedbackLabel";
-            this.loginFeedbackLabel.Size = new System.Drawing.Size(35, 13);
+            this.loginFeedbackLabel.Size = new System.Drawing.Size(52, 13);
             this.loginFeedbackLabel.TabIndex = 7;
-            this.loginFeedbackLabel.Text = "label1";
+            this.loginFeedbackLabel.Text = "feedback";
             this.loginFeedbackLabel.Visible = false;
             // 
             // pass_reset

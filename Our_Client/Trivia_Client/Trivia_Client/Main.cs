@@ -154,8 +154,8 @@ namespace Trivia_Client
                     // Get login response
                     byte[] bufferIn = new byte[4];
                     int bytesRead = clientStream.Read(bufferIn, 0, 4);
-                    string resuLtCode = new ASCIIEncoding().GetString(bufferIn);
-                    string errorMsg = protocol.getCodeErrorMsg(resuLtCode);
+                    string resultCode = new ASCIIEncoding().GetString(bufferIn);
+                    string errorMsg = protocol.getCodeErrorMsg(resultCode);
 
                     if (errorMsg == "success") {
                         // Login
