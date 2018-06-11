@@ -35,31 +35,42 @@
             this.sidebarItem3 = new System.Windows.Forms.Panel();
             this.sidebarItem2 = new System.Windows.Forms.Panel();
             this.sidebarItem1 = new System.Windows.Forms.Panel();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.profilePanel = new System.Windows.Forms.Panel();
+            this.tabs = new System.Windows.Forms.Panel();
             this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.mainProfilePicture = new System.Windows.Forms.PictureBox();
             this.sidebarIcon3 = new System.Windows.Forms.PictureBox();
             this.sidebarIcon2 = new System.Windows.Forms.PictureBox();
             this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.magshimimLogo = new System.Windows.Forms.PictureBox();
+            this.profilePanelPic = new System.Windows.Forms.PictureBox();
+            this.transparentControl1 = new TransparentControl();
+            this.onlineStatusCircle = new TransparentControl();
             this.panel2.SuspendLayout();
             this.sidebar.SuspendLayout();
             this.sidebarItem3.SuspendLayout();
             this.sidebarItem2.SuspendLayout();
             this.sidebarItem1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.profilePanel.SuspendLayout();
+            this.tabs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.pictureBox3);
-            this.panel2.Controls.Add(this.sidebarActivePanelIndicator);
             this.panel2.Controls.Add(this.exitBtn);
+            this.panel2.Controls.Add(this.sidebarActivePanelIndicator);
             this.panel2.Controls.Add(this.sidebar);
+            this.panel2.Controls.Add(this.magshimimLogo);
+            this.panel2.Controls.Add(this.tabs);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
@@ -77,6 +88,8 @@
             // sidebar
             // 
             this.sidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.sidebar.Controls.Add(this.transparentControl1);
+            this.sidebar.Controls.Add(this.mainProfilePicture);
             this.sidebar.Controls.Add(this.sidebarItem3);
             this.sidebar.Controls.Add(this.sidebarItem2);
             this.sidebar.Controls.Add(this.sidebarItem1);
@@ -116,15 +129,25 @@
             this.sidebarItem1.Size = new System.Drawing.Size(65, 57);
             this.sidebarItem1.TabIndex = 2;
             // 
-            // pictureBox3
+            // profilePanel
             // 
-            this.pictureBox3.Image = global::Trivia_Client.Properties.Resources.magshimim;
-            this.pictureBox3.Location = new System.Drawing.Point(784, 547);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(114, 29);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 8;
-            this.pictureBox3.TabStop = false;
+            this.profilePanel.BackColor = System.Drawing.Color.Transparent;
+            this.profilePanel.Controls.Add(this.onlineStatusCircle);
+            this.profilePanel.Controls.Add(this.profilePanelPic);
+            this.profilePanel.Location = new System.Drawing.Point(16, 15);
+            this.profilePanel.Name = "profilePanel";
+            this.profilePanel.Size = new System.Drawing.Size(818, 526);
+            this.profilePanel.TabIndex = 11;
+            this.profilePanel.Visible = false;
+            // 
+            // tabs
+            // 
+            this.tabs.BackColor = System.Drawing.Color.Transparent;
+            this.tabs.Controls.Add(this.profilePanel);
+            this.tabs.Location = new System.Drawing.Point(63, 0);
+            this.tabs.Name = "tabs";
+            this.tabs.Size = new System.Drawing.Size(856, 541);
+            this.tabs.TabIndex = 12;
             // 
             // exitBtn
             // 
@@ -140,6 +163,18 @@
             this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
             this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
             this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
+            // 
+            // mainProfilePicture
+            // 
+            this.mainProfilePicture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.mainProfilePicture.Image = global::Trivia_Client.Properties.Resources.pp;
+            this.mainProfilePicture.Location = new System.Drawing.Point(8, 15);
+            this.mainProfilePicture.Name = "mainProfilePicture";
+            this.mainProfilePicture.Size = new System.Drawing.Size(49, 49);
+            this.mainProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.mainProfilePicture.TabIndex = 10;
+            this.mainProfilePicture.TabStop = false;
+            this.mainProfilePicture.Click += new System.EventHandler(this.mainProfilePicture_Click);
             // 
             // sidebarIcon3
             // 
@@ -185,6 +220,46 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
+            // magshimimLogo
+            // 
+            this.magshimimLogo.Image = global::Trivia_Client.Properties.Resources.magshimim;
+            this.magshimimLogo.Location = new System.Drawing.Point(784, 547);
+            this.magshimimLogo.Name = "magshimimLogo";
+            this.magshimimLogo.Size = new System.Drawing.Size(114, 29);
+            this.magshimimLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.magshimimLogo.TabIndex = 8;
+            this.magshimimLogo.TabStop = false;
+            // 
+            // profilePanelPic
+            // 
+            this.profilePanelPic.Location = new System.Drawing.Point(343, 21);
+            this.profilePanelPic.Name = "profilePanelPic";
+            this.profilePanelPic.Size = new System.Drawing.Size(100, 100);
+            this.profilePanelPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.profilePanelPic.TabIndex = 0;
+            this.profilePanelPic.TabStop = false;
+            this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
+            // 
+            // transparentControl1
+            // 
+            this.transparentControl1.BackColor = System.Drawing.Color.Transparent;
+            this.transparentControl1.Image = null;
+            this.transparentControl1.Location = new System.Drawing.Point(0, 0);
+            this.transparentControl1.Name = "transparentControl1";
+            this.transparentControl1.Size = new System.Drawing.Size(75, 23);
+            this.transparentControl1.TabIndex = 11;
+            this.transparentControl1.Text = "transparentControl1";
+            // 
+            // onlineStatusCircle
+            // 
+            this.onlineStatusCircle.BackColor = System.Drawing.Color.Transparent;
+            this.onlineStatusCircle.Image = global::Trivia_Client.Properties.Resources.online;
+            this.onlineStatusCircle.Location = new System.Drawing.Point(-62, 26);
+            this.onlineStatusCircle.Name = "onlineStatusCircle";
+            this.onlineStatusCircle.Size = new System.Drawing.Size(15, 15);
+            this.onlineStatusCircle.TabIndex = 1;
+            this.onlineStatusCircle.Text = "transparentControl2";
+            // 
             // MainLogged
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -204,12 +279,16 @@
             this.sidebarItem3.ResumeLayout(false);
             this.sidebarItem2.ResumeLayout(false);
             this.sidebarItem1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.profilePanel.ResumeLayout(false);
+            this.tabs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -226,6 +305,12 @@
         private System.Windows.Forms.Panel sidebarItem2;
         private System.Windows.Forms.PictureBox sidebarIcon2;
         private System.Windows.Forms.Panel sidebarActivePanelIndicator;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox magshimimLogo;
+        private System.Windows.Forms.PictureBox mainProfilePicture;
+        private System.Windows.Forms.Panel profilePanel;
+        private System.Windows.Forms.Panel tabs;
+        private System.Windows.Forms.PictureBox profilePanelPic;
+        private TransparentControl transparentControl1;
+        private TransparentControl onlineStatusCircle;
     }
 }

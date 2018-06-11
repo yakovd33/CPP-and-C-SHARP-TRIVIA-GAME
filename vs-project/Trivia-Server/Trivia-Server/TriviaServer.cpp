@@ -191,6 +191,13 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		int emailLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
 		values.insert(make_pair("email", Helper::getStringPartFromSocket(client_socket, emailLength).c_str()));
 	}
+
+	if (msgCode == "381") {
+		// Profile picture update
+		int pictureLength = atoi(Helper::getStringPartFromSocket(client_socket, 3).c_str());
+		values.insert(make_pair("url", Helper::getStringPartFromSocket(client_socket, pictureLength).c_str()));
+	}
+
 	msg = new RecievedMessage(client_socket, msgCode, values);
 	return msg;
 }
@@ -510,6 +517,18 @@ void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
 	sendMessageToSocket(msg->getSock(), _db->getPersonalStatus(user->getUsername()));
 }
 
+void TriviaServer::handleGetProfilePic(RecievedMessage * msg) {
+	string picture_url = _db->getUserProfilePicUrlByUsername(getUserBySocket(msg->getSock())->getUsername());
+	string picture_length = to_string(picture_url.length());
+	picture_length = string(3 - picture_length.length(), '0') + picture_length;
+	sendMessageToSocket(msg->getSock(), string("189" + picture_length + picture_url));
+}
+
+void TriviaServer::handleChnageProfilePic(RecievedMessage * msg) {
+	cout << "url: " << msg->getValues().find("url")->second << endl;
+	_db->updateUserProfilePicByUsername(getUserBySocket(msg->getSock())->getUsername(), msg->getValues().find("url")->second);
+}
+
 Room * TriviaServer::getRoomById(int id) {
 	for (auto const& room : _roomsList) {
 		if (room.first == id) {
@@ -555,7 +574,7 @@ void TriviaServer::handleRecievedMessages()
 	SOCKET clientSock = 0;
 	string userName;
 
-	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666" };
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381" };
 
 	while (true) {
 		try {
@@ -642,6 +661,14 @@ void TriviaServer::handleRecievedMessages()
 
 					if (msgCode == "666") {
 						handleForgot_pass(currMessage);
+					}
+
+					if (msgCode == "543") {
+						handleGetProfilePic(currMessage);
+					}
+
+					if (msgCode == "381") {
+						handleChnageProfilePic(currMessage);
 					}
 				} else if (msgCode != "") {
 					// Unknown message code

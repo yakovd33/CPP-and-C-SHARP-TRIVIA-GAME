@@ -129,6 +129,28 @@ void DataBase::insertUserGameResult(string username, int gameId, int result) {
 	}
 }
 
+string DataBase::getUserProfilePicUrlByUsername(string username) {
+	string query = "SELECT `picture_url` FROM `t_users` WHERE `username` = '" + username + "'";
+	sqlite3_stmt *stmt;
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+
+	if (sqlite3_step(stmt) == SQLITE_ROW) {
+		return std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+	} else {
+		return "https://i.imgur.com/oeKRbhC.png";
+	}
+}
+
+void DataBase::updateUserProfilePicByUsername(string username, string url) {
+	string query = "UPDATE `t_users` SET `picture_url` = '" + url + "' WHERE `username` = '" + username + "'";
+
+	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
+		sqlite3_free(zErrMsg);
+	}
+}
+
 string DataBase::getBestScores() {
 	string message = "124";
 

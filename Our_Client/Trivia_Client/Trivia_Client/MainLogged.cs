@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Drawing;
 
 namespace Trivia_Client
 {
@@ -25,6 +26,7 @@ namespace Trivia_Client
         IPEndPoint serverEndPoint;
         NetworkStream clientStream;
         Protocol protocol = new Protocol();
+        string fileDialogPath;
 
         public MainLogged(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream) {
             InitializeComponent();
@@ -35,7 +37,15 @@ namespace Trivia_Client
 
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
 
+            mainProfilePicture.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, mainProfilePicture.Width, mainProfilePicture.Height, 49, 49));
             Sidebar();
+
+            new Thread(() =>
+            {
+                Thread.Sleep(1000);
+                mainProfilePicture.Load(getUserProfilePic());
+                profilePanelPic.Image = mainProfilePicture.Image;
+            }).Start();
         }
 
         private void exitBtn_MouseHover(object sender, EventArgs e)
@@ -82,13 +92,14 @@ namespace Trivia_Client
             clientStream.Flush();
         }
 
-        private void Sidebar () {
+        private void Sidebar()
+        {
             sidebarItem1.Click += new EventHandler(SidebarItemClick);
             sidebarItem2.Click += new EventHandler(SidebarItemClick);
             sidebarItem3.Click += new EventHandler(SidebarItemClick);
             sidebarIcon1.Click += new EventHandler(SidebarItemClick);
             sidebarIcon2.Click += new EventHandler(SidebarItemClick);
-            sidebarIcon3.Click += new EventHandler(SidebarItemClick);
+            sidebarIcon3.Click += new EventHandler(SidebarItemClick);            
         }
 
         private void SidebarItemClick(object sender, EventArgs e) {
@@ -132,6 +143,31 @@ namespace Trivia_Client
             }
         }
 
+        string getUserProfilePic () {
+            string picture_url = "";
+
+            sendMessageToServer("543");
+
+            if (getResultFromServer(3) == "189")
+            {
+                int picUrlSize = Int32.Parse(getResultFromServer(3));
+                picture_url = getResultFromServer(picUrlSize);
+            }
+
+            return picture_url;
+        }
+
+        string uploadImageToServer (string path) {
+            string myFile = path;
+            WebClient webClient = new WebClient();
+            Byte[] response = webClient.UploadFile(@"https://triviaplusplus.000webhostapp.com/image_upload.php", "POST", myFile);
+
+            string url = "https://triviaplusplus.000webhostapp.com/" + System.Text.Encoding.UTF8.GetString(response);
+            webClient.Dispose();
+
+            return url;
+        }
+
         private void sendMessageToServer (string message) {
             byte[] buffer = new ASCIIEncoding().GetBytes(message);
             clientStream.Write(buffer, 0, message.Length);
@@ -145,5 +181,40 @@ namespace Trivia_Client
 
             return result;
         }
+
+        private void mainProfilePicture_Click(object sender, EventArgs e) {
+            profilePanel.Visible = true;
+            profilePanelPic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, profilePanelPic.Width, profilePanelPic.Height, 100, 100));
+        }
+
+        private void profilePanelPic_Click(object sender, EventArgs e) {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Open Image";
+                dlg.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+
+                if (dlg.ShowDialog() == DialogResult.OK) {
+                    fileDialogPath = dlg.FileName;
+                    Thread t = new Thread(new ParameterizedThreadStart(updateProfilePicture));
+                    t.Start(fileDialogPath);
+                }
+            }
+        }
+
+        private void updateProfilePicture (object path) {
+            mainProfilePicture.Invoke((MethodInvoker)delegate {
+                mainProfilePicture.Image = Image.FromFile((string)fileDialogPath);
+            });
+
+            profilePanelPic.Invoke((MethodInvoker)delegate {
+                profilePanelPic.Image = mainProfilePicture.Image;
+            });
+
+            string url = uploadImageToServer((string)fileDialogPath);
+
+            string message = "381" + url.Length.ToString("D3") + url;
+            sendMessageToServer(message);
+        }
     }
 }
+ 

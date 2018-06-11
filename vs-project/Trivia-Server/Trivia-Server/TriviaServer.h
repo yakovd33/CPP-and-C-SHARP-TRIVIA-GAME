@@ -76,6 +76,8 @@ private:
 
 	void handleGetBestScores(RecievedMessage * msg);
 	void handleGetPersonalStatus(RecievedMessage * msg);
+	void handleGetProfilePic(RecievedMessage * msg);
+	void handleChnageProfilePic(RecievedMessage * msg);
 
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);

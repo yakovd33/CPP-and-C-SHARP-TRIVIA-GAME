@@ -76,6 +76,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol.cs" />
+    <Compile Include="TransparentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="forget_password.resx">
       <DependentUpon>forget_password.cs</DependentUpon>
     </EmbeddedResource>
@@ -124,6 +127,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Pictures [Resources]\pp.jpg" />
+    <None Include="Pictures [Resources]\online.png" />
     <None Include="Pictures [Resources]\magshimim.png" />
     <None Include="Pictures [Resources]\eye.png" />
     <None Include="Pictures [Resources]\gear.png" />

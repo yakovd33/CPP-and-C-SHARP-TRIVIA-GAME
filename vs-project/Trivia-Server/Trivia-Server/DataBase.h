@@ -37,6 +37,8 @@ public:
 	string getBestScores();
 	string getPersonalStatus(string username);
 	void insertUserGameResult(string username, int gameId, int result);
+	string getUserProfilePicUrlByUsername(string username);
+	void updateUserProfilePicByUsername(string username, string url);
 private:
 	sqlite3 *db;
 	char *zErrMsg = 0;
