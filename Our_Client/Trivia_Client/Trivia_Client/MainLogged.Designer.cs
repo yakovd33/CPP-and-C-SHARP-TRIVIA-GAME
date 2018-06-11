@@ -206,7 +206,7 @@
             // 
             // sidebarIcon1
             // 
-            this.sidebarIcon1.Image = global::Trivia_Client.Properties.Resources.gear;
+            this.sidebarIcon1.Image = global::Trivia_Client.Properties.Resources.home;
             this.sidebarIcon1.Location = new System.Drawing.Point(24, 16);
             this.sidebarIcon1.Name = "sidebarIcon1";
             this.sidebarIcon1.Size = new System.Drawing.Size(25, 25);

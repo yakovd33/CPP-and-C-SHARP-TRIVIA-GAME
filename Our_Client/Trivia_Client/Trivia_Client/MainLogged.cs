@@ -127,9 +127,12 @@ namespace Trivia_Client
             if (ctrl.Name == "sidebarItem1" || ctrl.Name == "sidebarIcon1") {
                 sidebarItem1.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = sidebarItem1.Location.Y;
+                mainPanel.BringToFront();
             } else if (ctrl.Name == "createRoomItem" || ctrl.Name == "createRoomIcon") {
                 createRoomItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = createRoomItem.Location.Y;
+                creRoomPanel.Show();
+                creRoomPanel.BringToFront();
             } else if (ctrl.Name == "sidebarItem3" || ctrl.Name == "sidebarIcon3") {
                 sidebarItem3.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = sidebarItem3.Location.Y;
@@ -197,6 +200,7 @@ namespace Trivia_Client
 
         private void mainProfilePicture_Click(object sender, EventArgs e) {
             profilePanel.Visible = true;
+            profilePanel.BringToFront();
             profilePanelPic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, profilePanelPic.Width, profilePanelPic.Height, 100, 100));
         }
 
@@ -343,14 +347,14 @@ namespace Trivia_Client
 
         private void createRoomItem_Enter(object sender, EventArgs e)
         {
-            Console.WriteLine("enter");
-            creRoomPanel.Show();
+            //creRoomPanel.Show();
+            //creRoomPanel.BringToFront();
             //creRoomPanel.Visible = Visible;
         }
 
         private void createRoomItem_Leave(object sender, EventArgs e)
         {
-            creRoomPanel.Hide();
+            //creRoomPanel.Hide();
         }
     }
 }
