@@ -26,8 +26,11 @@ TriviaServer::TriviaServer()
 	// Create DataBase Instance
 	_db = new DataBase();
 
-	//_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
-	//_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
+	_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
+	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
+	_roomsList.insert(make_pair(123, new Room(5, 20, 20, "room3", 1235)));
+	_roomsList.insert(make_pair(124, new Room(5, 20, 20, "room4", 124)));
+	_roomsList.insert(make_pair(315, new Room(5, 20, 20, "room5", 315)));
 }
 
 TriviaServer::~TriviaServer()

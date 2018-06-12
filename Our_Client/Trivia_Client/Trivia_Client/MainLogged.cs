@@ -48,9 +48,13 @@ namespace Trivia_Client
 
             new Thread(() =>
             {
-                Thread.Sleep(1000);
-                mainProfilePicture.Load(getUserProfilePic());
-                profilePanelPic.Image = mainProfilePicture.Image;
+                try {
+                    Thread.Sleep(1000);
+                    mainProfilePicture.Load(getUserProfilePic());
+                    profilePanelPic.Image = mainProfilePicture.Image;
+                } catch (Exception e) {
+
+                }
             }).Start();
         }
 
@@ -103,21 +107,16 @@ namespace Trivia_Client
             sidebarItem1.Click += new EventHandler(SidebarItemClick);
             createRoomItem.Click += new EventHandler(SidebarItemClick);
             createRoomIcon.Click += new EventHandler(SidebarItemClick);
-            creRoomPanel.Hide();
-            createRoomItem.Enter += new EventHandler(createRoomItem_Enter);
-            createRoomIcon.Click += new EventHandler(createRoomItem_Enter);
-            
-
-            sidebarItem3.Click += new EventHandler(SidebarItemClick);
+            roomsItem.Click += new EventHandler(SidebarItemClick);
             sidebarIcon1.Click += new EventHandler(SidebarItemClick);
-            sidebarIcon3.Click += new EventHandler(SidebarItemClick);            
+            roomsIcon.Click += new EventHandler(SidebarItemClick);            
         }
 
         private void SidebarItemClick(object sender, EventArgs e)
         {
             Control ctrl = sender as Control;
 
-            Control[] sidebarItems = { sidebarItem1, createRoomItem, sidebarItem3 };
+            Control[] sidebarItems = { sidebarItem1, createRoomItem, roomsItem };
             for (int i = 0; i < sidebarItems.Length; i++){
                 sidebarItems[i].BackColor = System.Drawing.Color.FromArgb(1, 48, 56, 65);
             }
@@ -131,11 +130,15 @@ namespace Trivia_Client
             } else if (ctrl.Name == "createRoomItem" || ctrl.Name == "createRoomIcon") {
                 createRoomItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = createRoomItem.Location.Y;
-                creRoomPanel.Show();
                 creRoomPanel.BringToFront();
+            } else if (ctrl.Name == "roomsItem" || ctrl.Name == "roomsIcon") {
+                roomsItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = roomsItem.Location.Y;
+                roomsPanel.BringToFront();
+                listRooms();
             } else if (ctrl.Name == "sidebarItem3" || ctrl.Name == "sidebarIcon3") {
-                sidebarItem3.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
-                newY = sidebarItem3.Location.Y;
+                roomsItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = roomsItem.Location.Y;
             }
 
             Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
@@ -316,9 +319,6 @@ namespace Trivia_Client
                         CreateRoomFeedbackLabel.Visible = Visible;
                         CreateRoomFeedbackLabel.Text = errorMsg;
                     }
-
-
-
                 }
                 catch (Exception e)
                 {
@@ -345,16 +345,131 @@ namespace Trivia_Client
             }
         }
 
-        private void createRoomItem_Enter(object sender, EventArgs e)
-        {
-            //creRoomPanel.Show();
-            //creRoomPanel.BringToFront();
-            //creRoomPanel.Visible = Visible;
+        private void listRooms () {
+            roomsList.Controls.Clear();
+            sendMessageToServer("205");
+
+            if (getResultFromServer(3) == "106") {
+                int numRooms = Int32.Parse(getResultFromServer(4));
+                Panel[] roomItemsWraps = new Panel[numRooms];
+                Point[] originalLocations = new Point[numRooms];
+
+                int currentYPos = 0;
+
+                for (int i = 0; i < numRooms; i++) {
+                    int roomId = Int32.Parse(getResultFromServer(4));
+                    int roomNameLength = Int32.Parse(getResultFromServer(2));
+                    string roomName = getResultFromServer(roomNameLength);
+
+                    Panel roomItem = new Panel();
+                    roomItem.Cursor = Cursors.Hand;
+                    roomItem.Height = 66;
+                    roomItem.Width = 805;
+                    roomItem.BackColor = Color.FromArgb(48, 56, 65);
+                    roomItem.Location = new Point(0, currentYPos);
+                    originalLocations[i] = roomItem.Location;
+
+                    Label roomItemName = new Label();
+                    roomItemName.Font = new Font("Open Sans Light", 12);
+                    roomItemName.ForeColor = Color.FromArgb(173, 190, 202);
+                    roomItemName.Location = new Point(10, 21);
+                    roomItemName.Text = roomName;
+                    roomItem.Controls.Add(roomItemName);
+
+                    PictureBox joinBtn = new PictureBox();
+                    joinBtn.Height = 34;
+                    joinBtn.Width = 145;
+                    joinBtn.Location = new Point(645, 16);
+                    joinBtn.Image = Trivia_Client.Properties.Resources.join_btn;
+                    joinBtn.SizeMode = PictureBoxSizeMode.StretchImage;
+                    joinBtn.Cursor = Cursors.Hand;
+                    roomItem.Controls.Add(joinBtn);
+
+                    Label roomIdLabel = new Label();
+                    roomIdLabel.Name = "roomIdLabel";
+                    roomIdLabel.Text = roomId.ToString();
+                    roomIdLabel.Hide();
+                    roomItem.Controls.Add(roomIdLabel);
+
+                    Label roomIsUsersListOpen = new Label();
+                    roomIsUsersListOpen.Name = "roomIsUsersListOpen";
+                    roomIsUsersListOpen.Text = "false";
+                    roomIsUsersListOpen.Hide();
+                    roomItem.Controls.Add(roomIsUsersListOpen);
+
+                    roomItem.Click += delegate (object sender, EventArgs e) {
+                        if (((Panel) sender).Controls["roomIsUsersListOpen"].Text == "true") {
+                            // Panel is already open
+
+                            bool beenAlready = false;
+                            for (int j = 0; j < roomItemsWraps.Length; j++) {
+                                Label secondaryRoomItemIdLabel = roomItemsWraps[j].Controls["roomIdLabel"] as Label;
+                                roomItemsWraps[j].Location = originalLocations[j];
+                                if (roomId.ToString() != secondaryRoomItemIdLabel.Text) {
+                                    if (beenAlready) {
+                                        roomItemsWraps[j].Location = originalLocations[j];
+                                    }
+                                } else {
+                                    beenAlready = true;
+                                }
+                            }
+
+                            ((Panel)sender).Controls["roomIsUsersListOpen"].Text = "false";
+                        }
+                        else {
+                            // Add room users list
+                            sendMessageToServer("207" + ((Panel)sender).Controls["roomIdLabel"].Text);
+
+                            if (getResultFromServer(3) == "108") {
+                                int numPlayers = Int32.Parse(getResultFromServer(1));
+
+                                int usersCurYPos = ((Panel)sender).Location.Y + ((Panel)sender).Height + 10;
+                                Console.WriteLine(usersCurYPos);
+                                for (int q = 0; q < numPlayers; q++) {
+                                    int usernameLength = Int32.Parse(getResultFromServer(2));
+                                    string username = getResultFromServer(usernameLength);
+                                    Console.WriteLine(username);
+                                    Label roomUserNameLabel = new Label();
+                                    roomUserNameLabel.Font = new Font("Open Sans Light", 10);
+                                    roomUserNameLabel.Text = username;
+                                    roomUserNameLabel.Location = new Point(0, usersCurYPos);
+                                    roomsList.Controls.Add(roomUserNameLabel);
+                                    usersCurYPos += 40;
+                                }
+
+                                bool beenAlready = false;
+                                for (int j = 0; j < roomItemsWraps.Length; j++) {
+                                    Label secondaryRoomItemIdLabel = roomItemsWraps[j].Controls["roomIdLabel"] as Label;
+                                    roomItemsWraps[j].Location = originalLocations[j];
+                                    if (roomId.ToString() != secondaryRoomItemIdLabel.Text) {
+                                        if (beenAlready) {
+                                            roomItemsWraps[j].Location = new Point(0, originalLocations[j].Y + (35 * numPlayers));
+                                        }
+                                    } else {
+                                        beenAlready = true;
+                                    }
+                                }
+
+                            ((Panel)sender).Controls["roomIsUsersListOpen"].Text = "true";
+                            }
+                        }
+                    };
+
+                    roomsList.Controls.Add(roomItem);
+                    roomItemsWraps[i] = roomItem;
+
+                    currentYPos += 76;
+                }
+            }
         }
 
-        private void createRoomItem_Leave(object sender, EventArgs e)
+        private void tabs_Paint(object sender, PaintEventArgs e)
         {
-            //creRoomPanel.Hide();
+
+        }
+
+        private void roomsListRefreshBtn_Click(object sender, EventArgs e) {
+            listRooms();
         }
     }
 }
