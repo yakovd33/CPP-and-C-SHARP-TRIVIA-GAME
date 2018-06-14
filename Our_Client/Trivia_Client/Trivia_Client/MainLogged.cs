@@ -205,6 +205,16 @@ namespace Trivia_Client
             profilePanel.Visible = true;
             profilePanel.BringToFront();
             profilePanelPic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, profilePanelPic.Width, profilePanelPic.Height, 100, 100));
+            //get info about player
+            sendMessageToServer("225");
+            getResultFromServer(3);//get rid of msg num
+            string numGames = Int32.Parse(getResultFromServer(4)).ToString();
+            string R_ans = Int32.Parse(getResultFromServer(6)).ToString();
+            string W_ans = Int32.Parse(getResultFromServer(6)).ToString();
+            string AVG_t_f = Int32.Parse(getResultFromServer(2)).ToString();
+            string AVG_t_s = Int32.Parse(getResultFromServer(2)).ToString();
+            label1.Text = "Number of games: " + numGames + "\nRight answers: "+ R_ans + "\nWrong answers: "+ W_ans + "\nAVG time to answer: "+ AVG_t_f +"."+ AVG_t_s;
+            
         }
 
         private void profilePanelPic_Click(object sender, EventArgs e) {
@@ -470,6 +480,11 @@ namespace Trivia_Client
 
         private void roomsListRefreshBtn_Click(object sender, EventArgs e) {
             listRooms();
+        }
+
+        private void roomsItem_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
