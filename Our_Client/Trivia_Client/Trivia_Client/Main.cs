@@ -41,12 +41,16 @@ namespace Trivia_Client
             loginBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, loginBtn.Width, loginBtn.Height, 5, 5));
             SignupBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, SignupBtn.Width + 1, SignupBtn.Height + 1, 5, 5));
 
-            try {
+            try
+            {
                 client = new TcpClient();
                 serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8820);
                 client.Connect(serverEndPoint);
+
                 clientStream = client.GetStream();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
             }
 
