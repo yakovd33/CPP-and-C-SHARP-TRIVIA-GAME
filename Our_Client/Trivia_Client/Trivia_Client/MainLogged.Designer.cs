@@ -30,10 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainLogged));
             this.panel2 = new System.Windows.Forms.Panel();
+<<<<<<< HEAD
+=======
+            this.sidebarActivePanelIndicator = new System.Windows.Forms.Panel();
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             this.sidebar = new System.Windows.Forms.Panel();
             this.createRoomItem = new System.Windows.Forms.Panel();
             this.createRoomIcon = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+<<<<<<< HEAD
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.mainProfilePicture = new System.Windows.Forms.PictureBox();
             this.roomsItem = new System.Windows.Forms.Panel();
@@ -49,9 +54,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.profilePanelPic = new System.Windows.Forms.PictureBox();
             this.mainPanel = new System.Windows.Forms.Panel();
+=======
+            this.roomsItem = new System.Windows.Forms.Panel();
+            this.createRoomItem = new System.Windows.Forms.Panel();
+            this.sidebarItem1 = new System.Windows.Forms.Panel();
+            this.tabs = new System.Windows.Forms.Panel();
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             this.roomsPanel = new System.Windows.Forms.Panel();
-            this.roomsListRefreshBtn = new System.Windows.Forms.Label();
             this.roomsList = new System.Windows.Forms.Panel();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.creRoomPanel = new System.Windows.Forms.Panel();
             this.CreateRoomFeedbackLabel = new System.Windows.Forms.Label();
             this.createRoomBtn = new System.Windows.Forms.Button();
@@ -63,6 +74,20 @@
             this.numPlayersBox = new System.Windows.Forms.TextBox();
             this.roomNameWrap = new System.Windows.Forms.Panel();
             this.roomNameBox = new System.Windows.Forms.TextBox();
+<<<<<<< HEAD
+=======
+            this.profilePanel = new System.Windows.Forms.Panel();
+            this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.mainProfilePicture = new System.Windows.Forms.PictureBox();
+            this.roomsIcon = new System.Windows.Forms.PictureBox();
+            this.createRoomIcon = new System.Windows.Forms.PictureBox();
+            this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.magshimimLogo = new System.Windows.Forms.PictureBox();
+            this.profilePanelPic = new System.Windows.Forms.PictureBox();
+            this.roomsListRefreshBtn = new System.Windows.Forms.Label();
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             this.transparentControl1 = new TransparentControl();
             this.onlineStatusCircle = new TransparentControl();
             this.panel2.SuspendLayout();
@@ -70,15 +95,18 @@
             this.createRoomItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).BeginInit();
             this.roomsItem.SuspendLayout();
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).BeginInit();
             this.sidebarItem1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
+=======
+            this.createRoomItem.SuspendLayout();
+            this.sidebarItem1.SuspendLayout();
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             this.tabs.SuspendLayout();
             this.profilePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
@@ -88,13 +116,26 @@
             this.numQuestWrap.SuspendLayout();
             this.numPlayersWrap.SuspendLayout();
             this.roomNameWrap.SuspendLayout();
+<<<<<<< HEAD
+=======
+            this.profilePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             this.SuspendLayout();
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.sidebar);
             this.panel2.Controls.Add(this.exitBtn);
             this.panel2.Controls.Add(this.sidebarActivePanelIndicator);
+            this.panel2.Controls.Add(this.sidebar);
             this.panel2.Controls.Add(this.magshimimLogo);
             this.panel2.Controls.Add(this.tabs);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -103,14 +144,25 @@
             this.panel2.Size = new System.Drawing.Size(919, 596);
             this.panel2.TabIndex = 8;
             // 
+<<<<<<< HEAD
+=======
+            // sidebarActivePanelIndicator
+            // 
+            this.sidebarActivePanelIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(210)))), ((int)(((byte)(139)))));
+            this.sidebarActivePanelIndicator.Location = new System.Drawing.Point(0, 79);
+            this.sidebarActivePanelIndicator.Name = "sidebarActivePanelIndicator";
+            this.sidebarActivePanelIndicator.Size = new System.Drawing.Size(5, 57);
+            this.sidebarActivePanelIndicator.TabIndex = 7;
+            // 
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             // sidebar
             // 
             this.sidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.sidebar.Controls.Add(this.createRoomItem);
             this.sidebar.Controls.Add(this.panel1);
             this.sidebar.Controls.Add(this.transparentControl1);
             this.sidebar.Controls.Add(this.mainProfilePicture);
             this.sidebar.Controls.Add(this.roomsItem);
+            this.sidebar.Controls.Add(this.createRoomItem);
             this.sidebar.Controls.Add(this.sidebarItem1);
             this.sidebar.Controls.Add(this.pictureBox2);
             this.sidebar.Dock = System.Windows.Forms.DockStyle.Left;
@@ -148,6 +200,7 @@
             this.panel1.Size = new System.Drawing.Size(65, 57);
             this.panel1.TabIndex = 10;
             // 
+<<<<<<< HEAD
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Trivia_Client.Properties.Resources.gear;
@@ -170,6 +223,8 @@
             this.mainProfilePicture.TabStop = false;
             this.mainProfilePicture.Click += new System.EventHandler(this.mainProfilePicture_Click);
             // 
+=======
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             // roomsItem
             // 
             this.roomsItem.Controls.Add(this.roomsIcon);
@@ -178,6 +233,7 @@
             this.roomsItem.Name = "roomsItem";
             this.roomsItem.Size = new System.Drawing.Size(65, 57);
             this.roomsItem.TabIndex = 9;
+<<<<<<< HEAD
             // 
             // roomsIcon
             // 
@@ -189,6 +245,19 @@
             this.roomsIcon.TabIndex = 7;
             this.roomsIcon.TabStop = false;
             // 
+=======
+            // 
+            // createRoomItem
+            // 
+            this.createRoomItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.createRoomItem.Controls.Add(this.createRoomIcon);
+            this.createRoomItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.createRoomItem.Location = new System.Drawing.Point(0, 136);
+            this.createRoomItem.Name = "createRoomItem";
+            this.createRoomItem.Size = new System.Drawing.Size(65, 57);
+            this.createRoomItem.TabIndex = 8;
+            // 
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             // sidebarItem1
             // 
             this.sidebarItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(62)))), ((int)(((byte)(71)))));
@@ -199,6 +268,7 @@
             this.sidebarItem1.Size = new System.Drawing.Size(65, 57);
             this.sidebarItem1.TabIndex = 2;
             // 
+<<<<<<< HEAD
             // sidebarIcon1
             // 
             this.sidebarIcon1.Image = global::Trivia_Client.Properties.Resources.home;
@@ -256,19 +326,22 @@
             this.magshimimLogo.TabIndex = 8;
             this.magshimimLogo.TabStop = false;
             // 
+=======
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             // tabs
             // 
             this.tabs.BackColor = System.Drawing.Color.Transparent;
-            this.tabs.Controls.Add(this.profilePanel);
             this.tabs.Controls.Add(this.mainPanel);
             this.tabs.Controls.Add(this.roomsPanel);
             this.tabs.Controls.Add(this.creRoomPanel);
+            this.tabs.Controls.Add(this.profilePanel);
             this.tabs.Location = new System.Drawing.Point(63, 0);
             this.tabs.Name = "tabs";
             this.tabs.Size = new System.Drawing.Size(856, 541);
             this.tabs.TabIndex = 12;
             this.tabs.Paint += new System.Windows.Forms.PaintEventHandler(this.tabs_Paint);
             // 
+<<<<<<< HEAD
             // profilePanel
             // 
             this.profilePanel.BackColor = System.Drawing.Color.Transparent;
@@ -308,6 +381,8 @@
             this.mainPanel.Size = new System.Drawing.Size(856, 596);
             this.mainPanel.TabIndex = 2;
             // 
+=======
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             // roomsPanel
             // 
             this.roomsPanel.BackColor = System.Drawing.Color.Transparent;
@@ -319,18 +394,6 @@
             this.roomsPanel.Size = new System.Drawing.Size(853, 593);
             this.roomsPanel.TabIndex = 12;
             // 
-            // roomsListRefreshBtn
-            // 
-            this.roomsListRefreshBtn.AutoSize = true;
-            this.roomsListRefreshBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.roomsListRefreshBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(190)))), ((int)(((byte)(202)))));
-            this.roomsListRefreshBtn.Location = new System.Drawing.Point(14, 46);
-            this.roomsListRefreshBtn.Name = "roomsListRefreshBtn";
-            this.roomsListRefreshBtn.Size = new System.Drawing.Size(55, 16);
-            this.roomsListRefreshBtn.TabIndex = 2;
-            this.roomsListRefreshBtn.Text = "Refresh";
-            this.roomsListRefreshBtn.Click += new System.EventHandler(this.roomsListRefreshBtn_Click);
-            // 
             // roomsList
             // 
             this.roomsList.AutoScroll = true;
@@ -339,6 +402,13 @@
             this.roomsList.Name = "roomsList";
             this.roomsList.Size = new System.Drawing.Size(827, 461);
             this.roomsList.TabIndex = 1;
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(856, 596);
+            this.mainPanel.TabIndex = 2;
             // 
             // creRoomPanel
             // 
@@ -476,6 +546,142 @@
             // 
             // transparentControl1
             // 
+<<<<<<< HEAD
+            this.transparentControl1.BackColor = System.Drawing.Color.Transparent;
+            this.transparentControl1.Image = null;
+            this.transparentControl1.Location = new System.Drawing.Point(0, 0);
+            this.transparentControl1.Name = "transparentControl1";
+            this.transparentControl1.Size = new System.Drawing.Size(75, 23);
+            this.transparentControl1.TabIndex = 11;
+            this.transparentControl1.Text = "transparentControl1";
+=======
+            this.profilePanel.BackColor = System.Drawing.Color.Transparent;
+            this.profilePanel.Controls.Add(this.onlineStatusCircle);
+            this.profilePanel.Controls.Add(this.profilePanelPic);
+            this.profilePanel.Location = new System.Drawing.Point(0, 0);
+            this.profilePanel.Name = "profilePanel";
+            this.profilePanel.Size = new System.Drawing.Size(856, 593);
+            this.profilePanel.TabIndex = 11;
+            this.profilePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.profilePanel_Paint);
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
+            // 
+            // exitBtn
+            // 
+            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
+            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitBtn.Location = new System.Drawing.Point(877, 12);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(30, 30);
+            this.exitBtn.TabIndex = 6;
+            this.exitBtn.TabStop = false;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
+            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Trivia_Client.Properties.Resources.gear;
+            this.pictureBox1.Location = new System.Drawing.Point(24, 15);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
+            // mainProfilePicture
+            // 
+            this.mainProfilePicture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.mainProfilePicture.Image = global::Trivia_Client.Properties.Resources.pp;
+            this.mainProfilePicture.Location = new System.Drawing.Point(8, 15);
+            this.mainProfilePicture.Name = "mainProfilePicture";
+            this.mainProfilePicture.Size = new System.Drawing.Size(49, 49);
+            this.mainProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.mainProfilePicture.TabIndex = 10;
+            this.mainProfilePicture.TabStop = false;
+            this.mainProfilePicture.Click += new System.EventHandler(this.mainProfilePicture_Click);
+            // 
+            // roomsIcon
+            // 
+            this.roomsIcon.Image = global::Trivia_Client.Properties.Resources.rooms;
+            this.roomsIcon.Location = new System.Drawing.Point(24, 15);
+            this.roomsIcon.Name = "roomsIcon";
+            this.roomsIcon.Size = new System.Drawing.Size(25, 25);
+            this.roomsIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.roomsIcon.TabIndex = 7;
+            this.roomsIcon.TabStop = false;
+            // 
+            // createRoomIcon
+            // 
+            this.createRoomIcon.Image = global::Trivia_Client.Properties.Resources.createRoom;
+            this.createRoomIcon.Location = new System.Drawing.Point(17, 14);
+            this.createRoomIcon.Name = "createRoomIcon";
+            this.createRoomIcon.Size = new System.Drawing.Size(32, 25);
+            this.createRoomIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.createRoomIcon.TabIndex = 7;
+            this.createRoomIcon.TabStop = false;
+            // 
+            // sidebarIcon1
+            // 
+            this.sidebarIcon1.Image = global::Trivia_Client.Properties.Resources.home;
+            this.sidebarIcon1.Location = new System.Drawing.Point(24, 16);
+            this.sidebarIcon1.Name = "sidebarIcon1";
+            this.sidebarIcon1.Size = new System.Drawing.Size(25, 25);
+            this.sidebarIcon1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sidebarIcon1.TabIndex = 7;
+            this.sidebarIcon1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox2.Image = global::Trivia_Client.Properties.Resources.io;
+            this.pictureBox2.InitialImage = null;
+            this.pictureBox2.Location = new System.Drawing.Point(17, 548);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(31, 31);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // magshimimLogo
+            // 
+            this.magshimimLogo.Image = global::Trivia_Client.Properties.Resources.magshimim;
+            this.magshimimLogo.Location = new System.Drawing.Point(784, 547);
+            this.magshimimLogo.Name = "magshimimLogo";
+            this.magshimimLogo.Size = new System.Drawing.Size(114, 29);
+            this.magshimimLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.magshimimLogo.TabIndex = 8;
+            this.magshimimLogo.TabStop = false;
+            // 
+<<<<<<< HEAD
+=======
+            // profilePanelPic
+            // 
+            this.profilePanelPic.Location = new System.Drawing.Point(343, 21);
+            this.profilePanelPic.Name = "profilePanelPic";
+            this.profilePanelPic.Size = new System.Drawing.Size(100, 100);
+            this.profilePanelPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.profilePanelPic.TabIndex = 0;
+            this.profilePanelPic.TabStop = false;
+            this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
+            // 
+            // roomsListRefreshBtn
+            // 
+            this.roomsListRefreshBtn.AutoSize = true;
+            this.roomsListRefreshBtn.Font = new System.Drawing.Font("Open Sans Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.roomsListRefreshBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(190)))), ((int)(((byte)(202)))));
+            this.roomsListRefreshBtn.Location = new System.Drawing.Point(14, 46);
+            this.roomsListRefreshBtn.Name = "roomsListRefreshBtn";
+            this.roomsListRefreshBtn.Size = new System.Drawing.Size(53, 18);
+            this.roomsListRefreshBtn.TabIndex = 2;
+            this.roomsListRefreshBtn.Text = "Refresh";
+            this.roomsListRefreshBtn.Click += new System.EventHandler(this.roomsListRefreshBtn_Click);
+            // 
+            // transparentControl1
+            // 
             this.transparentControl1.BackColor = System.Drawing.Color.Transparent;
             this.transparentControl1.Image = null;
             this.transparentControl1.Location = new System.Drawing.Point(0, 0);
@@ -494,6 +700,7 @@
             this.onlineStatusCircle.TabIndex = 1;
             this.onlineStatusCircle.Text = "transparentControl2";
             // 
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             // MainLogged
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -513,15 +720,18 @@
             this.createRoomItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).EndInit();
             this.roomsItem.ResumeLayout(false);
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).EndInit();
             this.sidebarItem1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
+=======
+            this.createRoomItem.ResumeLayout(false);
+            this.sidebarItem1.ResumeLayout(false);
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             this.tabs.ResumeLayout(false);
             this.profilePanel.ResumeLayout(false);
             this.profilePanel.PerformLayout();
@@ -538,6 +748,19 @@
             this.numPlayersWrap.PerformLayout();
             this.roomNameWrap.ResumeLayout(false);
             this.roomNameWrap.PerformLayout();
+<<<<<<< HEAD
+=======
+            this.profilePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
+>>>>>>> parent of 2c200a2... [client]get personal info to client.
             this.ResumeLayout(false);
 
         }
@@ -578,6 +801,5 @@
         private System.Windows.Forms.Panel roomsPanel;
         private System.Windows.Forms.Panel roomsList;
         private System.Windows.Forms.Label roomsListRefreshBtn;
-        private System.Windows.Forms.Label label1;
     }
 }
