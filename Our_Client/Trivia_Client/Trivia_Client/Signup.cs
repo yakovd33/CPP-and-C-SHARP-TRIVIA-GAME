@@ -143,7 +143,10 @@ namespace Trivia_Client
                     if (errorMsg == "success") {
                         // Signup success
                         loginFeedbackLabel.Hide();
-                        this.Close();
+                        this.Hide();
+                        Client_game client_game = new Client_game(client, serverEndPoint, clientStream);
+                        client_game.ShowDialog();
+                        //this.Close();
                     }
                     else {
                         loginFeedbackLabel.Visible = Visible;

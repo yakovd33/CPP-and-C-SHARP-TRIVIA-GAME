@@ -30,22 +30,24 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainLogged));
             this.panel2 = new System.Windows.Forms.Panel();
-            this.exitBtn = new System.Windows.Forms.PictureBox();
-            this.sidebarActivePanelIndicator = new System.Windows.Forms.Panel();
             this.sidebar = new System.Windows.Forms.Panel();
+            this.createRoomItem = new System.Windows.Forms.Panel();
+            this.createRoomIcon = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.transparentControl1 = new TransparentControl();
             this.mainProfilePicture = new System.Windows.Forms.PictureBox();
             this.roomsItem = new System.Windows.Forms.Panel();
             this.roomsIcon = new System.Windows.Forms.PictureBox();
-            this.createRoomItem = new System.Windows.Forms.Panel();
-            this.createRoomIcon = new System.Windows.Forms.PictureBox();
             this.sidebarItem1 = new System.Windows.Forms.Panel();
             this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.sidebarActivePanelIndicator = new System.Windows.Forms.Panel();
             this.magshimimLogo = new System.Windows.Forms.PictureBox();
             this.tabs = new System.Windows.Forms.Panel();
+            this.profilePanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.profilePanelPic = new System.Windows.Forms.PictureBox();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.roomsPanel = new System.Windows.Forms.Panel();
             this.roomsListRefreshBtn = new System.Windows.Forms.Label();
@@ -61,33 +63,31 @@
             this.numPlayersBox = new System.Windows.Forms.TextBox();
             this.roomNameWrap = new System.Windows.Forms.Panel();
             this.roomNameBox = new System.Windows.Forms.TextBox();
-            this.profilePanel = new System.Windows.Forms.Panel();
+            this.transparentControl1 = new TransparentControl();
             this.onlineStatusCircle = new TransparentControl();
-            this.profilePanelPic = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             this.sidebar.SuspendLayout();
+            this.createRoomItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).BeginInit();
             this.roomsItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).BeginInit();
-            this.createRoomItem.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).BeginInit();
             this.sidebarItem1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
             this.tabs.SuspendLayout();
+            this.profilePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
             this.roomsPanel.SuspendLayout();
             this.creRoomPanel.SuspendLayout();
             this.questionsTimeWrap.SuspendLayout();
             this.numQuestWrap.SuspendLayout();
             this.numPlayersWrap.SuspendLayout();
             this.roomNameWrap.SuspendLayout();
-            this.profilePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -102,29 +102,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(919, 596);
             this.panel2.TabIndex = 8;
-            // 
-            // exitBtn
-            // 
-            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
-            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitBtn.Location = new System.Drawing.Point(877, 12);
-            this.exitBtn.Name = "exitBtn";
-            this.exitBtn.Size = new System.Drawing.Size(30, 30);
-            this.exitBtn.TabIndex = 6;
-            this.exitBtn.TabStop = false;
-            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
-            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
-            // 
-            // sidebarActivePanelIndicator
-            // 
-            this.sidebarActivePanelIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(210)))), ((int)(((byte)(139)))));
-            this.sidebarActivePanelIndicator.Location = new System.Drawing.Point(0, 79);
-            this.sidebarActivePanelIndicator.Name = "sidebarActivePanelIndicator";
-            this.sidebarActivePanelIndicator.Size = new System.Drawing.Size(5, 57);
-            this.sidebarActivePanelIndicator.TabIndex = 7;
             // 
             // sidebar
             // 
@@ -141,6 +118,26 @@
             this.sidebar.Name = "sidebar";
             this.sidebar.Size = new System.Drawing.Size(65, 596);
             this.sidebar.TabIndex = 0;
+            // 
+            // createRoomItem
+            // 
+            this.createRoomItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.createRoomItem.Controls.Add(this.createRoomIcon);
+            this.createRoomItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.createRoomItem.Location = new System.Drawing.Point(0, 136);
+            this.createRoomItem.Name = "createRoomItem";
+            this.createRoomItem.Size = new System.Drawing.Size(65, 57);
+            this.createRoomItem.TabIndex = 8;
+            // 
+            // createRoomIcon
+            // 
+            this.createRoomIcon.Image = global::Trivia_Client.Properties.Resources.createRoom;
+            this.createRoomIcon.Location = new System.Drawing.Point(17, 14);
+            this.createRoomIcon.Name = "createRoomIcon";
+            this.createRoomIcon.Size = new System.Drawing.Size(32, 25);
+            this.createRoomIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.createRoomIcon.TabIndex = 7;
+            this.createRoomIcon.TabStop = false;
             // 
             // panel1
             // 
@@ -160,16 +157,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
-            // 
-            // transparentControl1
-            // 
-            this.transparentControl1.BackColor = System.Drawing.Color.Transparent;
-            this.transparentControl1.Image = null;
-            this.transparentControl1.Location = new System.Drawing.Point(0, 0);
-            this.transparentControl1.Name = "transparentControl1";
-            this.transparentControl1.Size = new System.Drawing.Size(75, 23);
-            this.transparentControl1.TabIndex = 11;
-            this.transparentControl1.Text = "transparentControl1";
             // 
             // mainProfilePicture
             // 
@@ -191,7 +178,6 @@
             this.roomsItem.Name = "roomsItem";
             this.roomsItem.Size = new System.Drawing.Size(65, 57);
             this.roomsItem.TabIndex = 9;
-            this.roomsItem.Paint += new System.Windows.Forms.PaintEventHandler(this.roomsItem_Paint);
             // 
             // roomsIcon
             // 
@@ -202,26 +188,6 @@
             this.roomsIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.roomsIcon.TabIndex = 7;
             this.roomsIcon.TabStop = false;
-            // 
-            // createRoomItem
-            // 
-            this.createRoomItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.createRoomItem.Controls.Add(this.createRoomIcon);
-            this.createRoomItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.createRoomItem.Location = new System.Drawing.Point(0, 136);
-            this.createRoomItem.Name = "createRoomItem";
-            this.createRoomItem.Size = new System.Drawing.Size(65, 57);
-            this.createRoomItem.TabIndex = 8;
-            // 
-            // createRoomIcon
-            // 
-            this.createRoomIcon.Image = global::Trivia_Client.Properties.Resources.createRoom;
-            this.createRoomIcon.Location = new System.Drawing.Point(17, 14);
-            this.createRoomIcon.Name = "createRoomIcon";
-            this.createRoomIcon.Size = new System.Drawing.Size(32, 25);
-            this.createRoomIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.createRoomIcon.TabIndex = 7;
-            this.createRoomIcon.TabStop = false;
             // 
             // sidebarItem1
             // 
@@ -257,6 +223,29 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
+            // exitBtn
+            // 
+            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
+            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitBtn.Location = new System.Drawing.Point(877, 12);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(30, 30);
+            this.exitBtn.TabIndex = 6;
+            this.exitBtn.TabStop = false;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
+            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
+            // 
+            // sidebarActivePanelIndicator
+            // 
+            this.sidebarActivePanelIndicator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(210)))), ((int)(((byte)(139)))));
+            this.sidebarActivePanelIndicator.Location = new System.Drawing.Point(0, 79);
+            this.sidebarActivePanelIndicator.Name = "sidebarActivePanelIndicator";
+            this.sidebarActivePanelIndicator.Size = new System.Drawing.Size(5, 57);
+            this.sidebarActivePanelIndicator.TabIndex = 7;
+            // 
             // magshimimLogo
             // 
             this.magshimimLogo.Image = global::Trivia_Client.Properties.Resources.magshimim;
@@ -279,6 +268,38 @@
             this.tabs.Size = new System.Drawing.Size(856, 541);
             this.tabs.TabIndex = 12;
             this.tabs.Paint += new System.Windows.Forms.PaintEventHandler(this.tabs_Paint);
+            // 
+            // profilePanel
+            // 
+            this.profilePanel.BackColor = System.Drawing.Color.Transparent;
+            this.profilePanel.Controls.Add(this.label1);
+            this.profilePanel.Controls.Add(this.onlineStatusCircle);
+            this.profilePanel.Controls.Add(this.profilePanelPic);
+            this.profilePanel.Location = new System.Drawing.Point(0, 0);
+            this.profilePanel.Name = "profilePanel";
+            this.profilePanel.Size = new System.Drawing.Size(856, 593);
+            this.profilePanel.TabIndex = 11;
+            this.profilePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.profilePanel_Paint);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(128, 193);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(24, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "info";
+            this.label1.UseMnemonic = false;
+            // 
+            // profilePanelPic
+            // 
+            this.profilePanelPic.Location = new System.Drawing.Point(343, 21);
+            this.profilePanelPic.Name = "profilePanelPic";
+            this.profilePanelPic.Size = new System.Drawing.Size(100, 100);
+            this.profilePanelPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.profilePanelPic.TabIndex = 0;
+            this.profilePanelPic.TabStop = false;
+            this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
             // 
             // mainPanel
             // 
@@ -453,17 +474,15 @@
             this.roomNameBox.Text = "Room Name";
             this.roomNameBox.Enter += new System.EventHandler(this.roomNameBox_Enter);
             // 
-            // profilePanel
+            // transparentControl1
             // 
-            this.profilePanel.BackColor = System.Drawing.Color.Transparent;
-            this.profilePanel.Controls.Add(this.label1);
-            this.profilePanel.Controls.Add(this.onlineStatusCircle);
-            this.profilePanel.Controls.Add(this.profilePanelPic);
-            this.profilePanel.Location = new System.Drawing.Point(0, 0);
-            this.profilePanel.Name = "profilePanel";
-            this.profilePanel.Size = new System.Drawing.Size(856, 593);
-            this.profilePanel.TabIndex = 11;
-            this.profilePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.profilePanel_Paint);
+            this.transparentControl1.BackColor = System.Drawing.Color.Transparent;
+            this.transparentControl1.Image = null;
+            this.transparentControl1.Location = new System.Drawing.Point(0, 0);
+            this.transparentControl1.Name = "transparentControl1";
+            this.transparentControl1.Size = new System.Drawing.Size(75, 23);
+            this.transparentControl1.TabIndex = 11;
+            this.transparentControl1.Text = "transparentControl1";
             // 
             // onlineStatusCircle
             // 
@@ -474,26 +493,6 @@
             this.onlineStatusCircle.Size = new System.Drawing.Size(15, 15);
             this.onlineStatusCircle.TabIndex = 1;
             this.onlineStatusCircle.Text = "transparentControl2";
-            // 
-            // profilePanelPic
-            // 
-            this.profilePanelPic.Location = new System.Drawing.Point(343, 21);
-            this.profilePanelPic.Name = "profilePanelPic";
-            this.profilePanelPic.Size = new System.Drawing.Size(100, 100);
-            this.profilePanelPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.profilePanelPic.TabIndex = 0;
-            this.profilePanelPic.TabStop = false;
-            this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(128, 193);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(24, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "info";
-            this.label1.UseMnemonic = false;
             // 
             // MainLogged
             // 
@@ -510,20 +509,23 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainLogged";
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             this.sidebar.ResumeLayout(false);
+            this.createRoomItem.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).EndInit();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).EndInit();
             this.roomsItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).EndInit();
-            this.createRoomItem.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).EndInit();
             this.sidebarItem1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
             this.tabs.ResumeLayout(false);
+            this.profilePanel.ResumeLayout(false);
+            this.profilePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
             this.roomsPanel.ResumeLayout(false);
             this.roomsPanel.PerformLayout();
             this.creRoomPanel.ResumeLayout(false);
@@ -536,9 +538,6 @@
             this.numPlayersWrap.PerformLayout();
             this.roomNameWrap.ResumeLayout(false);
             this.roomNameWrap.PerformLayout();
-            this.profilePanel.ResumeLayout(false);
-            this.profilePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
             this.ResumeLayout(false);
 
         }

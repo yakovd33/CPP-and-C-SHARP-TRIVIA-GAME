@@ -410,11 +410,12 @@ return false;
 }
 
 bool TriviaServer::handleCreateRoom(RecievedMessage * msg) {
+	_roomIdSequence += 1;//debug
 	string name = msg->getValues().find("name")->second;
 	int maxUsers = atoi(msg->getValues().find("max_users")->second.c_str());
 	int questionTime = atoi(msg->getValues().find("question_time")->second.c_str());
 	int questionsNumber = atoi(msg->getValues().find("questions_number")->second.c_str());
-
+	cout << "check:" <<name << " " << maxUsers << " " << questionTime << " " << questionsNumber << endl;//debug
 	User* user = getUserBySocket(msg->getSock());
 	cout << "user: " << user << endl;
 	Room* room = new Room(maxUsers, questionTime, questionsNumber, name, _roomIdSequence);
@@ -423,9 +424,10 @@ bool TriviaServer::handleCreateRoom(RecievedMessage * msg) {
 
 	if (_roomsList.insert(make_pair(_roomIdSequence, room)).second == false) { // Insertion failed
 		sendMessageToSocket(msg->getSock(), "1141"); // Fail
+		cout << "not success\n";
 		return false;
 	}
-
+	cout << "success\n";
 	_roomIdSequence++;
 	sendMessageToSocket(msg->getSock(), "1140"); // Success
 	return true;

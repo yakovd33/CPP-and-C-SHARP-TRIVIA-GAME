@@ -246,11 +246,6 @@ namespace Trivia_Client
             sendMessageToServer(message);
         }
 
-        private void profilePanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void roomNameBox_Enter(object sender, EventArgs e)
         {
             if (roomNameBox.Text == "Room Name")
@@ -318,16 +313,17 @@ namespace Trivia_Client
                     Console.WriteLine(message);
                     sendMessageToServer(message);
                     string resultCode = getResultFromServer(4);
-                    string errorMsg = protocol.getCodeErrorMsg(resultCode);
-                    if (errorMsg == "success")
+                    //string errorMsg = protocol.getCodeErrorMsg(resultCode);
+                    if (resultCode == "1140")//success  ///errorMsg == "success")
                     {
                         // Login
                         CreateRoomFeedbackLabel.Hide();
+
                     }
-                    else
+                    else//1141 = fail
                     {
                         CreateRoomFeedbackLabel.Visible = Visible;
-                        CreateRoomFeedbackLabel.Text = errorMsg;
+                        CreateRoomFeedbackLabel.Text = "fail";//errorMsg;
                     }
                 }
                 catch (Exception e)
@@ -482,7 +478,7 @@ namespace Trivia_Client
             listRooms();
         }
 
-        private void roomsItem_Paint(object sender, PaintEventArgs e)
+        private void profilePanel_Paint(object sender, PaintEventArgs e)
         {
 
         }

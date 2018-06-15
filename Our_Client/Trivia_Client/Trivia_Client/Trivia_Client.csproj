@@ -49,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
+    <Compile Include="client_game.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="client_game.Designer.cs">
+      <DependentUpon>client_game.cs</DependentUpon>
+    </Compile>
     <Compile Include="forget_password.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +85,9 @@
     <Compile Include="TransparentControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="client_game.resx">
+      <DependentUpon>client_game.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forget_password.resx">
       <DependentUpon>forget_password.cs</DependentUpon>
     </EmbeddedResource>
