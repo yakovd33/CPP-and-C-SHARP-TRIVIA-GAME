@@ -114,6 +114,7 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 		addRecievedMessage(currRcvMsg);
 
 	} catch (const std::exception& e) {
+		// Exit
 		//std::cout << "Exception was catch in function clientHandler. socket=" << client_socket << ", what=" << e.what() << std::endl;
 		currRcvMsg = buildRecieveMessage(client_socket, "299"); // Handle a socket disconnection
 		addRecievedMessage(currRcvMsg);
@@ -193,6 +194,12 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 	{
 		int emailLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
 		values.insert(make_pair("email", Helper::getStringPartFromSocket(client_socket, emailLength).c_str()));
+	}
+
+	if (msgCode == "419") {
+		// Get user profile picture by username
+		int usernameLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		values.insert(make_pair("username", Helper::getStringPartFromSocket(client_socket, usernameLength).c_str()));
 	}
 
 	if (msgCode == "381") {
@@ -276,6 +283,7 @@ User* TriviaServer::handleSignin(RecievedMessage * msg) {
 				// Successful Login
 				_connectedUsers.insert(make_pair(msg->getSock(), new User(msg->getValues().find("username")->second, msg->getSock())));
 				sendMessageToSocket(msg->getSock(), "1020");
+				cout << "successsss" << endl;
 			} else {
 				sendMessageToSocket(msg->getSock(), "1022"); // User is already connected
 			}
@@ -295,10 +303,13 @@ void TriviaServer::handleSignout(RecievedMessage * msg) {
 
 		if (room) {
 			room->closeRoom(user);
+			//room->leaveRoom(user);
+
+			// Remove user from room list
 			room->leaveRoom(user);
 		}
 	}
-	
+
 	// TODO Close game
 	
 	safeDeleteUser(msg->getSock()); // Remove users from connected users
@@ -350,18 +361,22 @@ bool TriviaServer::handleJoinRoom(RecievedMessage * msg) {
 	Room* room = getRoomById(roomId);
 	User* user = getUserBySocket(msg->getSock());
 
-	if (room) {
-		if (room->joinRoom(user)) {
-			// Success
-			string message = "1100";
-			message += string(2 - to_string(room->getQuestionsNo()).length(), '0') + to_string(room->getQuestionsNo());
-			message += string(2 - to_string(room->getQuestionTime()).length(), '0') + to_string(room->getQuestionTime());
-			sendMessageToSocket(msg->getSock(), message);
+	if (!user->getRoomId()) {
+		if (room) {
+			if (room->joinRoom(user)) {
+				// Success
+				string message = "1100";
+				message += string(2 - to_string(room->getQuestionsNo()).length(), '0') + to_string(room->getQuestionsNo());
+				message += string(2 - to_string(room->getQuestionTime()).length(), '0') + to_string(room->getQuestionTime());
+				sendMessageToSocket(msg->getSock(), message);
+			} else {
+				sendMessageToSocket(msg->getSock(), "1102"); // Unsuccessful join
+			}
 		} else {
-			sendMessageToSocket(msg->getSock(), "1102"); // Unsuccessful join
+			sendMessageToSocket(msg->getSock(), "1102"); // Room does not exist
 		}
 	} else {
-		sendMessageToSocket(msg->getSock(), "1102"); // Room does not exist
+		sendMessageToSocket(msg->getSock(), "1102"); // User is already in room
 	}
 
 	return false;
@@ -399,7 +414,9 @@ bool TriviaServer::handleLeaveRoom(RecievedMessage * msg) {
 		user->leaveRoom();
 		
 		if (room) {
-			room->getUsers().erase(std::remove(room->getUsers().begin(), room->getUsers().end(), user), room->getUsers().end());
+			vector<User*> users = room->getUsers();
+			users.erase(std::remove(users.begin(), users.end(), user), users.end());
+			room->setUsers(users);
 			sendMessageToSocket(msg->getSock(), "1120");
 		} else {
 			// Room not found
@@ -517,19 +534,33 @@ void TriviaServer::handleGetBestScores(RecievedMessage * msg) {
 
 void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
 	User* user = getUserBySocket(msg->getSock());
-	sendMessageToSocket(msg->getSock(), _db->getPersonalStatus(user->getUsername()));
+	
+	if (user) {
+		cout << "lalala" << endl;
+		sendMessageToSocket(msg->getSock(), _db->getPersonalStatus(user->getUsername()));
+	}
 }
 
 void TriviaServer::handleGetProfilePic(RecievedMessage * msg) {
 	string picture_url = _db->getUserProfilePicUrlByUsername(getUserBySocket(msg->getSock())->getUsername());
 	string picture_length = to_string(picture_url.length());
 	picture_length = string(3 - picture_length.length(), '0') + picture_length;
+	cout << string("189" + picture_length + picture_url) << endl;
 	sendMessageToSocket(msg->getSock(), string("189" + picture_length + picture_url));
 }
 
 void TriviaServer::handleChnageProfilePic(RecievedMessage * msg) {
 	cout << "url: " << msg->getValues().find("url")->second << endl;
-	_db->updateUserProfilePicByUsername(getUserBySocket(msg->getSock())->getUsername(), msg->getValues().find("url")->second);
+	_db->updateUserProfilePicByUsername("830" + getUserBySocket(msg->getSock())->getUsername(), msg->getValues().find("url")->second);
+}
+
+void TriviaServer::handleGetUserProfilePicByUsername(RecievedMessage * msg) {
+	string picture_url = _db->getUserProfilePicUrlByUsername(msg->getValues().find("username")->second);
+	string picture_length = to_string(picture_url.length());
+	picture_length = string(3 - picture_length.length(), '0') + picture_length;
+	string message = string("189" + picture_length + picture_url);
+	cout << message << endl;
+	sendMessageToSocket(msg->getSock(), string("189" + picture_length + picture_url));
 }
 
 Room * TriviaServer::getRoomById(int id) {
@@ -577,7 +608,7 @@ void TriviaServer::handleRecievedMessages()
 	SOCKET clientSock = 0;
 	string userName;
 
-	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381" };
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419" };
 
 	while (true) {
 		try {
@@ -658,12 +689,15 @@ void TriviaServer::handleRecievedMessages()
 					}
 
 					if (msgCode == "299") {
-						cout << "exit" << endl;
 						handleSignout(currMessage);
 					}
 
 					if (msgCode == "666") {
 						handleForgot_pass(currMessage);
+					}
+
+					if (msgCode == "419") {
+						handleGetUserProfilePicByUsername(currMessage);
 					}
 
 					if (msgCode == "543") {

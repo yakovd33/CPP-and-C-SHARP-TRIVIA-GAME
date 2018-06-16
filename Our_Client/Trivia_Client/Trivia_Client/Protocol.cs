@@ -20,6 +20,10 @@ namespace Trivia_Client
             errorStr.Add("1042", "Username is already exists");
             errorStr.Add("1043", "Username is illegal");
             errorStr.Add("1044", "Other");
+            errorStr.Add("1100", "success");
+            errorStr.Add("1101", "Room is full");
+            errorStr.Add("1102", "Room does not exist or other reason");
+            errorStr.Add("1120", "success");
         }
 
         public string getCodeErrorMsg(string code) {

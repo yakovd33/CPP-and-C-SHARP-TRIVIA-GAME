@@ -27,6 +27,8 @@ namespace Trivia_Client
         NetworkStream clientStream;
         Protocol protocol = new Protocol();
         string fileDialogPath;
+        int currentRoomId = 0;
+        bool inRoom = false;
 
         public MainLogged(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream) {
             InitializeComponent();
@@ -109,14 +111,15 @@ namespace Trivia_Client
             createRoomIcon.Click += new EventHandler(SidebarItemClick);
             roomsItem.Click += new EventHandler(SidebarItemClick);
             sidebarIcon1.Click += new EventHandler(SidebarItemClick);
-            roomsIcon.Click += new EventHandler(SidebarItemClick);            
+            roomsIcon.Click += new EventHandler(SidebarItemClick);
+            leadeboardItem.Click += new EventHandler(SidebarItemClick);
+            leadeboardItemIcon.Click += new EventHandler(SidebarItemClick);
         }
 
-        private void SidebarItemClick(object sender, EventArgs e)
-        {
+        private void SidebarItemClick(object sender, EventArgs e) {
             Control ctrl = sender as Control;
 
-            Control[] sidebarItems = { sidebarItem1, createRoomItem, roomsItem };
+            Control[] sidebarItems = { sidebarItem1, createRoomItem, roomsItem, leadeboardItem };
             for (int i = 0; i < sidebarItems.Length; i++){
                 sidebarItems[i].BackColor = System.Drawing.Color.FromArgb(1, 48, 56, 65);
             }
@@ -139,6 +142,13 @@ namespace Trivia_Client
             } else if (ctrl.Name == "sidebarItem3" || ctrl.Name == "sidebarIcon3") {
                 roomsItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = roomsItem.Location.Y;
+            } else  if (ctrl.Name == "leadeboardItem" || ctrl.Name == "leadeboardItemIcon") {
+                leadeboardItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = leadeboardItem.Location.Y;
+
+                getLeaderboard();
+
+                leadboardPanel.BringToFront();
             }
 
             Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
@@ -176,6 +186,19 @@ namespace Trivia_Client
             return picture_url;
         }
 
+        string getUserProfilePicByUsername(string username) {
+            string picture_url = "https://i.imgur.com/oeKRbhC.png";
+
+            sendMessageToServer("419" + username.Length.ToString("D2") + username);
+
+            if (getResultFromServer(3) == "189") {
+                int pictureLength = Int32.Parse(getResultFromServer(3));
+                picture_url = getResultFromServer(pictureLength);
+            }
+
+            return picture_url;
+        }
+
         string uploadImageToServer (string path) {
             string myFile = path;
             WebClient webClient = new WebClient();
@@ -202,19 +225,20 @@ namespace Trivia_Client
         }
 
         private void mainProfilePicture_Click(object sender, EventArgs e) {
-            profilePanel.Visible = true;
             profilePanel.BringToFront();
             profilePanelPic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, profilePanelPic.Width, profilePanelPic.Height, 100, 100));
-            //get info about player
-            sendMessageToServer("225");
-            getResultFromServer(3);//get rid of msg num
-            string numGames = Int32.Parse(getResultFromServer(4)).ToString();
-            string R_ans = Int32.Parse(getResultFromServer(6)).ToString();
-            string W_ans = Int32.Parse(getResultFromServer(6)).ToString();
-            string AVG_t_f = Int32.Parse(getResultFromServer(2)).ToString();
-            string AVG_t_s = Int32.Parse(getResultFromServer(2)).ToString();
-            label1.Text = "Number of games: " + numGames + "\nRight answers: "+ R_ans + "\nWrong answers: "+ W_ans + "\nAVG time to answer: "+ AVG_t_f +"."+ AVG_t_s;
             
+            // Get personal status
+            sendMessageToServer("225");
+
+            if (getResultFromServer(3) == "126") {
+                string numGames = Int32.Parse(getResultFromServer(4)).ToString();
+                string R_ans = Int32.Parse(getResultFromServer(6)).ToString();
+                string W_ans = Int32.Parse(getResultFromServer(6)).ToString();
+                string AVG_t_f = Int32.Parse(getResultFromServer(2)).ToString();
+                string AVG_t_s = Int32.Parse(getResultFromServer(2)).ToString();
+                label1.Text = "Number of games: " + numGames + "\nRight answers: " + R_ans + "\nWrong answers: " + W_ans + "\nAVG time to answer: " + AVG_t_f + "." + AVG_t_s;
+            }
         }
 
         private void profilePanelPic_Click(object sender, EventArgs e) {
@@ -315,13 +339,11 @@ namespace Trivia_Client
                     int timeQuestions = Convert.ToInt32(questionsTime);
                     string message = "213" + roomName.Length.ToString("D2") + roomName + numPlayers
                         + questionsNum.ToString("D2") + timeQuestions.ToString("D2"); //D2 for 2 decimal digits format.
-                    Console.WriteLine(message);
                     sendMessageToServer(message);
                     string resultCode = getResultFromServer(4);
                     string errorMsg = protocol.getCodeErrorMsg(resultCode);
                     if (errorMsg == "success")
                     {
-                        // Login
                         CreateRoomFeedbackLabel.Hide();
                     }
                     else
@@ -380,6 +402,7 @@ namespace Trivia_Client
                     originalLocations[i] = roomItem.Location;
 
                     Label roomItemName = new Label();
+                    roomItemName.Name = "roomItemName";
                     roomItemName.Font = new Font("Open Sans Light", 12);
                     roomItemName.ForeColor = Color.FromArgb(173, 190, 202);
                     roomItemName.Location = new Point(10, 21);
@@ -393,6 +416,89 @@ namespace Trivia_Client
                     joinBtn.Image = Trivia_Client.Properties.Resources.join_btn;
                     joinBtn.SizeMode = PictureBoxSizeMode.StretchImage;
                     joinBtn.Cursor = Cursors.Hand;
+
+                    joinBtn.Click += delegate (object sender, EventArgs e) {
+                        currentRoomId = Int32.Parse(((PictureBox) sender).Parent.Controls["roomIdLabel"].Text);
+
+                        sendMessageToServer("209" + currentRoomId.ToString("D2"));
+
+                        string roomJoinRequestResponse = getResultFromServer(4);
+                        string roomJoinRequestResponseMsg = protocol.getCodeErrorMsg(roomJoinRequestResponse);
+                        
+                        if (roomJoinRequestResponseMsg == "success") {
+                            // Server joined user to room
+                            inRoom = true;
+
+                            // Disable sidebar tabs
+                            sidebarItem1.Enabled = false;
+                            sidebarIcon1.Enabled = false;
+                            createRoomItem.Enabled = false;
+                            createRoomIcon.Enabled = false;
+                            roomsItem.Enabled = false;
+                            roomsIcon.Enabled = false;
+
+                            roomPanel.BringToFront();
+                            roomNameLabel.Text = ((PictureBox)sender).Parent.Controls["roomItemName"].Text;
+                            int questionNumber = Int32.Parse(getResultFromServer(2));
+                            int questionTime = Int32.Parse(getResultFromServer(2));
+
+                            roomNumQuestionsLabel.Text = "Number of questions: " + questionNumber.ToString();
+                            roomTimePerQuestion.Text = "Time per question: " + questionTime.ToString();
+
+                            // Get room players
+                            sendMessageToServer("207" + currentRoomId.ToString());
+
+                            if (getResultFromServer(3) == "108") {
+                                int curRoomNumPlayers = Int32.Parse(getResultFromServer(1));
+                                string[] usernames = new string[curRoomNumPlayers];
+
+                                int curRoomUsersCurYPos = 2;
+                                for (int q = 0; q < curRoomNumPlayers; q++) {
+                                    string usernameLengthStr = getResultFromServer(2);
+                                    int roomCurUsernameLength = Int32.Parse(usernameLengthStr);
+                                    string username = getResultFromServer(roomCurUsernameLength);
+                                    usernames[q] = username;
+
+                                    Label roomUserNameLabel = new Label();
+                                    roomUserNameLabel.Font = new Font("Open Sans Light", 10);
+                                    roomUserNameLabel.ForeColor = Color.FromArgb(173, 190, 202);
+                                    roomUserNameLabel.Text = username;
+                                    roomUserNameLabel.Location = new Point(40, curRoomUsersCurYPos);
+                                    currentRoomUsersList.Controls.Add(roomUserNameLabel);
+                                    curRoomUsersCurYPos += 43;
+                                }
+
+                                int curUserPicYPos = 0;
+                                new Thread(() => {
+                                    for (int q = 0; q < curRoomNumPlayers; q++) {
+                                        sendMessageToServer("419" + usernames[q].Length.ToString("D2") + usernames[q]);
+
+                                        if (getResultFromServer(3) == "189") {
+                                            int pictureLength = Int32.Parse(getResultFromServer(3));
+                                            string profilePicUrl = getResultFromServer(pictureLength);
+
+                                            PictureBox currentUserListUserPic = new PictureBox();
+                                            currentUserListUserPic.Load(profilePicUrl);
+                                            currentUserListUserPic.Height = 30;
+                                            currentUserListUserPic.Width = 30;
+                                            currentUserListUserPic.Location = new Point(0, curUserPicYPos);
+                                            currentUserListUserPic.SizeMode = PictureBoxSizeMode.StretchImage;
+                                            currentRoomUsersList.Invoke((MethodInvoker)delegate {
+                                                currentRoomUsersList.Controls.Add(currentUserListUserPic);
+                                                //currentRoomUsersList.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, 30, 30, 30, 30));
+                                            });
+
+                                            curUserPicYPos += 40;
+                                        }
+                                    }
+                                }).Start();
+                            }
+                        } else {
+                            currentRoomId = 0;
+                            System.Windows.Forms.MessageBox.Show(roomJoinRequestResponseMsg);
+                        }
+                    };
+
                     roomItem.Controls.Add(joinBtn);
 
                     Label roomIdLabel = new Label();
@@ -434,7 +540,6 @@ namespace Trivia_Client
                                 int numPlayers = Int32.Parse(getResultFromServer(1));
 
                                 int usersCurYPos = ((Panel)sender).Location.Y + ((Panel)sender).Height + 10;
-                                Console.WriteLine(usersCurYPos);
                                 for (int q = 0; q < numPlayers; q++) {
                                     int usernameLength = Int32.Parse(getResultFromServer(2));
                                     string username = getResultFromServer(usernameLength);
@@ -482,9 +587,111 @@ namespace Trivia_Client
             listRooms();
         }
 
-        private void roomsItem_Paint(object sender, PaintEventArgs e)
-        {
+        private void roomExitBtn_Click(object sender, EventArgs e) {
+            sendMessageToServer("211");
 
+            if (getResultFromServer(4) == "1120") {
+                // Room leave successful
+                currentRoomId = 0;
+                inRoom = false;
+
+                mainPanel.BringToFront();
+                sidebarItem1.Enabled = true;
+                sidebarIcon1.Enabled = true;
+                createRoomItem.Enabled = true;
+                createRoomIcon.Enabled = true;
+                roomsItem.Enabled = true;
+                roomsIcon.Enabled = true;
+
+                // Go back to main tab
+                Control[] sidebarItems = { sidebarItem1, createRoomItem, roomsItem };
+                for (int i = 0; i < sidebarItems.Length; i++) {
+                    sidebarItems[i].BackColor = System.Drawing.Color.FromArgb(1, 48, 56, 65);
+                }
+
+                int newY = sidebarActivePanelIndicator.Location.Y;
+                sidebarItem1.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = sidebarItem1.Location.Y;
+
+                Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
+                animate.Start(newY);
+            }
+        }
+
+        void getLeaderboard () {
+            firstPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, firstPlacePic.Width, firstPlacePic.Height, firstPlacePic.Height, firstPlacePic.Width));
+            secPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, secPlacePic.Width, secPlacePic.Height, secPlacePic.Height, secPlacePic.Width));
+            thirdPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, thirdPlacePic.Width, thirdPlacePic.Height, thirdPlacePic.Height, thirdPlacePic.Width));
+
+            sendMessageToServer("223");
+
+            bool isFirst = false, isSec = false, isThird = false;
+            string secUsername = "";
+            string firstUsername = "";
+            string thirdUsername = "";
+
+            if (getResultFromServer(3) == "124") {
+                int firstUsernameLength = Int32.Parse(getResultFromServer(2));
+                if (firstUsernameLength > 0) {
+                    // First exists
+                    isFirst = true;
+                    firstUsername = getResultFromServer(firstUsernameLength);
+                    int firstUserScoreCount = Int32.Parse(getResultFromServer(6));
+                    firstPlaceUsername.Text = firstUsername;
+                    firstPlaceScore.Text = firstUserScoreCount.ToString();
+
+                    int secUsernameLength = Int32.Parse(getResultFromServer(2));
+                    if (secUsernameLength > 0) {
+                        // Second exists
+                        isSec = true;
+                        secUsername = getResultFromServer(secUsernameLength);
+                        int secUserScoreCount = Int32.Parse(getResultFromServer(6));
+                        double secProgress = ((double)secUserScoreCount / (double)firstUserScoreCount) * (double)100;
+                        secPlaceUsername.Text = secUsername;
+                        secPlaceScore.Text = secUserScoreCount.ToString();
+                        secPlaceProgress.Width = (int)((double)firstPlaceProgress.Width * ((double)secProgress / (double)100));
+                        Console.WriteLine("sec per " + secProgress / (double)100);
+
+                        int thirdUsernameLength = Int32.Parse(getResultFromServer(2));
+                        if (thirdUsernameLength > 0) {
+                            // Third exists
+                            isThird = true;
+                            thirdUsername = getResultFromServer(thirdUsernameLength);
+                            int thirdUserScoreCount = Int32.Parse(getResultFromServer(6));
+                            lastPlaceUsername.Text = thirdUsername;
+                            lastPlaceScore.Text = thirdUserScoreCount.ToString();
+                            double thirdProgress = ((double)secUserScoreCount / (double)firstUserScoreCount) * (double)100;
+                            thirdPlaceProgress.Width = (int)((double)firstPlaceProgress.Width * ((double)thirdProgress / (double)100));
+                        } else {
+                            getResultFromServer(8);
+                        }
+                    } else {
+                        getResultFromServer(16);
+                    }
+                } else {
+                    getResultFromServer(24);
+                }
+
+                new Thread(() => {
+                    if (isFirst) {
+                        firstPlacePic.Invoke((MethodInvoker)delegate {
+                            firstPlacePic.Load(getUserProfilePicByUsername(firstUsername));
+                        });
+                    }
+
+                    if (isSec) {
+                        secPlacePic.Invoke((MethodInvoker)delegate {
+                            secPlacePic.Load(getUserProfilePicByUsername(secUsername));
+                        });
+                    }
+
+                    if (isThird) {
+                        thirdPlacePic.Invoke((MethodInvoker)delegate {
+                            thirdPlacePic.Load(getUserProfilePicByUsername(thirdUsername));
+                        });
+                    }
+                }).Start();
+            }
         }
     }
 }

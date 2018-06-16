@@ -31,10 +31,15 @@ bool Room::joinRoom(User * user) {
 }
 
 void Room::leaveRoom(User * user) {
+	this->_users.erase(std::remove(this->_users.begin(), this->_users.end(), user), this->_users.end());
 }
 
 vector<User*> Room::getUsers() {
 	return this->_users;
+}
+
+void Room::setUsers(vector<User*> users) {
+	this->_users = users;
 }
 
 string Room::getUsersListMessage() {

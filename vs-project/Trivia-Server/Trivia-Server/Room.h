@@ -13,6 +13,7 @@ public:
 	bool joinRoom(User* user);
 	void leaveRoom(User* user);
 	vector<User*> getUsers();
+	void setUsers(vector<User*> users);
 	string getUsersListMessage();
 	int getQuestionsNo();
 	int getId();
