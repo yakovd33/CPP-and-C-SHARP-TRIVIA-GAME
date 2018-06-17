@@ -330,7 +330,7 @@ namespace Trivia_Client
             string numQuest = numQuestBox.Text;
             string questionsTime = questionsTimeBox.Text;
 
-            if (roomName != "" && numPlayers != "" && numQuest != "" && questionsTime != "" &&
+            if (Int32.Parse(numPlayers) < 10 && Int32.Parse(numPlayers) > 0 && roomName != "" && numPlayers != "" && numQuest != "" && questionsTime != "" &&
                 roomName != "Room Name" && numPlayers != "No. Players" && numQuest != "No. Questions" && questionsTime != "Time Per Question")
             {
                 try
@@ -345,6 +345,16 @@ namespace Trivia_Client
                     if (errorMsg == "success")
                     {
                         CreateRoomFeedbackLabel.Hide();
+                        roomPanel.BringToFront();
+
+                        inRoom = true;
+                        // Get new room id
+                        sendMessageToServer("517");
+                        currentRoomId = Int32.Parse(getResultFromServer(4));
+                        roomNameLabel.Text = roomName;
+                        roomNumQuestionsLabel.Text = "Number of questions: " + numQuest;
+                        roomTimePerQuestion.Text = "Time per question: " + questionsTime;
+                        listRoomUsers();
                     }
                     else
                     {
@@ -360,7 +370,12 @@ namespace Trivia_Client
             else
             {
                 CreateRoomFeedbackLabel.Visible = Visible;
-                CreateRoomFeedbackLabel.Text = "Fields must not be empty.";
+                
+                if (Int32.Parse(numPlayers) >= 10 || Int32.Parse(numPlayers) < 0) {
+                    CreateRoomFeedbackLabel.Text = "Num players needs to be between 1-9.";
+                } else {
+                    CreateRoomFeedbackLabel.Text = "Fields must not be empty.";
+                }
             }
         }
 
@@ -445,54 +460,7 @@ namespace Trivia_Client
                             roomNumQuestionsLabel.Text = "Number of questions: " + questionNumber.ToString();
                             roomTimePerQuestion.Text = "Time per question: " + questionTime.ToString();
 
-                            // Get room players
-                            sendMessageToServer("207" + currentRoomId.ToString());
-
-                            if (getResultFromServer(3) == "108") {
-                                int curRoomNumPlayers = Int32.Parse(getResultFromServer(1));
-                                string[] usernames = new string[curRoomNumPlayers];
-
-                                int curRoomUsersCurYPos = 2;
-                                for (int q = 0; q < curRoomNumPlayers; q++) {
-                                    string usernameLengthStr = getResultFromServer(2);
-                                    int roomCurUsernameLength = Int32.Parse(usernameLengthStr);
-                                    string username = getResultFromServer(roomCurUsernameLength);
-                                    usernames[q] = username;
-
-                                    Label roomUserNameLabel = new Label();
-                                    roomUserNameLabel.Font = new Font("Open Sans Light", 10);
-                                    roomUserNameLabel.ForeColor = Color.FromArgb(173, 190, 202);
-                                    roomUserNameLabel.Text = username;
-                                    roomUserNameLabel.Location = new Point(40, curRoomUsersCurYPos);
-                                    currentRoomUsersList.Controls.Add(roomUserNameLabel);
-                                    curRoomUsersCurYPos += 43;
-                                }
-
-                                int curUserPicYPos = 0;
-                                new Thread(() => {
-                                    for (int q = 0; q < curRoomNumPlayers; q++) {
-                                        sendMessageToServer("419" + usernames[q].Length.ToString("D2") + usernames[q]);
-
-                                        if (getResultFromServer(3) == "189") {
-                                            int pictureLength = Int32.Parse(getResultFromServer(3));
-                                            string profilePicUrl = getResultFromServer(pictureLength);
-
-                                            PictureBox currentUserListUserPic = new PictureBox();
-                                            currentUserListUserPic.Load(profilePicUrl);
-                                            currentUserListUserPic.Height = 30;
-                                            currentUserListUserPic.Width = 30;
-                                            currentUserListUserPic.Location = new Point(0, curUserPicYPos);
-                                            currentUserListUserPic.SizeMode = PictureBoxSizeMode.StretchImage;
-                                            currentRoomUsersList.Invoke((MethodInvoker)delegate {
-                                                currentRoomUsersList.Controls.Add(currentUserListUserPic);
-                                                //currentRoomUsersList.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, 30, 30, 30, 30));
-                                            });
-
-                                            curUserPicYPos += 40;
-                                        }
-                                    }
-                                }).Start();
-                            }
+                            listRoomUsers();
                         } else {
                             currentRoomId = 0;
                             System.Windows.Forms.MessageBox.Show(roomJoinRequestResponseMsg);
@@ -615,6 +583,64 @@ namespace Trivia_Client
 
                 Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
                 animate.Start(newY);
+            }
+        }
+
+        void listRoomUsers () {
+            // Clear current room list
+            currentRoomUsersList.Controls.Clear();
+
+            // Get room players
+            sendMessageToServer("207" + currentRoomId.ToString());
+
+            if (getResultFromServer(3) == "108")
+            {
+                int curRoomNumPlayers = Int32.Parse(getResultFromServer(1));
+                string[] usernames = new string[curRoomNumPlayers];
+
+                int curRoomUsersCurYPos = 2;
+                for (int q = 0; q < curRoomNumPlayers; q++)
+                {
+                    string usernameLengthStr = getResultFromServer(2);
+                    int roomCurUsernameLength = Int32.Parse(usernameLengthStr);
+                    string username = getResultFromServer(roomCurUsernameLength);
+                    usernames[q] = username;
+
+                    Label roomUserNameLabel = new Label();
+                    roomUserNameLabel.Font = new Font("Open Sans Light", 10);
+                    roomUserNameLabel.ForeColor = Color.FromArgb(173, 190, 202);
+                    roomUserNameLabel.Text = username;
+                    roomUserNameLabel.Location = new Point(40, curRoomUsersCurYPos);
+                    currentRoomUsersList.Controls.Add(roomUserNameLabel);
+                    curRoomUsersCurYPos += 43;
+                }
+
+                int curUserPicYPos = 0;
+                new Thread(() => {
+                    for (int q = 0; q < curRoomNumPlayers; q++)
+                    {
+                        sendMessageToServer("419" + usernames[q].Length.ToString("D2") + usernames[q]);
+
+                        if (getResultFromServer(3) == "189")
+                        {
+                            int pictureLength = Int32.Parse(getResultFromServer(3));
+                            string profilePicUrl = getResultFromServer(pictureLength);
+
+                            PictureBox currentUserListUserPic = new PictureBox();
+                            currentUserListUserPic.Load(profilePicUrl);
+                            currentUserListUserPic.Height = 30;
+                            currentUserListUserPic.Width = 30;
+                            currentUserListUserPic.Location = new Point(0, curUserPicYPos);
+                            currentUserListUserPic.SizeMode = PictureBoxSizeMode.StretchImage;
+                            currentRoomUsersList.Invoke((MethodInvoker)delegate {
+                                currentRoomUsersList.Controls.Add(currentUserListUserPic);
+                                //currentRoomUsersList.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, 30, 30, 30, 30));
+                            });
+
+                            curUserPicYPos += 40;
+                        }
+                    }
+                }).Start();
             }
         }
 

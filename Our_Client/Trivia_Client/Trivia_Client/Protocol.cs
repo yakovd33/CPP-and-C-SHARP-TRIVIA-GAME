@@ -24,6 +24,8 @@ namespace Trivia_Client
             errorStr.Add("1101", "Room is full");
             errorStr.Add("1102", "Room does not exist or other reason");
             errorStr.Add("1120", "success");
+            errorStr.Add("1140", "success");
+            errorStr.Add("1141", "Fail");
         }
 
         public string getCodeErrorMsg(string code) {

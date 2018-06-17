@@ -26,7 +26,7 @@ TriviaServer::TriviaServer()
 	// Create DataBase Instance
 	_db = new DataBase();
 
-	_roomsList.insert(make_pair(1, new Room(5, 20, 20, "room1", 1)));
+	_roomsList.insert(make_pair(203, new Room(5, 20, 20, "room1", 203)));
 	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
 	_roomsList.insert(make_pair(123, new Room(5, 20, 20, "room3", 1235)));
 	_roomsList.insert(make_pair(124, new Room(5, 20, 20, "room4", 124)));
@@ -563,6 +563,11 @@ void TriviaServer::handleGetUserProfilePicByUsername(RecievedMessage * msg) {
 	sendMessageToSocket(msg->getSock(), string("189" + picture_length + picture_url));
 }
 
+void TriviaServer::handleGetCuruserRoomId(RecievedMessage * msg) {
+	User* user = getUserBySocket(msg->getSock());
+	user->send(string(4 - to_string(user->getRoomId()).length(), '0') + to_string(user->getRoomId()));
+}
+
 Room * TriviaServer::getRoomById(int id) {
 	for (auto const& room : _roomsList) {
 		if (room.first == id) {
@@ -607,8 +612,8 @@ void TriviaServer::handleRecievedMessages()
 	string msgCode = "";
 	SOCKET clientSock = 0;
 	string userName;
-
-	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419" };
+	
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517" };
 
 	while (true) {
 		try {
@@ -698,6 +703,10 @@ void TriviaServer::handleRecievedMessages()
 
 					if (msgCode == "419") {
 						handleGetUserProfilePicByUsername(currMessage);
+					}
+
+					if (msgCode == "517") {
+						handleGetCuruserRoomId(currMessage);
 					}
 
 					if (msgCode == "543") {
