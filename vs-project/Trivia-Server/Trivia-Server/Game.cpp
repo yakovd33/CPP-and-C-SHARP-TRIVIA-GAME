@@ -28,10 +28,12 @@ void Game::sendFirstQuestion() {
 }
 
 void Game::handleFinishGame() {
+	cout << "finishing game" << endl;
 	string message = "121";
 	message += to_string(this->_players.size());
 	
 	for (auto user : this->_players) {
+		// Construct a results message
 		message += string(2 - to_string(user->getUsername().length()).length(), '0') + to_string(user->getUsername().length());
 		message += user->getUsername();
 		message += string(2 - to_string(this->_results.find(user->getUsername())->second).length(), '0') + to_string(this->_results.find(user->getUsername())->second);
@@ -41,9 +43,10 @@ void Game::handleFinishGame() {
 
 	for (auto user : this->_players) {
 		try {
-			user->clearGame();
+			this->leaveGame(user);
 			user->leaveGame();
 			user->send(message);
+			user->clearGame();
 		} catch (std::exception e) {
 
 		}
@@ -104,7 +107,7 @@ bool Game::handleAnswerFromUser(User * user, int answerNo, int time) {
 
 bool Game::leaveGame(User * user) {
 	this->_players.erase(std::remove(this->_players.begin(), this->_players.end(), user), this->_players.end());
-	this->handleNextTurn();
+	//this->handleNextTurn(); // Creates a problem. Need to fix
 
 	return true; // TODO check if game has ended
 }

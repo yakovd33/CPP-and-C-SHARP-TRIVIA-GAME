@@ -19,7 +19,7 @@ void User::setGame(Game * gm) {
 }
 
 void User::clearGame() {
-	this->_currGame = NULL;
+	this->_currGame = nullptr;
 }
 
 bool User::createRoom(int troomId, string roomName, int maxUsers, int questionsNo, int questionTime) {
@@ -50,7 +50,7 @@ int User::closeRoom() {
 }
 
 bool User::leaveGame() {
-	return this->_currGame->leaveGame(this);
+	return (this->_currGame && this->_currGame->leaveGame(this));
 }
 
 void User::clearRoom() {
@@ -62,7 +62,6 @@ Game * User::getGame() {
 
 string User::getUsername()
 {
-	//return "-------";
 	return this->_username;
 }
 
