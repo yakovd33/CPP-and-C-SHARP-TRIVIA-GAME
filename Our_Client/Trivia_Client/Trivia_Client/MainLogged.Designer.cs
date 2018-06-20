@@ -33,13 +33,37 @@
             this.sidebarActivePanelIndicator = new System.Windows.Forms.Panel();
             this.sidebar = new System.Windows.Forms.Panel();
             this.leadeboardItem = new System.Windows.Forms.Panel();
+            this.leadeboardItemIcon = new System.Windows.Forms.PictureBox();
             this.createRoomItem = new System.Windows.Forms.Panel();
+            this.createRoomIcon = new System.Windows.Forms.PictureBox();
             this.settingsItem = new System.Windows.Forms.Panel();
+            this.settingsItemIcon = new System.Windows.Forms.PictureBox();
+            this.mainProfilePicture = new System.Windows.Forms.PictureBox();
             this.roomsItem = new System.Windows.Forms.Panel();
+            this.roomsIcon = new System.Windows.Forms.PictureBox();
             this.sidebarItem1 = new System.Windows.Forms.Panel();
+            this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
+            this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.magshimimLogo = new System.Windows.Forms.PictureBox();
             this.tabs = new System.Windows.Forms.Panel();
+            this.gamePanel = new System.Windows.Forms.Panel();
+            this.gameTimeProgressBar = new System.Windows.Forms.Panel();
+            this.sep = new System.Windows.Forms.Panel();
+            this.gameTopBarPanel = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.questionInformer = new System.Windows.Forms.Label();
+            this.gameScore = new System.Windows.Forms.Label();
+            this.gameCountdown = new System.Windows.Forms.Label();
+            this.fourthAnswerBtn = new System.Windows.Forms.Button();
+            this.secondAnswerBtn = new System.Windows.Forms.Button();
+            this.thirdAnswerBtn = new System.Windows.Forms.Button();
+            this.firstAnswerBtn = new System.Windows.Forms.Button();
+            this.questionLabel = new System.Windows.Forms.Label();
+            this.leaveGame = new System.Windows.Forms.PictureBox();
+            this.gameRoomTitle = new System.Windows.Forms.Label();
             this.roomPanel = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.roomExitBtn = new System.Windows.Forms.PictureBox();
             this.roomNameLabel = new System.Windows.Forms.Label();
             this.roomTimePerQuestion = new System.Windows.Forms.Label();
             this.roomNumQuestionsLabel = new System.Windows.Forms.Label();
@@ -53,19 +77,23 @@
             this.thirdPlaceProgress = new System.Windows.Forms.Panel();
             this.lastPlaceUsername = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.thirdPlacePic = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.secPlaceProgress = new System.Windows.Forms.Panel();
             this.secPlaceUsername = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.secPlacePic = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.firstPlaceProgress = new System.Windows.Forms.Panel();
             this.firstPlaceUsername = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.firstPlacePic = new System.Windows.Forms.PictureBox();
             this.roomsPanel = new System.Windows.Forms.Panel();
             this.roomsListRefreshBtn = new System.Windows.Forms.Label();
             this.roomsList = new System.Windows.Forms.Panel();
             this.profilePanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.profilePanelPic = new System.Windows.Forms.PictureBox();
             this.creRoomPanel = new System.Windows.Forms.Panel();
             this.CreateRoomFeedbackLabel = new System.Windows.Forms.Label();
             this.createRoomBtn = new System.Windows.Forms.Button();
@@ -77,70 +105,44 @@
             this.numPlayersBox = new System.Windows.Forms.TextBox();
             this.roomNameWrap = new System.Windows.Forms.Panel();
             this.roomNameBox = new System.Windows.Forms.TextBox();
-            this.gamePanel = new System.Windows.Forms.Panel();
-            this.gameRoomTitle = new System.Windows.Forms.Label();
-            this.questionLabel = new System.Windows.Forms.Label();
-            this.firstAnswerBtn = new System.Windows.Forms.Button();
-            this.secondAnswerBtn = new System.Windows.Forms.Button();
-            this.thirdAnswerBtn = new System.Windows.Forms.Button();
-            this.fourthAnswerBtn = new System.Windows.Forms.Button();
-            this.gameScore = new System.Windows.Forms.Label();
-            this.gameCountdown = new System.Windows.Forms.Label();
-            this.gameTopBarPanel = new System.Windows.Forms.Panel();
-            this.questionInformer = new System.Windows.Forms.Label();
-            this.leadeboardItemIcon = new System.Windows.Forms.PictureBox();
-            this.createRoomIcon = new System.Windows.Forms.PictureBox();
-            this.settingsItemIcon = new System.Windows.Forms.PictureBox();
-            this.mainProfilePicture = new System.Windows.Forms.PictureBox();
-            this.roomsIcon = new System.Windows.Forms.PictureBox();
-            this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
-            this.exitBtn = new System.Windows.Forms.PictureBox();
-            this.magshimimLogo = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.leaveGame = new System.Windows.Forms.PictureBox();
-            this.roomExitBtn = new System.Windows.Forms.PictureBox();
-            this.thirdPlacePic = new System.Windows.Forms.PictureBox();
-            this.secPlacePic = new System.Windows.Forms.PictureBox();
-            this.firstPlacePic = new System.Windows.Forms.PictureBox();
-            this.profilePanelPic = new System.Windows.Forms.PictureBox();
-            this.sep = new System.Windows.Forms.Panel();
+            this.closeRoomBtn = new System.Windows.Forms.Button();
+            this.startGameBtn = new System.Windows.Forms.Button();
             this.onlineStatusCircle = new TransparentControl();
-            this.gameTimeProgressBar = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             this.sidebar.SuspendLayout();
             this.leadeboardItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).BeginInit();
             this.createRoomItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).BeginInit();
             this.settingsItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.settingsItemIcon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).BeginInit();
             this.roomsItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).BeginInit();
             this.sidebarItem1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
             this.tabs.SuspendLayout();
+            this.gamePanel.SuspendLayout();
+            this.gameTopBarPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).BeginInit();
             this.roomPanel.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.roomExitBtn)).BeginInit();
             this.leadboardPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdPlacePic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secPlacePic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstPlacePic)).BeginInit();
             this.roomsPanel.SuspendLayout();
             this.profilePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
             this.creRoomPanel.SuspendLayout();
             this.questionsTimeWrap.SuspendLayout();
             this.numQuestWrap.SuspendLayout();
             this.numPlayersWrap.SuspendLayout();
             this.roomNameWrap.SuspendLayout();
-            this.gamePanel.SuspendLayout();
-            this.gameTopBarPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.settingsItemIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.roomExitBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdPlacePic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secPlacePic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstPlacePic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -188,6 +190,16 @@
             this.leadeboardItem.Size = new System.Drawing.Size(65, 57);
             this.leadeboardItem.TabIndex = 11;
             // 
+            // leadeboardItemIcon
+            // 
+            this.leadeboardItemIcon.Image = global::Trivia_Client.Properties.Resources.leadboard;
+            this.leadeboardItemIcon.Location = new System.Drawing.Point(24, 15);
+            this.leadeboardItemIcon.Name = "leadeboardItemIcon";
+            this.leadeboardItemIcon.Size = new System.Drawing.Size(25, 25);
+            this.leadeboardItemIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.leadeboardItemIcon.TabIndex = 7;
+            this.leadeboardItemIcon.TabStop = false;
+            // 
             // createRoomItem
             // 
             this.createRoomItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
@@ -198,6 +210,16 @@
             this.createRoomItem.Size = new System.Drawing.Size(65, 57);
             this.createRoomItem.TabIndex = 8;
             // 
+            // createRoomIcon
+            // 
+            this.createRoomIcon.Image = global::Trivia_Client.Properties.Resources.createRoom;
+            this.createRoomIcon.Location = new System.Drawing.Point(17, 14);
+            this.createRoomIcon.Name = "createRoomIcon";
+            this.createRoomIcon.Size = new System.Drawing.Size(32, 25);
+            this.createRoomIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.createRoomIcon.TabIndex = 7;
+            this.createRoomIcon.TabStop = false;
+            // 
             // settingsItem
             // 
             this.settingsItem.Controls.Add(this.settingsItemIcon);
@@ -207,6 +229,28 @@
             this.settingsItem.Size = new System.Drawing.Size(65, 57);
             this.settingsItem.TabIndex = 10;
             // 
+            // settingsItemIcon
+            // 
+            this.settingsItemIcon.Image = global::Trivia_Client.Properties.Resources.gear;
+            this.settingsItemIcon.Location = new System.Drawing.Point(24, 15);
+            this.settingsItemIcon.Name = "settingsItemIcon";
+            this.settingsItemIcon.Size = new System.Drawing.Size(25, 25);
+            this.settingsItemIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.settingsItemIcon.TabIndex = 7;
+            this.settingsItemIcon.TabStop = false;
+            // 
+            // mainProfilePicture
+            // 
+            this.mainProfilePicture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.mainProfilePicture.Image = global::Trivia_Client.Properties.Resources.pp;
+            this.mainProfilePicture.Location = new System.Drawing.Point(8, 15);
+            this.mainProfilePicture.Name = "mainProfilePicture";
+            this.mainProfilePicture.Size = new System.Drawing.Size(49, 49);
+            this.mainProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.mainProfilePicture.TabIndex = 10;
+            this.mainProfilePicture.TabStop = false;
+            this.mainProfilePicture.Click += new System.EventHandler(this.mainProfilePicture_Click);
+            // 
             // roomsItem
             // 
             this.roomsItem.Controls.Add(this.roomsIcon);
@@ -215,6 +259,16 @@
             this.roomsItem.Name = "roomsItem";
             this.roomsItem.Size = new System.Drawing.Size(65, 57);
             this.roomsItem.TabIndex = 9;
+            // 
+            // roomsIcon
+            // 
+            this.roomsIcon.Image = global::Trivia_Client.Properties.Resources.rooms;
+            this.roomsIcon.Location = new System.Drawing.Point(24, 15);
+            this.roomsIcon.Name = "roomsIcon";
+            this.roomsIcon.Size = new System.Drawing.Size(25, 25);
+            this.roomsIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.roomsIcon.TabIndex = 7;
+            this.roomsIcon.TabStop = false;
             // 
             // sidebarItem1
             // 
@@ -226,24 +280,242 @@
             this.sidebarItem1.Size = new System.Drawing.Size(65, 57);
             this.sidebarItem1.TabIndex = 2;
             // 
+            // sidebarIcon1
+            // 
+            this.sidebarIcon1.Image = global::Trivia_Client.Properties.Resources.home;
+            this.sidebarIcon1.Location = new System.Drawing.Point(24, 16);
+            this.sidebarIcon1.Name = "sidebarIcon1";
+            this.sidebarIcon1.Size = new System.Drawing.Size(25, 25);
+            this.sidebarIcon1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sidebarIcon1.TabIndex = 7;
+            this.sidebarIcon1.TabStop = false;
+            // 
+            // exitBtn
+            // 
+            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
+            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitBtn.Location = new System.Drawing.Point(877, 12);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(30, 30);
+            this.exitBtn.TabIndex = 6;
+            this.exitBtn.TabStop = false;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
+            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
+            // 
+            // magshimimLogo
+            // 
+            this.magshimimLogo.Image = global::Trivia_Client.Properties.Resources.magshimim;
+            this.magshimimLogo.Location = new System.Drawing.Point(784, 547);
+            this.magshimimLogo.Name = "magshimimLogo";
+            this.magshimimLogo.Size = new System.Drawing.Size(114, 29);
+            this.magshimimLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.magshimimLogo.TabIndex = 8;
+            this.magshimimLogo.TabStop = false;
+            // 
             // tabs
             // 
             this.tabs.BackColor = System.Drawing.Color.Transparent;
-            this.tabs.Controls.Add(this.gamePanel);
             this.tabs.Controls.Add(this.roomPanel);
+            this.tabs.Controls.Add(this.creRoomPanel);
+            this.tabs.Controls.Add(this.gamePanel);
             this.tabs.Controls.Add(this.mainPanel);
             this.tabs.Controls.Add(this.leadboardPanel);
             this.tabs.Controls.Add(this.roomsPanel);
             this.tabs.Controls.Add(this.profilePanel);
-            this.tabs.Controls.Add(this.creRoomPanel);
             this.tabs.Location = new System.Drawing.Point(63, 0);
             this.tabs.Name = "tabs";
             this.tabs.Size = new System.Drawing.Size(856, 541);
             this.tabs.TabIndex = 12;
             this.tabs.Paint += new System.Windows.Forms.PaintEventHandler(this.tabs_Paint);
             // 
+            // gamePanel
+            // 
+            this.gamePanel.Controls.Add(this.gameTimeProgressBar);
+            this.gamePanel.Controls.Add(this.sep);
+            this.gamePanel.Controls.Add(this.gameTopBarPanel);
+            this.gamePanel.Controls.Add(this.fourthAnswerBtn);
+            this.gamePanel.Controls.Add(this.secondAnswerBtn);
+            this.gamePanel.Controls.Add(this.thirdAnswerBtn);
+            this.gamePanel.Controls.Add(this.firstAnswerBtn);
+            this.gamePanel.Controls.Add(this.questionLabel);
+            this.gamePanel.Controls.Add(this.leaveGame);
+            this.gamePanel.Controls.Add(this.gameRoomTitle);
+            this.gamePanel.Location = new System.Drawing.Point(0, -28);
+            this.gamePanel.Name = "gamePanel";
+            this.gamePanel.Size = new System.Drawing.Size(856, 596);
+            this.gamePanel.TabIndex = 14;
+            // 
+            // gameTimeProgressBar
+            // 
+            this.gameTimeProgressBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.gameTimeProgressBar.Location = new System.Drawing.Point(80, 485);
+            this.gameTimeProgressBar.Name = "gameTimeProgressBar";
+            this.gameTimeProgressBar.Size = new System.Drawing.Size(670, 3);
+            this.gameTimeProgressBar.TabIndex = 13;
+            // 
+            // sep
+            // 
+            this.sep.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.sep.Location = new System.Drawing.Point(80, 164);
+            this.sep.Name = "sep";
+            this.sep.Size = new System.Drawing.Size(670, 1);
+            this.sep.TabIndex = 12;
+            // 
+            // gameTopBarPanel
+            // 
+            this.gameTopBarPanel.Controls.Add(this.pictureBox1);
+            this.gameTopBarPanel.Controls.Add(this.questionInformer);
+            this.gameTopBarPanel.Controls.Add(this.gameScore);
+            this.gameTopBarPanel.Controls.Add(this.gameCountdown);
+            this.gameTopBarPanel.Location = new System.Drawing.Point(80, 96);
+            this.gameTopBarPanel.Name = "gameTopBarPanel";
+            this.gameTopBarPanel.Size = new System.Drawing.Size(670, 69);
+            this.gameTopBarPanel.TabIndex = 11;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Trivia_Client.Properties.Resources.clock;
+            this.pictureBox1.Location = new System.Drawing.Point(312, 8);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            // 
+            // questionInformer
+            // 
+            this.questionInformer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.questionInformer.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.questionInformer.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.questionInformer.Location = new System.Drawing.Point(0, 0);
+            this.questionInformer.Name = "questionInformer";
+            this.questionInformer.Size = new System.Drawing.Size(97, 69);
+            this.questionInformer.TabIndex = 12;
+            this.questionInformer.Text = "Question 4/5";
+            this.questionInformer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // gameScore
+            // 
+            this.gameScore.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gameScore.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameScore.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.gameScore.Location = new System.Drawing.Point(573, 0);
+            this.gameScore.Name = "gameScore";
+            this.gameScore.Size = new System.Drawing.Size(97, 69);
+            this.gameScore.TabIndex = 9;
+            this.gameScore.Text = "Score: 2/4";
+            this.gameScore.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // gameCountdown
+            // 
+            this.gameCountdown.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameCountdown.ForeColor = System.Drawing.Color.White;
+            this.gameCountdown.Location = new System.Drawing.Point(3, 41);
+            this.gameCountdown.Name = "gameCountdown";
+            this.gameCountdown.Size = new System.Drawing.Size(649, 20);
+            this.gameCountdown.TabIndex = 10;
+            this.gameCountdown.Text = "14";
+            this.gameCountdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // fourthAnswerBtn
+            // 
+            this.fourthAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.fourthAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.fourthAnswerBtn.FlatAppearance.BorderSize = 0;
+            this.fourthAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fourthAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fourthAnswerBtn.ForeColor = System.Drawing.Color.White;
+            this.fourthAnswerBtn.Location = new System.Drawing.Point(80, 414);
+            this.fourthAnswerBtn.Name = "fourthAnswerBtn";
+            this.fourthAnswerBtn.Size = new System.Drawing.Size(670, 45);
+            this.fourthAnswerBtn.TabIndex = 8;
+            this.fourthAnswerBtn.Text = "Trivia++";
+            this.fourthAnswerBtn.UseVisualStyleBackColor = false;
+            // 
+            // secondAnswerBtn
+            // 
+            this.secondAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.secondAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.secondAnswerBtn.FlatAppearance.BorderSize = 0;
+            this.secondAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.secondAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.secondAnswerBtn.ForeColor = System.Drawing.Color.White;
+            this.secondAnswerBtn.Location = new System.Drawing.Point(80, 293);
+            this.secondAnswerBtn.Name = "secondAnswerBtn";
+            this.secondAnswerBtn.Size = new System.Drawing.Size(670, 45);
+            this.secondAnswerBtn.TabIndex = 6;
+            this.secondAnswerBtn.Text = "Trivia++";
+            this.secondAnswerBtn.UseVisualStyleBackColor = false;
+            // 
+            // thirdAnswerBtn
+            // 
+            this.thirdAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.thirdAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.thirdAnswerBtn.FlatAppearance.BorderSize = 0;
+            this.thirdAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.thirdAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.thirdAnswerBtn.ForeColor = System.Drawing.Color.White;
+            this.thirdAnswerBtn.Location = new System.Drawing.Point(80, 354);
+            this.thirdAnswerBtn.Name = "thirdAnswerBtn";
+            this.thirdAnswerBtn.Size = new System.Drawing.Size(670, 45);
+            this.thirdAnswerBtn.TabIndex = 7;
+            this.thirdAnswerBtn.Text = "Trivia++";
+            this.thirdAnswerBtn.UseVisualStyleBackColor = false;
+            // 
+            // firstAnswerBtn
+            // 
+            this.firstAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.firstAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.firstAnswerBtn.FlatAppearance.BorderSize = 0;
+            this.firstAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.firstAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.firstAnswerBtn.ForeColor = System.Drawing.Color.White;
+            this.firstAnswerBtn.Location = new System.Drawing.Point(80, 230);
+            this.firstAnswerBtn.Name = "firstAnswerBtn";
+            this.firstAnswerBtn.Size = new System.Drawing.Size(670, 45);
+            this.firstAnswerBtn.TabIndex = 5;
+            this.firstAnswerBtn.Text = "Trivia++";
+            this.firstAnswerBtn.UseVisualStyleBackColor = false;
+            // 
+            // questionLabel
+            // 
+            this.questionLabel.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.questionLabel.ForeColor = System.Drawing.Color.White;
+            this.questionLabel.Location = new System.Drawing.Point(80, 189);
+            this.questionLabel.Name = "questionLabel";
+            this.questionLabel.Size = new System.Drawing.Size(670, 23);
+            this.questionLabel.TabIndex = 4;
+            this.questionLabel.Text = "What is the best trivia app?";
+            this.questionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // leaveGame
+            // 
+            this.leaveGame.Image = global::Trivia_Client.Properties.Resources.leave_room;
+            this.leaveGame.Location = new System.Drawing.Point(23, 52);
+            this.leaveGame.Name = "leaveGame";
+            this.leaveGame.Size = new System.Drawing.Size(35, 35);
+            this.leaveGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.leaveGame.TabIndex = 1;
+            this.leaveGame.TabStop = false;
+            // 
+            // gameRoomTitle
+            // 
+            this.gameRoomTitle.AutoSize = true;
+            this.gameRoomTitle.Font = new System.Drawing.Font("Open Sans Light", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gameRoomTitle.ForeColor = System.Drawing.Color.White;
+            this.gameRoomTitle.Location = new System.Drawing.Point(75, 56);
+            this.gameRoomTitle.Name = "gameRoomTitle";
+            this.gameRoomTitle.Size = new System.Drawing.Size(101, 26);
+            this.gameRoomTitle.TabIndex = 0;
+            this.gameRoomTitle.Text = "Room Title";
+            // 
             // roomPanel
             // 
+            this.roomPanel.Controls.Add(this.startGameBtn);
+            this.roomPanel.Controls.Add(this.closeRoomBtn);
             this.roomPanel.Controls.Add(this.panel3);
             this.roomPanel.Controls.Add(this.roomTimePerQuestion);
             this.roomPanel.Controls.Add(this.roomNumQuestionsLabel);
@@ -262,6 +534,18 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(800, 41);
             this.panel3.TabIndex = 5;
+            // 
+            // roomExitBtn
+            // 
+            this.roomExitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.roomExitBtn.Image = global::Trivia_Client.Properties.Resources.leave_room;
+            this.roomExitBtn.Location = new System.Drawing.Point(0, 10);
+            this.roomExitBtn.Name = "roomExitBtn";
+            this.roomExitBtn.Size = new System.Drawing.Size(30, 30);
+            this.roomExitBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.roomExitBtn.TabIndex = 1;
+            this.roomExitBtn.TabStop = false;
+            this.roomExitBtn.Click += new System.EventHandler(this.roomExitBtn_Click);
             // 
             // roomNameLabel
             // 
@@ -411,6 +695,16 @@
             this.label7.TabIndex = 11;
             this.label7.Text = "3.";
             // 
+            // thirdPlacePic
+            // 
+            this.thirdPlacePic.Image = global::Trivia_Client.Properties.Resources.pp;
+            this.thirdPlacePic.Location = new System.Drawing.Point(23, 230);
+            this.thirdPlacePic.Name = "thirdPlacePic";
+            this.thirdPlacePic.Size = new System.Drawing.Size(60, 60);
+            this.thirdPlacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.thirdPlacePic.TabIndex = 10;
+            this.thirdPlacePic.TabStop = false;
+            // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
@@ -449,6 +743,16 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "2.";
             // 
+            // secPlacePic
+            // 
+            this.secPlacePic.Image = global::Trivia_Client.Properties.Resources.pp;
+            this.secPlacePic.Location = new System.Drawing.Point(23, 142);
+            this.secPlacePic.Name = "secPlacePic";
+            this.secPlacePic.Size = new System.Drawing.Size(60, 60);
+            this.secPlacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.secPlacePic.TabIndex = 5;
+            this.secPlacePic.TabStop = false;
+            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
@@ -486,6 +790,17 @@
             this.label2.Size = new System.Drawing.Size(22, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "1.";
+            // 
+            // firstPlacePic
+            // 
+            this.firstPlacePic.Image = global::Trivia_Client.Properties.Resources.pp;
+            this.firstPlacePic.ImageLocation = "";
+            this.firstPlacePic.Location = new System.Drawing.Point(23, 46);
+            this.firstPlacePic.Name = "firstPlacePic";
+            this.firstPlacePic.Size = new System.Drawing.Size(60, 60);
+            this.firstPlacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.firstPlacePic.TabIndex = 0;
+            this.firstPlacePic.TabStop = false;
             // 
             // roomsPanel
             // 
@@ -540,6 +855,16 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "info";
             this.label1.UseMnemonic = false;
+            // 
+            // profilePanelPic
+            // 
+            this.profilePanelPic.Location = new System.Drawing.Point(343, 21);
+            this.profilePanelPic.Name = "profilePanelPic";
+            this.profilePanelPic.Size = new System.Drawing.Size(100, 100);
+            this.profilePanelPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.profilePanelPic.TabIndex = 0;
+            this.profilePanelPic.TabStop = false;
+            this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
             // 
             // creRoomPanel
             // 
@@ -675,318 +1000,33 @@
             this.roomNameBox.Text = "Room Name";
             this.roomNameBox.Enter += new System.EventHandler(this.roomNameBox_Enter);
             // 
-            // gamePanel
+            // closeRoomBtn
             // 
-            this.gamePanel.Controls.Add(this.gameTimeProgressBar);
-            this.gamePanel.Controls.Add(this.sep);
-            this.gamePanel.Controls.Add(this.gameTopBarPanel);
-            this.gamePanel.Controls.Add(this.fourthAnswerBtn);
-            this.gamePanel.Controls.Add(this.secondAnswerBtn);
-            this.gamePanel.Controls.Add(this.thirdAnswerBtn);
-            this.gamePanel.Controls.Add(this.firstAnswerBtn);
-            this.gamePanel.Controls.Add(this.questionLabel);
-            this.gamePanel.Controls.Add(this.leaveGame);
-            this.gamePanel.Controls.Add(this.gameRoomTitle);
-            this.gamePanel.Location = new System.Drawing.Point(0, -28);
-            this.gamePanel.Name = "gamePanel";
-            this.gamePanel.Size = new System.Drawing.Size(856, 596);
-            this.gamePanel.TabIndex = 14;
+            this.closeRoomBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.closeRoomBtn.FlatAppearance.BorderSize = 0;
+            this.closeRoomBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.closeRoomBtn.ForeColor = System.Drawing.Color.White;
+            this.closeRoomBtn.Location = new System.Drawing.Point(17, 365);
+            this.closeRoomBtn.Name = "closeRoomBtn";
+            this.closeRoomBtn.Size = new System.Drawing.Size(110, 45);
+            this.closeRoomBtn.TabIndex = 6;
+            this.closeRoomBtn.Text = "Close Room";
+            this.closeRoomBtn.UseVisualStyleBackColor = false;
+            this.closeRoomBtn.Visible = false;
             // 
-            // gameRoomTitle
+            // startGameBtn
             // 
-            this.gameRoomTitle.AutoSize = true;
-            this.gameRoomTitle.Font = new System.Drawing.Font("Open Sans Light", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameRoomTitle.ForeColor = System.Drawing.Color.White;
-            this.gameRoomTitle.Location = new System.Drawing.Point(75, 56);
-            this.gameRoomTitle.Name = "gameRoomTitle";
-            this.gameRoomTitle.Size = new System.Drawing.Size(101, 26);
-            this.gameRoomTitle.TabIndex = 0;
-            this.gameRoomTitle.Text = "Room Title";
-            // 
-            // questionLabel
-            // 
-            this.questionLabel.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.questionLabel.ForeColor = System.Drawing.Color.White;
-            this.questionLabel.Location = new System.Drawing.Point(80, 189);
-            this.questionLabel.Name = "questionLabel";
-            this.questionLabel.Size = new System.Drawing.Size(670, 23);
-            this.questionLabel.TabIndex = 4;
-            this.questionLabel.Text = "What is the best trivia app?";
-            this.questionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // firstAnswerBtn
-            // 
-            this.firstAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.firstAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.firstAnswerBtn.FlatAppearance.BorderSize = 0;
-            this.firstAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.firstAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.firstAnswerBtn.ForeColor = System.Drawing.Color.White;
-            this.firstAnswerBtn.Location = new System.Drawing.Point(80, 230);
-            this.firstAnswerBtn.Name = "firstAnswerBtn";
-            this.firstAnswerBtn.Size = new System.Drawing.Size(670, 45);
-            this.firstAnswerBtn.TabIndex = 5;
-            this.firstAnswerBtn.Text = "Trivia++";
-            this.firstAnswerBtn.UseVisualStyleBackColor = false;
-            // 
-            // secondAnswerBtn
-            // 
-            this.secondAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.secondAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.secondAnswerBtn.FlatAppearance.BorderSize = 0;
-            this.secondAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.secondAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.secondAnswerBtn.ForeColor = System.Drawing.Color.White;
-            this.secondAnswerBtn.Location = new System.Drawing.Point(80, 293);
-            this.secondAnswerBtn.Name = "secondAnswerBtn";
-            this.secondAnswerBtn.Size = new System.Drawing.Size(670, 45);
-            this.secondAnswerBtn.TabIndex = 6;
-            this.secondAnswerBtn.Text = "Trivia++";
-            this.secondAnswerBtn.UseVisualStyleBackColor = false;
-            // 
-            // thirdAnswerBtn
-            // 
-            this.thirdAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.thirdAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.thirdAnswerBtn.FlatAppearance.BorderSize = 0;
-            this.thirdAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.thirdAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.thirdAnswerBtn.ForeColor = System.Drawing.Color.White;
-            this.thirdAnswerBtn.Location = new System.Drawing.Point(80, 354);
-            this.thirdAnswerBtn.Name = "thirdAnswerBtn";
-            this.thirdAnswerBtn.Size = new System.Drawing.Size(670, 45);
-            this.thirdAnswerBtn.TabIndex = 7;
-            this.thirdAnswerBtn.Text = "Trivia++";
-            this.thirdAnswerBtn.UseVisualStyleBackColor = false;
-            // 
-            // fourthAnswerBtn
-            // 
-            this.fourthAnswerBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.fourthAnswerBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.fourthAnswerBtn.FlatAppearance.BorderSize = 0;
-            this.fourthAnswerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fourthAnswerBtn.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fourthAnswerBtn.ForeColor = System.Drawing.Color.White;
-            this.fourthAnswerBtn.Location = new System.Drawing.Point(80, 414);
-            this.fourthAnswerBtn.Name = "fourthAnswerBtn";
-            this.fourthAnswerBtn.Size = new System.Drawing.Size(670, 45);
-            this.fourthAnswerBtn.TabIndex = 8;
-            this.fourthAnswerBtn.Text = "Trivia++";
-            this.fourthAnswerBtn.UseVisualStyleBackColor = false;
-            // 
-            // gameScore
-            // 
-            this.gameScore.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gameScore.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameScore.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.gameScore.Location = new System.Drawing.Point(573, 0);
-            this.gameScore.Name = "gameScore";
-            this.gameScore.Size = new System.Drawing.Size(97, 69);
-            this.gameScore.TabIndex = 9;
-            this.gameScore.Text = "Score: 2/4";
-            this.gameScore.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // gameCountdown
-            // 
-            this.gameCountdown.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameCountdown.ForeColor = System.Drawing.Color.White;
-            this.gameCountdown.Location = new System.Drawing.Point(3, 41);
-            this.gameCountdown.Name = "gameCountdown";
-            this.gameCountdown.Size = new System.Drawing.Size(649, 20);
-            this.gameCountdown.TabIndex = 10;
-            this.gameCountdown.Text = "14";
-            this.gameCountdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gameTopBarPanel
-            // 
-            this.gameTopBarPanel.Controls.Add(this.pictureBox1);
-            this.gameTopBarPanel.Controls.Add(this.questionInformer);
-            this.gameTopBarPanel.Controls.Add(this.gameScore);
-            this.gameTopBarPanel.Controls.Add(this.gameCountdown);
-            this.gameTopBarPanel.Location = new System.Drawing.Point(80, 96);
-            this.gameTopBarPanel.Name = "gameTopBarPanel";
-            this.gameTopBarPanel.Size = new System.Drawing.Size(670, 69);
-            this.gameTopBarPanel.TabIndex = 11;
-            // 
-            // questionInformer
-            // 
-            this.questionInformer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.questionInformer.Font = new System.Drawing.Font("Open Sans Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.questionInformer.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.questionInformer.Location = new System.Drawing.Point(0, 0);
-            this.questionInformer.Name = "questionInformer";
-            this.questionInformer.Size = new System.Drawing.Size(97, 69);
-            this.questionInformer.TabIndex = 12;
-            this.questionInformer.Text = "Question 4/5";
-            this.questionInformer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // leadeboardItemIcon
-            // 
-            this.leadeboardItemIcon.Image = global::Trivia_Client.Properties.Resources.leadboard;
-            this.leadeboardItemIcon.Location = new System.Drawing.Point(24, 15);
-            this.leadeboardItemIcon.Name = "leadeboardItemIcon";
-            this.leadeboardItemIcon.Size = new System.Drawing.Size(25, 25);
-            this.leadeboardItemIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.leadeboardItemIcon.TabIndex = 7;
-            this.leadeboardItemIcon.TabStop = false;
-            // 
-            // createRoomIcon
-            // 
-            this.createRoomIcon.Image = global::Trivia_Client.Properties.Resources.createRoom;
-            this.createRoomIcon.Location = new System.Drawing.Point(17, 14);
-            this.createRoomIcon.Name = "createRoomIcon";
-            this.createRoomIcon.Size = new System.Drawing.Size(32, 25);
-            this.createRoomIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.createRoomIcon.TabIndex = 7;
-            this.createRoomIcon.TabStop = false;
-            // 
-            // settingsItemIcon
-            // 
-            this.settingsItemIcon.Image = global::Trivia_Client.Properties.Resources.gear;
-            this.settingsItemIcon.Location = new System.Drawing.Point(24, 15);
-            this.settingsItemIcon.Name = "settingsItemIcon";
-            this.settingsItemIcon.Size = new System.Drawing.Size(25, 25);
-            this.settingsItemIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.settingsItemIcon.TabIndex = 7;
-            this.settingsItemIcon.TabStop = false;
-            // 
-            // mainProfilePicture
-            // 
-            this.mainProfilePicture.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.mainProfilePicture.Image = global::Trivia_Client.Properties.Resources.pp;
-            this.mainProfilePicture.Location = new System.Drawing.Point(8, 15);
-            this.mainProfilePicture.Name = "mainProfilePicture";
-            this.mainProfilePicture.Size = new System.Drawing.Size(49, 49);
-            this.mainProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.mainProfilePicture.TabIndex = 10;
-            this.mainProfilePicture.TabStop = false;
-            this.mainProfilePicture.Click += new System.EventHandler(this.mainProfilePicture_Click);
-            // 
-            // roomsIcon
-            // 
-            this.roomsIcon.Image = global::Trivia_Client.Properties.Resources.rooms;
-            this.roomsIcon.Location = new System.Drawing.Point(24, 15);
-            this.roomsIcon.Name = "roomsIcon";
-            this.roomsIcon.Size = new System.Drawing.Size(25, 25);
-            this.roomsIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.roomsIcon.TabIndex = 7;
-            this.roomsIcon.TabStop = false;
-            // 
-            // sidebarIcon1
-            // 
-            this.sidebarIcon1.Image = global::Trivia_Client.Properties.Resources.home;
-            this.sidebarIcon1.Location = new System.Drawing.Point(24, 16);
-            this.sidebarIcon1.Name = "sidebarIcon1";
-            this.sidebarIcon1.Size = new System.Drawing.Size(25, 25);
-            this.sidebarIcon1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.sidebarIcon1.TabIndex = 7;
-            this.sidebarIcon1.TabStop = false;
-            // 
-            // exitBtn
-            // 
-            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
-            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitBtn.Location = new System.Drawing.Point(877, 12);
-            this.exitBtn.Name = "exitBtn";
-            this.exitBtn.Size = new System.Drawing.Size(30, 30);
-            this.exitBtn.TabIndex = 6;
-            this.exitBtn.TabStop = false;
-            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
-            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
-            // 
-            // magshimimLogo
-            // 
-            this.magshimimLogo.Image = global::Trivia_Client.Properties.Resources.magshimim;
-            this.magshimimLogo.Location = new System.Drawing.Point(784, 547);
-            this.magshimimLogo.Name = "magshimimLogo";
-            this.magshimimLogo.Size = new System.Drawing.Size(114, 29);
-            this.magshimimLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.magshimimLogo.TabIndex = 8;
-            this.magshimimLogo.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Trivia_Client.Properties.Resources.clock;
-            this.pictureBox1.Location = new System.Drawing.Point(312, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(30, 30);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
-            // 
-            // leaveGame
-            // 
-            this.leaveGame.Image = global::Trivia_Client.Properties.Resources.leave_room;
-            this.leaveGame.Location = new System.Drawing.Point(23, 52);
-            this.leaveGame.Name = "leaveGame";
-            this.leaveGame.Size = new System.Drawing.Size(35, 35);
-            this.leaveGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.leaveGame.TabIndex = 1;
-            this.leaveGame.TabStop = false;
-            // 
-            // roomExitBtn
-            // 
-            this.roomExitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.roomExitBtn.Image = global::Trivia_Client.Properties.Resources.leave_room;
-            this.roomExitBtn.Location = new System.Drawing.Point(0, 10);
-            this.roomExitBtn.Name = "roomExitBtn";
-            this.roomExitBtn.Size = new System.Drawing.Size(30, 30);
-            this.roomExitBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.roomExitBtn.TabIndex = 1;
-            this.roomExitBtn.TabStop = false;
-            this.roomExitBtn.Click += new System.EventHandler(this.roomExitBtn_Click);
-            // 
-            // thirdPlacePic
-            // 
-            this.thirdPlacePic.Image = global::Trivia_Client.Properties.Resources.pp;
-            this.thirdPlacePic.Location = new System.Drawing.Point(23, 230);
-            this.thirdPlacePic.Name = "thirdPlacePic";
-            this.thirdPlacePic.Size = new System.Drawing.Size(60, 60);
-            this.thirdPlacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.thirdPlacePic.TabIndex = 10;
-            this.thirdPlacePic.TabStop = false;
-            // 
-            // secPlacePic
-            // 
-            this.secPlacePic.Image = global::Trivia_Client.Properties.Resources.pp;
-            this.secPlacePic.Location = new System.Drawing.Point(23, 142);
-            this.secPlacePic.Name = "secPlacePic";
-            this.secPlacePic.Size = new System.Drawing.Size(60, 60);
-            this.secPlacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.secPlacePic.TabIndex = 5;
-            this.secPlacePic.TabStop = false;
-            // 
-            // firstPlacePic
-            // 
-            this.firstPlacePic.Image = global::Trivia_Client.Properties.Resources.pp;
-            this.firstPlacePic.ImageLocation = "";
-            this.firstPlacePic.Location = new System.Drawing.Point(23, 46);
-            this.firstPlacePic.Name = "firstPlacePic";
-            this.firstPlacePic.Size = new System.Drawing.Size(60, 60);
-            this.firstPlacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstPlacePic.TabIndex = 0;
-            this.firstPlacePic.TabStop = false;
-            // 
-            // profilePanelPic
-            // 
-            this.profilePanelPic.Location = new System.Drawing.Point(343, 21);
-            this.profilePanelPic.Name = "profilePanelPic";
-            this.profilePanelPic.Size = new System.Drawing.Size(100, 100);
-            this.profilePanelPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.profilePanelPic.TabIndex = 0;
-            this.profilePanelPic.TabStop = false;
-            this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
-            // 
-            // sep
-            // 
-            this.sep.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.sep.Location = new System.Drawing.Point(80, 164);
-            this.sep.Name = "sep";
-            this.sep.Size = new System.Drawing.Size(670, 1);
-            this.sep.TabIndex = 12;
+            this.startGameBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.startGameBtn.FlatAppearance.BorderSize = 0;
+            this.startGameBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startGameBtn.ForeColor = System.Drawing.Color.White;
+            this.startGameBtn.Location = new System.Drawing.Point(144, 365);
+            this.startGameBtn.Name = "startGameBtn";
+            this.startGameBtn.Size = new System.Drawing.Size(110, 45);
+            this.startGameBtn.TabIndex = 7;
+            this.startGameBtn.Text = "Start Game";
+            this.startGameBtn.UseVisualStyleBackColor = true;
+            this.startGameBtn.Visible = false;
             // 
             // onlineStatusCircle
             // 
@@ -997,14 +1037,6 @@
             this.onlineStatusCircle.Size = new System.Drawing.Size(15, 15);
             this.onlineStatusCircle.TabIndex = 1;
             this.onlineStatusCircle.Text = "transparentControl2";
-            // 
-            // gameTimeProgressBar
-            // 
-            this.gameTimeProgressBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.gameTimeProgressBar.Location = new System.Drawing.Point(80, 485);
-            this.gameTimeProgressBar.Name = "gameTimeProgressBar";
-            this.gameTimeProgressBar.Size = new System.Drawing.Size(670, 3);
-            this.gameTimeProgressBar.TabIndex = 13;
             // 
             // MainLogged
             // 
@@ -1023,20 +1055,38 @@
             this.panel2.ResumeLayout(false);
             this.sidebar.ResumeLayout(false);
             this.leadeboardItem.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).EndInit();
             this.createRoomItem.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).EndInit();
             this.settingsItem.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.settingsItemIcon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).EndInit();
             this.roomsItem.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).EndInit();
             this.sidebarItem1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
             this.tabs.ResumeLayout(false);
+            this.gamePanel.ResumeLayout(false);
+            this.gamePanel.PerformLayout();
+            this.gameTopBarPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).EndInit();
             this.roomPanel.ResumeLayout(false);
             this.roomPanel.PerformLayout();
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.roomExitBtn)).EndInit();
             this.leadboardPanel.ResumeLayout(false);
             this.leadboardPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdPlacePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secPlacePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstPlacePic)).EndInit();
             this.roomsPanel.ResumeLayout(false);
             this.roomsPanel.PerformLayout();
             this.profilePanel.ResumeLayout(false);
             this.profilePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
             this.creRoomPanel.ResumeLayout(false);
             this.creRoomPanel.PerformLayout();
             this.questionsTimeWrap.ResumeLayout(false);
@@ -1047,24 +1097,6 @@
             this.numPlayersWrap.PerformLayout();
             this.roomNameWrap.ResumeLayout(false);
             this.roomNameWrap.PerformLayout();
-            this.gamePanel.ResumeLayout(false);
-            this.gamePanel.PerformLayout();
-            this.gameTopBarPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.settingsItemIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainProfilePicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.roomExitBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdPlacePic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secPlacePic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstPlacePic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1147,5 +1179,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel sep;
         private System.Windows.Forms.Panel gameTimeProgressBar;
+        private System.Windows.Forms.Button startGameBtn;
+        private System.Windows.Forms.Button closeRoomBtn;
     }
 }

@@ -355,6 +355,10 @@ namespace Trivia_Client
                         roomNumQuestionsLabel.Text = "Number of questions: " + numQuest;
                         roomTimePerQuestion.Text = "Time per question: " + questionsTime;
                         listRoomUsers();
+
+                        // Show start game and room close btns
+                        closeRoomBtn.Visible = true;
+                        startGameBtn.Visible = true;
                     }
                     else
                     {
@@ -451,6 +455,10 @@ namespace Trivia_Client
                             createRoomIcon.Enabled = false;
                             roomsItem.Enabled = false;
                             roomsIcon.Enabled = false;
+
+                            // Hide start game and room close btns
+                            closeRoomBtn.Visible = false;
+                            startGameBtn.Visible = false;
 
                             roomPanel.BringToFront();
                             roomNameLabel.Text = ((PictureBox)sender).Parent.Controls["roomItemName"].Text;
@@ -689,9 +697,11 @@ namespace Trivia_Client
                             double thirdProgress = ((double)secUserScoreCount / (double)firstUserScoreCount) * (double)100;
                             thirdPlaceProgress.Width = (int)((double)firstPlaceProgress.Width * ((double)thirdProgress / (double)100));
                         } else {
+                            thirdPlaceProgress.Width = 0;
                             getResultFromServer(8);
                         }
                     } else {
+                        secPlaceProgress.Width = 0;
                         getResultFromServer(16);
                     }
                 } else {
