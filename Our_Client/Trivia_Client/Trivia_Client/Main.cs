@@ -32,6 +32,7 @@ namespace Trivia_Client
 
         public LogInScreen()
         {
+
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));

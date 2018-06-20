@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Trivia_Client
 {
@@ -29,6 +30,10 @@ namespace Trivia_Client
         string fileDialogPath;
         int currentRoomId = 0;
         bool inRoom = false;
+        bool exit = false;
+        Thread questionsThread;
+
+        int answerSeconds = 0;
 
         public MainLogged(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream) {
             InitializeComponent();
@@ -58,6 +63,13 @@ namespace Trivia_Client
 
                 }
             }).Start();
+
+            new Thread(() =>
+            {
+                answerSeconds++;
+                Console.WriteLine(answerSeconds);
+                Thread.Sleep(1000);
+            }).Start();
         }
 
         private void exitBtn_MouseHover(object sender, EventArgs e)
@@ -72,6 +84,11 @@ namespace Trivia_Client
 
         private void exitBtn_Click(object sender, EventArgs e) {
             sendMessageToServer("299");
+            exit = true;
+            if (questionsThread != null || questionsThread.IsAlive)
+            {
+                questionsThread.Abort();
+            }
             Application.Exit();
         }
 
@@ -728,6 +745,58 @@ namespace Trivia_Client
                     }
                 }).Start();
             }
+        }
+
+        private void startGameBtn_Click(object sender, EventArgs e)
+        {
+            sendMessageToServer("217");//start game msg
+            gamePanel.BringToFront();
+
+            questionsThread = new Thread(getQuestions);
+            questionsThread.Start();
+        }
+
+        private void getQuestions ()
+        {
+            while (true)
+            {
+                if (getResultFromServer(3) == "118") // msg code
+                {
+                    answerSeconds = 0;
+                    questionTimer.Start();
+                    int q_len = Int32.Parse(getResultFromServer(3));
+                    questionLabel.Invoke((MethodInvoker)delegate
+                    {
+                        questionLabel.Text = getResultFromServer(q_len);
+                    });
+
+                    
+                    firstAnswerBtn.Invoke((MethodInvoker)delegate
+                    {
+                        firstAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+                    });
+
+                    secondAnswerBtn.Invoke((MethodInvoker)delegate
+                    {
+                        secondAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+                    });
+
+                    thirdAnswerBtn.Invoke((MethodInvoker)delegate
+                    {
+                        thirdAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+                    });
+
+                    fourthAnswerBtn.Invoke((MethodInvoker)delegate
+                    {
+                        fourthAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+                    });
+                }
+            }
+        }
+
+        private void firstAnswerBtn_Click(object sender, EventArgs e)
+        {
+            sendMessageToServer("219"+"1"+"");
         }
     }
 }
