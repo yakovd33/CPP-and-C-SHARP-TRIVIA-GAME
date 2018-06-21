@@ -30,8 +30,15 @@ namespace Trivia_Client
         string fileDialogPath;
         int currentRoomId = 0;
         bool inRoom = false;
+        bool inGame = false;
         bool exit = false;
+
+        int roomQuestionTime;
+        int roomQuestionsNumber;
+        int currentScore = 0;
+        int currentQuestionsCounter = 0;
         Thread questionsThread;
+        Thread answerTimerThread;
 
         int answerSeconds = 0;
 
@@ -63,13 +70,31 @@ namespace Trivia_Client
 
                 }
             }).Start();
+        }
 
-            new Thread(() =>
-            {
+        private void MainLogged_Load(object sender, EventArgs e) {
+            answerTimerThread = new Thread(answerTimer);
+            answerTimerThread.Start();
+        }
+
+        private void answerTimer () {
+            while (!exit) {
                 answerSeconds++;
-                Console.WriteLine(answerSeconds);
+
+                if (inGame) {
+                    gameCountdown.BeginInvoke((MethodInvoker)delegate {
+                        gameCountdown.Text = answerSeconds.ToString();
+                    });
+
+                    if (answerSeconds >= roomQuestionTime) {
+                        answerSeconds = 0;
+                        sendMessageToServer("219" + "5" + answerSeconds.ToString("D2")); // Question timeout
+                        getAnswerResponse();
+                    }
+                }
+
                 Thread.Sleep(1000);
-            }).Start();
+            }
         }
 
         private void exitBtn_MouseHover(object sender, EventArgs e)
@@ -83,13 +108,18 @@ namespace Trivia_Client
         }
 
         private void exitBtn_Click(object sender, EventArgs e) {
-            sendMessageToServer("299");
-            exit = true;
-            if (questionsThread != null || questionsThread.IsAlive)
+            try
             {
-                questionsThread.Abort();
+                sendMessageToServer("299");
+                exit = true;
+                questionsThread.IsBackground = true;
+                answerTimerThread.IsBackground = true;
+            } catch (Exception ex) {
+                Console.WriteLine(ex);
+            } finally {
+                Application.Exit();
+
             }
-            Application.Exit();
         }
 
         // Window drag
@@ -354,6 +384,9 @@ namespace Trivia_Client
                 {
                     int questionsNum = Convert.ToInt32(numQuest);
                     int timeQuestions = Convert.ToInt32(questionsTime);
+                    roomQuestionsNumber = questionsNum;
+                    roomQuestionTime = timeQuestions;
+
                     string message = "213" + roomName.Length.ToString("D2") + roomName + numPlayers
                         + questionsNum.ToString("D2") + timeQuestions.ToString("D2"); //D2 for 2 decimal digits format.
                     sendMessageToServer(message);
@@ -481,11 +514,30 @@ namespace Trivia_Client
                             roomNameLabel.Text = ((PictureBox)sender).Parent.Controls["roomItemName"].Text;
                             int questionNumber = Int32.Parse(getResultFromServer(2));
                             int questionTime = Int32.Parse(getResultFromServer(2));
+                            roomQuestionTime = questionTime;
+                            roomQuestionsNumber = questionNumber;
 
                             roomNumQuestionsLabel.Text = "Number of questions: " + questionNumber.ToString();
                             roomTimePerQuestion.Text = "Time per question: " + questionTime.ToString();
 
                             listRoomUsers();
+
+                            new Thread(() => {
+                                while (!inGame) {
+                                    Byte[] peekBuffer = new byte[3];
+                                    client.Client.Receive(peekBuffer, SocketFlags.Peek);
+
+                                    if (new ASCIIEncoding().GetString(peekBuffer).Substring(0, 3) == "118") {
+                                        Console.WriteLine("starting game");
+                                        // Start game
+                                        gamePanel.Invoke((MethodInvoker)delegate {
+                                            gamePanel.BringToFront();
+                                        });
+                                        
+                                        startGame();
+                                    }
+                                }
+                            }).Start();
                         } else {
                             currentRoomId = 0;
                             System.Windows.Forms.MessageBox.Show(roomJoinRequestResponseMsg);
@@ -751,53 +803,157 @@ namespace Trivia_Client
         {
             sendMessageToServer("217");//start game msg
             gamePanel.BringToFront();
+            startGame();
+        }
 
-            questionsThread = new Thread(getQuestions);
-            questionsThread.Start();
+        private void startGame() {
+            inGame = true;
+            currentScore = 0;
+            currentQuestionsCounter = 0;
+
+            getQuestions();
         }
 
         private void getQuestions ()
         {
-            while (true)
+            firstAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
+            secondAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
+            thirdAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
+            fourthAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
+
+            if (getResultFromServer(3) == "118")
             {
-                if (getResultFromServer(3) == "118") // msg code
+                Console.WriteLine("getting questions");
+
+                inGame = true;
+                currentQuestionsCounter++;
+                answerSeconds = 0;
+                int questionLength = Int32.Parse(getResultFromServer(3));
+                string question = getResultFromServer(questionLength);
+                string firstAnswer = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+                string secondAnswer = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+                string thirdAnswer = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+                string fourthAnswer = getResultFromServer(Int32.Parse(getResultFromServer(3)));
+
+                Console.WriteLine("question: " + question);
+
+                questionLabel.Invoke((MethodInvoker)delegate
                 {
-                    answerSeconds = 0;
-                    questionTimer.Start();
-                    int q_len = Int32.Parse(getResultFromServer(3));
-                    questionLabel.Invoke((MethodInvoker)delegate
-                    {
-                        questionLabel.Text = getResultFromServer(q_len);
-                    });
+                    questionLabel.Text = question;
+                });
 
                     
-                    firstAnswerBtn.Invoke((MethodInvoker)delegate
-                    {
-                        firstAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
-                    });
+                firstAnswerBtn.Invoke((MethodInvoker)delegate
+                {
+                    firstAnswerBtn.Text = firstAnswer;
+                });
 
-                    secondAnswerBtn.Invoke((MethodInvoker)delegate
-                    {
-                        secondAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
-                    });
+                secondAnswerBtn.Invoke((MethodInvoker)delegate
+                {
+                    secondAnswerBtn.Text = secondAnswer;
+                });
 
-                    thirdAnswerBtn.Invoke((MethodInvoker)delegate
-                    {
-                        thirdAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
-                    });
+                thirdAnswerBtn.Invoke((MethodInvoker)delegate
+                {
+                    thirdAnswerBtn.Text = thirdAnswer;
+                });
 
-                    fourthAnswerBtn.Invoke((MethodInvoker)delegate
-                    {
-                        fourthAnswerBtn.Text = getResultFromServer(Int32.Parse(getResultFromServer(3)));
-                    });
+                fourthAnswerBtn.Invoke((MethodInvoker)delegate
+                {
+                    fourthAnswerBtn.Text = fourthAnswer;
+                });
+            }
+        }
+
+        private void firstAnswerBtn_Click(object sender, EventArgs e) {
+            sendMessageToServer("219" + "1" + answerSeconds.ToString("D2"));
+            if (getAnswerResponse()) {
+                firstAnswerBtn.BackColor = Color.Green;
+            } else {
+                firstAnswerBtn.BackColor = Color.Red;
+            }
+
+            nextTour();
+        }
+
+        private void secondAnswerBtn_Click(object sender, EventArgs e) {
+            sendMessageToServer("219" + "2" + answerSeconds.ToString("D2"));
+            if (getAnswerResponse()) {
+                secondAnswerBtn.BackColor = Color.Green;
+            } else {
+                secondAnswerBtn.BackColor = Color.Red;
+            }
+
+            nextTour();
+        }
+
+        private void thirdAnswerBtn_Click(object sender, EventArgs e) {
+            sendMessageToServer("219" + "3" + answerSeconds.ToString("D2"));
+            if (getAnswerResponse()) {
+                thirdAnswerBtn.BackColor = Color.Green;
+            } else {
+                thirdAnswerBtn.BackColor = Color.Red;
+            }
+
+            nextTour();
+        }
+
+        private void fourthAnswerBtn_Click(object sender, EventArgs e) {
+            sendMessageToServer("219" + "4" + answerSeconds.ToString("D2"));
+            if (getAnswerResponse()) {
+                fourthAnswerBtn.BackColor = Color.Green;
+            } else {
+                fourthAnswerBtn.BackColor = Color.Red;
+            }
+
+            nextTour();
+        }
+
+        private void nextTour () {
+            if (currentQuestionsCounter < roomQuestionsNumber) {
+                // Get next question
+                new Thread(() => {
+                    Thread.Sleep(1500);
+                    getQuestions();
+                }).Start();
+            } else {
+                // Game finished
+                if (getResultFromServer(3) == "121") {
+                    int userNumber = Int32.Parse(getResultFromServer(1));
+
+                    for (int i = 0; i < userNumber; i++) {
+                        int usernameLength = Int32.Parse(getResultFromServer(2));
+                        string username = getResultFromServer(usernameLength);
+                        int score = Int32.Parse(getResultFromServer(2));
+                        Console.WriteLine("Username: " + username + " Score: " + score);
+                    }
                 }
             }
         }
 
-        private void firstAnswerBtn_Click(object sender, EventArgs e)
-        {
-            sendMessageToServer("219"+"1"+"");
+        private bool getAnswerResponse () {
+            if (getResultFromServer(4) == "1201") {
+                // Correct answer
+                currentScore++;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void listenToGameStart () {
+            // Listen to game start
+            new Thread(() => {
+                while (!inGame)
+                {
+                    Console.WriteLine("listening");
+                    if (getResultFromServer(3) == "118")
+                    {
+                        Console.WriteLine("game start!!!");
+                        startGame();
+                    }
+                }
+            }).Start(); ;
         }
     }
 }
- 

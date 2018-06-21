@@ -85,6 +85,7 @@ bool Game::handleAnswerFromUser(User * user, int answerNo, int time) {
 
 	if (answerNo - 1 == this->_questions.at(questionIndex)->getCorrectAnswersIndex()) {
 		// Correct answer
+		cout << "correct ans" << endl;
 		isCorrect = true;
 		this->_results.find(user->getUsername())->second++;
 		msg = "1201";
@@ -95,6 +96,8 @@ bool Game::handleAnswerFromUser(User * user, int answerNo, int time) {
 	string answer = "";
 	if (answerNo != 5) {
 		answer = this->_questions.at(questionIndex)->getAnswers()[this->_questions.at(questionIndex)->getCorrectAnswersIndex()];
+	} else {
+		cout << "question timeout" << endl;
 	}
 
 	_db.addAnswerToPlayer(this->getID(), user->getUsername(), this->_questions.at(questionIndex)->getId(), answer, isCorrect, time);
