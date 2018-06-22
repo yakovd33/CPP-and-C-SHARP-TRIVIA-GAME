@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainLogged));
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.container = new System.Windows.Forms.Panel();
+            this.exitBtn = new System.Windows.Forms.PictureBox();
             this.sidebarActivePanelIndicator = new System.Windows.Forms.Panel();
             this.sidebar = new System.Windows.Forms.Panel();
             this.leadeboardItem = new System.Windows.Forms.Panel();
@@ -43,9 +44,9 @@
             this.roomsIcon = new System.Windows.Forms.PictureBox();
             this.sidebarItem1 = new System.Windows.Forms.Panel();
             this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
-            this.exitBtn = new System.Windows.Forms.PictureBox();
             this.magshimimLogo = new System.Windows.Forms.PictureBox();
             this.tabs = new System.Windows.Forms.Panel();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.gamePanel = new System.Windows.Forms.Panel();
             this.gameTimeProgressBar = new System.Windows.Forms.Panel();
             this.sep = new System.Windows.Forms.Panel();
@@ -82,7 +83,6 @@
             this.numPlayersBox = new System.Windows.Forms.TextBox();
             this.roomNameWrap = new System.Windows.Forms.Panel();
             this.roomNameBox = new System.Windows.Forms.TextBox();
-            this.mainPanel = new System.Windows.Forms.Panel();
             this.leadboardPanel = new System.Windows.Forms.Panel();
             this.lastPlaceScore = new System.Windows.Forms.Label();
             this.secPlaceScore = new System.Windows.Forms.Label();
@@ -106,9 +106,11 @@
             this.roomsList = new System.Windows.Forms.Panel();
             this.profilePanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.onlineStatusCircle = new TransparentControl();
             this.profilePanelPic = new System.Windows.Forms.PictureBox();
-            this.panel2.SuspendLayout();
+            this.dragSection = new System.Windows.Forms.Panel();
+            this.onlineStatusCircle = new TransparentControl();
+            this.container.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             this.sidebar.SuspendLayout();
             this.leadeboardItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).BeginInit();
@@ -121,7 +123,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).BeginInit();
             this.sidebarItem1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
             this.tabs.SuspendLayout();
             this.gamePanel.SuspendLayout();
@@ -145,18 +146,33 @@
             ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel2
+            // container
             // 
-            this.panel2.Controls.Add(this.sidebarActivePanelIndicator);
-            this.panel2.Controls.Add(this.sidebar);
-            this.panel2.Controls.Add(this.exitBtn);
-            this.panel2.Controls.Add(this.magshimimLogo);
-            this.panel2.Controls.Add(this.tabs);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(919, 596);
-            this.panel2.TabIndex = 8;
+            this.container.Controls.Add(this.exitBtn);
+            this.container.Controls.Add(this.sidebarActivePanelIndicator);
+            this.container.Controls.Add(this.sidebar);
+            this.container.Controls.Add(this.magshimimLogo);
+            this.container.Controls.Add(this.tabs);
+            this.container.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.container.Location = new System.Drawing.Point(0, 0);
+            this.container.Name = "container";
+            this.container.Size = new System.Drawing.Size(919, 596);
+            this.container.TabIndex = 8;
+            // 
+            // exitBtn
+            // 
+            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
+            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitBtn.Location = new System.Drawing.Point(877, 12);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(30, 30);
+            this.exitBtn.TabIndex = 6;
+            this.exitBtn.TabStop = false;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
+            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
             // 
             // sidebarActivePanelIndicator
             // 
@@ -290,21 +306,6 @@
             this.sidebarIcon1.TabIndex = 7;
             this.sidebarIcon1.TabStop = false;
             // 
-            // exitBtn
-            // 
-            this.exitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitBtn.BackgroundImage")));
-            this.exitBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.exitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitBtn.Location = new System.Drawing.Point(877, 12);
-            this.exitBtn.Name = "exitBtn";
-            this.exitBtn.Size = new System.Drawing.Size(30, 30);
-            this.exitBtn.TabIndex = 6;
-            this.exitBtn.TabStop = false;
-            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
-            this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
-            // 
             // magshimimLogo
             // 
             this.magshimimLogo.Image = global::Trivia_Client.Properties.Resources.magshimim;
@@ -319,17 +320,24 @@
             // 
             this.tabs.BackColor = System.Drawing.Color.Transparent;
             this.tabs.Controls.Add(this.gamePanel);
-            this.tabs.Controls.Add(this.roomPanel);
-            this.tabs.Controls.Add(this.creRoomPanel);
             this.tabs.Controls.Add(this.mainPanel);
-            this.tabs.Controls.Add(this.leadboardPanel);
-            this.tabs.Controls.Add(this.roomsPanel);
             this.tabs.Controls.Add(this.profilePanel);
+            this.tabs.Controls.Add(this.roomsPanel);
+            this.tabs.Controls.Add(this.leadboardPanel);
+            this.tabs.Controls.Add(this.creRoomPanel);
+            this.tabs.Controls.Add(this.roomPanel);
             this.tabs.Location = new System.Drawing.Point(63, 0);
             this.tabs.Name = "tabs";
             this.tabs.Size = new System.Drawing.Size(856, 541);
             this.tabs.TabIndex = 12;
             this.tabs.Paint += new System.Windows.Forms.PaintEventHandler(this.tabs_Paint);
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(856, 596);
+            this.mainPanel.TabIndex = 2;
             // 
             // gamePanel
             // 
@@ -525,9 +533,9 @@
             this.roomPanel.Controls.Add(this.roomNumQuestionsLabel);
             this.roomPanel.Controls.Add(this.label3);
             this.roomPanel.Controls.Add(this.currentRoomUsersList);
-            this.roomPanel.Location = new System.Drawing.Point(0, 0);
+            this.roomPanel.Location = new System.Drawing.Point(0, 46);
             this.roomPanel.Name = "roomPanel";
-            this.roomPanel.Size = new System.Drawing.Size(856, 596);
+            this.roomPanel.Size = new System.Drawing.Size(856, 550);
             this.roomPanel.TabIndex = 13;
             // 
             // startGameBtn
@@ -768,13 +776,6 @@
             this.roomNameBox.Text = "Room Name";
             this.roomNameBox.Enter += new System.EventHandler(this.roomNameBox_Enter);
             // 
-            // mainPanel
-            // 
-            this.mainPanel.Location = new System.Drawing.Point(0, 0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(856, 596);
-            this.mainPanel.TabIndex = 2;
-            // 
             // leadboardPanel
             // 
             this.leadboardPanel.Controls.Add(this.lastPlaceScore);
@@ -794,9 +795,9 @@
             this.leadboardPanel.Controls.Add(this.firstPlaceUsername);
             this.leadboardPanel.Controls.Add(this.label2);
             this.leadboardPanel.Controls.Add(this.firstPlacePic);
-            this.leadboardPanel.Location = new System.Drawing.Point(0, 0);
+            this.leadboardPanel.Location = new System.Drawing.Point(0, 46);
             this.leadboardPanel.Name = "leadboardPanel";
-            this.leadboardPanel.Size = new System.Drawing.Size(856, 596);
+            this.leadboardPanel.Size = new System.Drawing.Size(856, 550);
             this.leadboardPanel.TabIndex = 3;
             // 
             // lastPlaceScore
@@ -975,9 +976,9 @@
             this.roomsPanel.Controls.Add(this.roomsListRefreshBtn);
             this.roomsPanel.Controls.Add(this.roomsList);
             this.roomsPanel.Font = new System.Drawing.Font("Vivaldi", 8.25F);
-            this.roomsPanel.Location = new System.Drawing.Point(0, 0);
+            this.roomsPanel.Location = new System.Drawing.Point(0, 21);
             this.roomsPanel.Name = "roomsPanel";
-            this.roomsPanel.Size = new System.Drawing.Size(853, 593);
+            this.roomsPanel.Size = new System.Drawing.Size(853, 572);
             this.roomsPanel.TabIndex = 12;
             // 
             // roomsListRefreshBtn
@@ -1007,9 +1008,9 @@
             this.profilePanel.Controls.Add(this.label1);
             this.profilePanel.Controls.Add(this.onlineStatusCircle);
             this.profilePanel.Controls.Add(this.profilePanelPic);
-            this.profilePanel.Location = new System.Drawing.Point(0, 0);
+            this.profilePanel.Location = new System.Drawing.Point(0, 24);
             this.profilePanel.Name = "profilePanel";
-            this.profilePanel.Size = new System.Drawing.Size(856, 593);
+            this.profilePanel.Size = new System.Drawing.Size(856, 569);
             this.profilePanel.TabIndex = 11;
             this.profilePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.profilePanel_Paint);
             // 
@@ -1023,16 +1024,6 @@
             this.label1.Text = "info";
             this.label1.UseMnemonic = false;
             // 
-            // onlineStatusCircle
-            // 
-            this.onlineStatusCircle.BackColor = System.Drawing.Color.Transparent;
-            this.onlineStatusCircle.Image = global::Trivia_Client.Properties.Resources.online;
-            this.onlineStatusCircle.Location = new System.Drawing.Point(-62, 26);
-            this.onlineStatusCircle.Name = "onlineStatusCircle";
-            this.onlineStatusCircle.Size = new System.Drawing.Size(15, 15);
-            this.onlineStatusCircle.TabIndex = 1;
-            this.onlineStatusCircle.Text = "transparentControl2";
-            // 
             // profilePanelPic
             // 
             this.profilePanelPic.Location = new System.Drawing.Point(343, 21);
@@ -1043,6 +1034,24 @@
             this.profilePanelPic.TabStop = false;
             this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
             // 
+            // dragSection
+            // 
+            this.dragSection.Location = new System.Drawing.Point(65, 0);
+            this.dragSection.Name = "dragSection";
+            this.dragSection.Size = new System.Drawing.Size(795, 46);
+            this.dragSection.TabIndex = 9;
+            this.dragSection.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dragContainerMouseMove);
+            // 
+            // onlineStatusCircle
+            // 
+            this.onlineStatusCircle.BackColor = System.Drawing.Color.Transparent;
+            this.onlineStatusCircle.Image = global::Trivia_Client.Properties.Resources.online;
+            this.onlineStatusCircle.Location = new System.Drawing.Point(-62, 26);
+            this.onlineStatusCircle.Name = "onlineStatusCircle";
+            this.onlineStatusCircle.Size = new System.Drawing.Size(15, 15);
+            this.onlineStatusCircle.TabIndex = 1;
+            this.onlineStatusCircle.Text = "transparentControl2";
+            // 
             // MainLogged
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1051,14 +1060,16 @@
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(919, 596);
             this.ControlBox = false;
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.dragSection);
+            this.Controls.Add(this.container);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainLogged";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainLogged";
             this.Load += new System.EventHandler(this.MainLogged_Load);
-            this.panel2.ResumeLayout(false);
+            this.container.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             this.sidebar.ResumeLayout(false);
             this.leadeboardItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).EndInit();
@@ -1071,7 +1082,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).EndInit();
             this.sidebarItem1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
             this.tabs.ResumeLayout(false);
             this.gamePanel.ResumeLayout(false);
@@ -1108,7 +1118,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel container;
         private System.Windows.Forms.Panel sidebar;
         private System.Windows.Forms.PictureBox exitBtn;
         private System.Windows.Forms.Panel sidebarItem1;
@@ -1187,5 +1197,6 @@
         private System.Windows.Forms.Panel gameTimeProgressBar;
         private System.Windows.Forms.Button startGameBtn;
         private System.Windows.Forms.Button closeRoomBtn;
+        private System.Windows.Forms.Panel dragSection;
     }
 }

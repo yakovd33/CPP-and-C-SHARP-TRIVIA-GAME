@@ -32,6 +32,7 @@ namespace Trivia_Client
         bool inRoom = false;
         bool inGame = false;
         bool exit = false;
+        bool isLeaderBoardLoaded = false;
 
         int roomQuestionTime;
         int roomQuestionsNumber;
@@ -82,8 +83,14 @@ namespace Trivia_Client
                 answerSeconds++;
 
                 if (inGame) {
+                    // Update game counter
                     gameCountdown.BeginInvoke((MethodInvoker)delegate {
                         gameCountdown.Text = answerSeconds.ToString();
+                    });
+
+                    // Update game counter bar
+                    gameTimeProgressBar.BeginInvoke((MethodInvoker)delegate {
+                        gameTimeProgressBar.Width = (670 / roomQuestionTime) * (roomQuestionTime - answerSeconds);
                     });
 
                     if (answerSeconds >= roomQuestionTime) {
@@ -193,7 +200,9 @@ namespace Trivia_Client
                 leadeboardItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = leadeboardItem.Location.Y;
 
-                getLeaderboard();
+                if (!isLeaderBoardLoaded) {
+                    getLeaderboard();
+                }
 
                 leadboardPanel.BringToFront();
             }
@@ -522,22 +531,10 @@ namespace Trivia_Client
 
                             listRoomUsers();
 
-                            new Thread(() => {
-                                while (!inGame) {
-                                    Byte[] peekBuffer = new byte[3];
-                                    client.Client.Receive(peekBuffer, SocketFlags.Peek);
-
-                                    if (new ASCIIEncoding().GetString(peekBuffer).Substring(0, 3) == "118") {
-                                        Console.WriteLine("starting game");
-                                        // Start game
-                                        gamePanel.Invoke((MethodInvoker)delegate {
-                                            gamePanel.BringToFront();
-                                        });
-                                        
-                                        startGame();
-                                    }
-                                }
-                            }).Start();
+                            // Listen to game start while in room Lobby
+                            Thread gameStartListen = new Thread(listenToGameStart);
+                            gameStartListen.IsBackground = true;
+                            gameStartListen.Start();
                         } else {
                             currentRoomId = 0;
                             System.Windows.Forms.MessageBox.Show(roomJoinRequestResponseMsg);
@@ -734,6 +731,7 @@ namespace Trivia_Client
             string thirdUsername = "";
 
             if (getResultFromServer(3) == "124") {
+                isLeaderBoardLoaded = true;
                 int firstUsernameLength = Int32.Parse(getResultFromServer(2));
                 if (firstUsernameLength > 0) {
                     // First exists
@@ -835,8 +833,7 @@ namespace Trivia_Client
                 string thirdAnswer = getResultFromServer(Int32.Parse(getResultFromServer(3)));
                 string fourthAnswer = getResultFromServer(Int32.Parse(getResultFromServer(3)));
 
-                Console.WriteLine("question: " + question);
-
+                // Update answer buttons
                 questionLabel.Invoke((MethodInvoker)delegate
                 {
                     questionLabel.Text = question;
@@ -862,10 +859,42 @@ namespace Trivia_Client
                 {
                     fourthAnswerBtn.Text = fourthAnswer;
                 });
+
+                // Update question counter
+                questionInformer.Invoke((MethodInvoker)delegate
+                {
+                    questionInformer.Text = "Question " + currentQuestionsCounter.ToString() + "/" + roomQuestionsNumber.ToString();
+                });
+
+                // Update score counter
+                gameScore.Invoke((MethodInvoker)delegate
+                {
+                    gameScore.Text = "Score: " + currentScore.ToString();
+                });
             }
         }
 
+        private void disableAllAnswerBtns () {
+            firstAnswerBtn.Enabled = false;
+            secondAnswerBtn.Enabled = false;
+            thirdAnswerBtn.Enabled = false;
+            fourthAnswerBtn.Enabled = false;
+        }
+
+        private void enableAllAnswerBtns() {
+            new Thread(() => {
+                firstAnswerBtn.Invoke((MethodInvoker) delegate {
+                    firstAnswerBtn.Enabled = true;
+                    secondAnswerBtn.Enabled = true;
+                    thirdAnswerBtn.Enabled = true;
+                    fourthAnswerBtn.Enabled = true;
+                });
+            }).Start();
+        }
+
         private void firstAnswerBtn_Click(object sender, EventArgs e) {
+            disableAllAnswerBtns();
+
             sendMessageToServer("219" + "1" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
                 firstAnswerBtn.BackColor = Color.Green;
@@ -877,6 +906,7 @@ namespace Trivia_Client
         }
 
         private void secondAnswerBtn_Click(object sender, EventArgs e) {
+            disableAllAnswerBtns();
             sendMessageToServer("219" + "2" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
                 secondAnswerBtn.BackColor = Color.Green;
@@ -888,6 +918,7 @@ namespace Trivia_Client
         }
 
         private void thirdAnswerBtn_Click(object sender, EventArgs e) {
+            disableAllAnswerBtns();
             sendMessageToServer("219" + "3" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
                 thirdAnswerBtn.BackColor = Color.Green;
@@ -899,6 +930,7 @@ namespace Trivia_Client
         }
 
         private void fourthAnswerBtn_Click(object sender, EventArgs e) {
+            disableAllAnswerBtns();
             sendMessageToServer("219" + "4" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
                 fourthAnswerBtn.BackColor = Color.Green;
@@ -915,6 +947,7 @@ namespace Trivia_Client
                 new Thread(() => {
                     Thread.Sleep(1500);
                     getQuestions();
+                    enableAllAnswerBtns();
                 }).Start();
             } else {
                 // Game finished
@@ -942,18 +975,31 @@ namespace Trivia_Client
         }
 
         private void listenToGameStart () {
-            // Listen to game start
-            new Thread(() => {
-                while (!inGame)
-                {
-                    Console.WriteLine("listening");
-                    if (getResultFromServer(3) == "118")
-                    {
-                        Console.WriteLine("game start!!!");
-                        startGame();
-                    }
+            while (!inGame) {
+                Byte[] peekBuffer = new byte[3];
+                client.Client.Receive(peekBuffer, SocketFlags.Peek);
+
+                if (new ASCIIEncoding().GetString(peekBuffer).Substring(0, 3) == "118") {
+                    Console.WriteLine("starting game");
+                    // Start game
+                    gamePanel.Invoke((MethodInvoker)delegate {
+                        gamePanel.BringToFront();
+                    });
+
+                    startGame();
                 }
-            }).Start(); ;
+            }
+        }
+
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        private void dragContainerMouseMove(object sender, MouseEventArgs e) {
+            // Fixing the window dragging problem
+            if (e.Button == MouseButtons.Left) {
+                ReleaseCapture();
+                SendMessage(Handle, 0x00A1, 2, 0);
+            }
         }
     }
 }

@@ -1,0 +1,6 @@
+Encryption support
+Question hints
+Question skip
+Main lobby chat
+Password recovery
+Theme Music
