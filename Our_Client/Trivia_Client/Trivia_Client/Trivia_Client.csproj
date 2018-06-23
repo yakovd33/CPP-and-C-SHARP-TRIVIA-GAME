@@ -55,6 +55,12 @@
     <Compile Include="forget_password.Designer.cs">
       <DependentUpon>forget_password.cs</DependentUpon>
     </Compile>
+    <Compile Include="Scores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scores.Designer.cs">
+      <DependentUpon>Scores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Signup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </Compile>
     <EmbeddedResource Include="forget_password.resx">
       <DependentUpon>forget_password.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scores.resx">
+      <DependentUpon>Scores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Signup.resx">
       <DependentUpon>Signup.cs</DependentUpon>
@@ -127,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Pictures [Resources]\icon.png" />
+    <None Include="Pictures [Resources]\Scoreboard.png" />
     <None Include="Pictures [Resources]\clock.png" />
     <None Include="Pictures [Resources]\leadboard.png" />
     <None Include="Pictures [Resources]\leave-room.png" />

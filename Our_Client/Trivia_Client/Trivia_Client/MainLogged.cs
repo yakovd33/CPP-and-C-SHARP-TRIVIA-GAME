@@ -43,7 +43,8 @@ namespace Trivia_Client
 
         int answerSeconds = 0;
 
-        public MainLogged(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream) {
+        public MainLogged(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream)
+        {
             InitializeComponent();
 
             this.client = client;
@@ -82,10 +83,11 @@ namespace Trivia_Client
             while (!exit) {
                 answerSeconds++;
 
-                if (inGame) {
+                if (inGame)
+                {
                     // Update game counter
                     gameCountdown.BeginInvoke((MethodInvoker)delegate {
-                        gameCountdown.Text = answerSeconds.ToString();
+                        gameCountdown.Text = (roomQuestionTime - answerSeconds).ToString();
                     });
 
                     // Update game counter bar
@@ -93,10 +95,12 @@ namespace Trivia_Client
                         gameTimeProgressBar.Width = (670 / roomQuestionTime) * (roomQuestionTime - answerSeconds);
                     });
 
-                    if (answerSeconds >= roomQuestionTime) {
+                    if (answerSeconds >= roomQuestionTime) //if time is up
+                    {
                         answerSeconds = 0;
                         sendMessageToServer("219" + "5" + answerSeconds.ToString("D2")); // Question timeout
                         getAnswerResponse();
+                        nextTour();
                     }
                 }
 
@@ -118,7 +122,6 @@ namespace Trivia_Client
             try
             {
                 sendMessageToServer("299");
-                exit = true;
                 questionsThread.IsBackground = true;
                 answerTimerThread.IsBackground = true;
             } catch (Exception ex) {
@@ -951,16 +954,11 @@ namespace Trivia_Client
                 }).Start();
             } else {
                 // Game finished
-                if (getResultFromServer(3) == "121") {
-                    int userNumber = Int32.Parse(getResultFromServer(1));
+                answerTimerThread.Abort(); // Stop timer thread
 
-                    for (int i = 0; i < userNumber; i++) {
-                        int usernameLength = Int32.Parse(getResultFromServer(2));
-                        string username = getResultFromServer(usernameLength);
-                        int score = Int32.Parse(getResultFromServer(2));
-                        Console.WriteLine("Username: " + username + " Score: " + score);
-                    }
-                }
+                Scores scores = new Scores(client, serverEndPoint, clientStream);
+                scores.ShowDialog();
+               
             }
         }
 

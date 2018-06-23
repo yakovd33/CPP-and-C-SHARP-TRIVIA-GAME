@@ -133,6 +133,16 @@ namespace Trivia_Client.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon {
+            get {
+                object obj = ResourceManager.GetObject("icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap io {
             get {
                 object obj = ResourceManager.GetObject("io", resourceCulture);
@@ -226,6 +236,16 @@ namespace Trivia_Client.Properties {
         internal static System.Drawing.Bitmap rooms {
             get {
                 object obj = ResourceManager.GetObject("rooms", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Scoreboard {
+            get {
+                object obj = ResourceManager.GetObject("Scoreboard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
