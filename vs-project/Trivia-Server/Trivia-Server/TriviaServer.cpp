@@ -541,7 +541,6 @@ void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
 	User* user = getUserBySocket(msg->getSock());
 	
 	if (user) {
-		cout << "lalala" << endl;
 		sendMessageToSocket(msg->getSock(), _db->getPersonalStatus(user->getUsername()));
 	}
 }
@@ -556,7 +555,8 @@ void TriviaServer::handleGetProfilePic(RecievedMessage * msg) {
 
 void TriviaServer::handleChnageProfilePic(RecievedMessage * msg) {
 	cout << "url: " << msg->getValues().find("url")->second << endl;
-	_db->updateUserProfilePicByUsername("830" + getUserBySocket(msg->getSock())->getUsername(), msg->getValues().find("url")->second);
+	_db->updateUserProfilePicByUsername(getUserBySocket(msg->getSock())->getUsername(), msg->getValues().find("url")->second);
+	
 }
 
 void TriviaServer::handleGetUserProfilePicByUsername(RecievedMessage * msg) {

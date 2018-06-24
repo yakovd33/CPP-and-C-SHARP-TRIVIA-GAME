@@ -142,11 +142,13 @@ string DataBase::getUserProfilePicUrlByUsername(string username) {
 }
 
 void DataBase::updateUserProfilePicByUsername(string username, string url) {
+	cout << "profile" << url << endl;
 	string query = "UPDATE `t_users` SET `picture_url` = '" + url + "' WHERE `username` = '" + username + "'";
 
 	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
 
 	if (rc != SQLITE_OK) {
+		cout << "error" << endl;
 		sqlite3_free(zErrMsg);
 	}
 }
