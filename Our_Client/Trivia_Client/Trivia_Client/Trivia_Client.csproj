@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Pictures [Resources]\music.png" />
     <None Include="Pictures [Resources]\icon.png" />
     <None Include="Pictures [Resources]\Scoreboard.png" />
     <None Include="Pictures [Resources]\clock.png" />

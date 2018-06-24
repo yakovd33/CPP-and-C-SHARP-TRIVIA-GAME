@@ -31,6 +31,11 @@ TriviaServer::TriviaServer()
 	_roomsList.insert(make_pair(123, new Room(5, 20, 20, "room3", 1235)));
 	_roomsList.insert(make_pair(124, new Room(5, 20, 20, "room4", 124)));
 	_roomsList.insert(make_pair(315, new Room(5, 20, 20, "room5", 315)));
+	_roomsList.insert(make_pair(316, new Room(5, 20, 20, "room6", 316)));
+	_roomsList.insert(make_pair(317, new Room(5, 20, 20, "room7", 317)));
+	_roomsList.insert(make_pair(318, new Room(5, 20, 20, "room8", 318)));
+	_roomsList.insert(make_pair(319, new Room(5, 20, 20, "room9", 319)));
+	_roomsList.insert(make_pair(320, new Room(5, 20, 20, "room10", 320)));
 }
 
 TriviaServer::~TriviaServer()

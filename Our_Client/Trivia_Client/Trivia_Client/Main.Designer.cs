@@ -32,7 +32,6 @@
             this.usernameBox = new System.Windows.Forms.TextBox();
             this.usernameWrap = new System.Windows.Forms.Panel();
             this.passwordWrap = new System.Windows.Forms.Panel();
-            this.showPassBtn = new System.Windows.Forms.PictureBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.loginBtn = new System.Windows.Forms.Button();
             this.SignupBtn = new System.Windows.Forms.Button();
@@ -41,12 +40,13 @@
             this.logoCopy = new System.Windows.Forms.PictureBox();
             this.logo = new System.Windows.Forms.PictureBox();
             this.exitBtn = new System.Windows.Forms.PictureBox();
+            this.showPassBtn = new System.Windows.Forms.PictureBox();
             this.usernameWrap.SuspendLayout();
             this.passwordWrap.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).BeginInit();
             this.SuspendLayout();
             // 
             // usernameBox
@@ -82,19 +82,6 @@
             this.passwordWrap.Name = "passwordWrap";
             this.passwordWrap.Size = new System.Drawing.Size(420, 36);
             this.passwordWrap.TabIndex = 2;
-            // 
-            // showPassBtn
-            // 
-            this.showPassBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.showPassBtn.Image = global::Trivia_Client.Properties.Resources.eye;
-            this.showPassBtn.Location = new System.Drawing.Point(387, 7);
-            this.showPassBtn.Name = "showPassBtn";
-            this.showPassBtn.Size = new System.Drawing.Size(22, 22);
-            this.showPassBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.showPassBtn.TabIndex = 9;
-            this.showPassBtn.TabStop = false;
-            this.showPassBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseDown);
-            this.showPassBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseUp);
             // 
             // passwordBox
             // 
@@ -206,6 +193,19 @@
             this.exitBtn.MouseLeave += new System.EventHandler(this.exitBtn_MouseLeave);
             this.exitBtn.MouseHover += new System.EventHandler(this.exitBtn_MouseHover);
             // 
+            // showPassBtn
+            // 
+            this.showPassBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.showPassBtn.Image = global::Trivia_Client.Properties.Resources.eye;
+            this.showPassBtn.Location = new System.Drawing.Point(387, 7);
+            this.showPassBtn.Name = "showPassBtn";
+            this.showPassBtn.Size = new System.Drawing.Size(22, 22);
+            this.showPassBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.showPassBtn.TabIndex = 9;
+            this.showPassBtn.TabStop = false;
+            this.showPassBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseDown);
+            this.showPassBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.showPassBtn_MouseUp);
+            // 
             // LogInScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,16 +227,16 @@
             this.Name = "LogInScreen";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "v";
             this.Load += new System.EventHandler(this.LogInScreen_Load);
             this.usernameWrap.ResumeLayout(false);
             this.usernameWrap.PerformLayout();
             this.passwordWrap.ResumeLayout(false);
             this.passwordWrap.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoCopy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.showPassBtn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

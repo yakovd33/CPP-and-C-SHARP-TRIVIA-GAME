@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Trivia_Client
 {
@@ -58,9 +59,14 @@ namespace Trivia_Client
             numQuestWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, numQuestWrap.Width, numQuestWrap.Height, 5, 5));
             questionsTimeWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, questionsTimeWrap.Width, questionsTimeWrap.Height, 5, 5));
             createRoomBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, createRoomBtn.Width, createRoomBtn.Height, 5, 5));
+            saveSettingsBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, saveSettingsBtn.Width, saveSettingsBtn.Height, 5, 5));
 
             mainProfilePicture.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, mainProfilePicture.Width, mainProfilePicture.Height, 49, 49));
             Sidebar();
+
+            ipBox.Text = getSettingValue("server_ip");
+            portBox.Text = getSettingValue("port");
+            volumeBar.Value = Int32.Parse(getSettingValue("volume"));
 
             new Thread(() =>
             {
@@ -76,6 +82,7 @@ namespace Trivia_Client
 
         private void MainLogged_Load(object sender, EventArgs e) {
             answerTimerThread = new Thread(answerTimer);
+            answerTimerThread.IsBackground = true;
             answerTimerThread.Start();
         }
 
@@ -156,9 +163,7 @@ namespace Trivia_Client
         }
 
         private void logout () {
-            byte[] buffer = new ASCIIEncoding().GetBytes("201");
-            clientStream.Write(buffer, 0, 3);
-            clientStream.Flush();
+            sendMessageToServer("201");
         }
 
         private void Sidebar()
@@ -171,6 +176,8 @@ namespace Trivia_Client
             roomsIcon.Click += new EventHandler(SidebarItemClick);
             leadeboardItem.Click += new EventHandler(SidebarItemClick);
             leadeboardItemIcon.Click += new EventHandler(SidebarItemClick);
+            settingsItem.Click += new EventHandler(SidebarItemClick);
+            settingsItemIcon.Click += new EventHandler(SidebarItemClick);
         }
 
         private void SidebarItemClick(object sender, EventArgs e) {
@@ -191,7 +198,8 @@ namespace Trivia_Client
                 createRoomItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = createRoomItem.Location.Y;
                 creRoomPanel.BringToFront();
-            } else if (ctrl.Name == "roomsItem" || ctrl.Name == "roomsIcon") {
+            }
+            else if (ctrl.Name == "roomsItem" || ctrl.Name == "roomsIcon") {
                 roomsItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = roomsItem.Location.Y;
                 roomsPanel.BringToFront();
@@ -199,15 +207,21 @@ namespace Trivia_Client
             } else if (ctrl.Name == "sidebarItem3" || ctrl.Name == "sidebarIcon3") {
                 roomsItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = roomsItem.Location.Y;
-            } else  if (ctrl.Name == "leadeboardItem" || ctrl.Name == "leadeboardItemIcon") {
+            } else if (ctrl.Name == "leadeboardItem" || ctrl.Name == "leadeboardItemIcon") {
                 leadeboardItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
                 newY = leadeboardItem.Location.Y;
 
                 if (!isLeaderBoardLoaded) {
-                    getLeaderboard();
+                    Thread getLeaderboardThread = new Thread(getLeaderboard);
+                    getLeaderboardThread.IsBackground = true;
+                    getLeaderboardThread.Start();
                 }
 
                 leadboardPanel.BringToFront();
+            } else if (ctrl.Name == "settingsItem" || ctrl.Name == "settingsItemIcon") {
+                settingsItem.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+                newY = settingsItem.Location.Y;
+                settingsPanel.BringToFront();
             }
 
             Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
@@ -482,6 +496,9 @@ namespace Trivia_Client
                     roomItem.Location = new Point(0, currentYPos);
                     originalLocations[i] = roomItem.Location;
 
+                    // Make panel rounder
+                    roomItem.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, roomItem.Width, roomItem.Height, 6, 6));
+
                     Label roomItemName = new Label();
                     roomItemName.Name = "roomItemName";
                     roomItemName.Font = new Font("Open Sans Light", 12);
@@ -722,9 +739,11 @@ namespace Trivia_Client
         }
 
         void getLeaderboard () {
-            firstPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, firstPlacePic.Width, firstPlacePic.Height, firstPlacePic.Height, firstPlacePic.Width));
-            secPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, secPlacePic.Width, secPlacePic.Height, secPlacePic.Height, secPlacePic.Width));
-            thirdPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, thirdPlacePic.Width, thirdPlacePic.Height, thirdPlacePic.Height, thirdPlacePic.Width));
+            firstPlacePic.Invoke((MethodInvoker)delegate {
+                firstPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, firstPlacePic.Width, firstPlacePic.Height, firstPlacePic.Height, firstPlacePic.Width));
+                secPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, secPlacePic.Width, secPlacePic.Height, secPlacePic.Height, secPlacePic.Width));
+                thirdPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, thirdPlacePic.Width, thirdPlacePic.Height, thirdPlacePic.Height, thirdPlacePic.Width));
+            });
 
             sendMessageToServer("223");
 
@@ -741,8 +760,11 @@ namespace Trivia_Client
                     isFirst = true;
                     firstUsername = getResultFromServer(firstUsernameLength);
                     int firstUserScoreCount = Int32.Parse(getResultFromServer(6));
-                    firstPlaceUsername.Text = firstUsername;
-                    firstPlaceScore.Text = firstUserScoreCount.ToString();
+
+                    firstPlaceUsername.Invoke((MethodInvoker)delegate {
+                        firstPlaceUsername.Text = firstUsername;
+                        firstPlaceScore.Text = firstUserScoreCount.ToString();
+                    });
 
                     int secUsernameLength = Int32.Parse(getResultFromServer(2));
                     if (secUsernameLength > 0) {
@@ -751,10 +773,12 @@ namespace Trivia_Client
                         secUsername = getResultFromServer(secUsernameLength);
                         int secUserScoreCount = Int32.Parse(getResultFromServer(6));
                         double secProgress = ((double)secUserScoreCount / (double)firstUserScoreCount) * (double)100;
-                        secPlaceUsername.Text = secUsername;
-                        secPlaceScore.Text = secUserScoreCount.ToString();
-                        secPlaceProgress.Width = (int)((double)firstPlaceProgress.Width * ((double)secProgress / (double)100));
-                        Console.WriteLine("sec per " + secProgress / (double)100);
+
+                        secPlaceUsername.Invoke((MethodInvoker)delegate {
+                            secPlaceUsername.Text = secUsername;
+                            secPlaceScore.Text = secUserScoreCount.ToString();
+                            secPlaceProgress.Width = (int)((double)firstPlaceProgress.Width * ((double)secProgress / (double)100));
+                        });
 
                         int thirdUsernameLength = Int32.Parse(getResultFromServer(2));
                         if (thirdUsernameLength > 0) {
@@ -762,16 +786,22 @@ namespace Trivia_Client
                             isThird = true;
                             thirdUsername = getResultFromServer(thirdUsernameLength);
                             int thirdUserScoreCount = Int32.Parse(getResultFromServer(6));
-                            lastPlaceUsername.Text = thirdUsername;
-                            lastPlaceScore.Text = thirdUserScoreCount.ToString();
                             double thirdProgress = ((double)secUserScoreCount / (double)firstUserScoreCount) * (double)100;
-                            thirdPlaceProgress.Width = (int)((double)firstPlaceProgress.Width * ((double)thirdProgress / (double)100));
+
+                            lastPlaceUsername.Invoke((MethodInvoker)delegate {
+                                lastPlaceUsername.Text = thirdUsername;
+                                lastPlaceScore.Text = thirdUserScoreCount.ToString();
+                                thirdPlaceProgress.Width = (int)((double)firstPlaceProgress.Width * ((double)thirdProgress / (double)100));
+                            });
                         } else {
                             thirdPlaceProgress.Width = 0;
                             getResultFromServer(8);
                         }
                     } else {
-                        secPlaceProgress.Width = 0;
+                        secPlaceProgress.Invoke((MethodInvoker)delegate {
+                            secPlaceProgress.Width = 0;
+                        });
+
                         getResultFromServer(16);
                     }
                 } else {
@@ -997,6 +1027,35 @@ namespace Trivia_Client
             if (e.Button == MouseButtons.Left) {
                 ReleaseCapture();
                 SendMessage(Handle, 0x00A1, 2, 0);
+            }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private string getSettingValue (string key) {
+            System.IO.StreamReader file = new System.IO.StreamReader(@"config.triv");
+            string line = "";
+
+            while ((line = file.ReadLine()) != null) {
+                if (line.Split('=')[0] == key) {
+                    file.Close();
+                    return line.Split('=')[1];
+                }
+            }
+
+            file.Close();
+            return "";
+        }
+
+        // Save settings
+        private void saveSettingsBtn_Click(object sender, EventArgs e) {
+            using (StreamWriter writer = new StreamWriter("config.triv")) {
+                writer.WriteLine("server_ip=" + ipBox.Text + "\nport=" + portBox.Text + "\nvolume=" + volumeBar.Value);
+                settingsFeedbackLabel.Text = "Changes saved.";
+                writer.Close();
             }
         }
     }
