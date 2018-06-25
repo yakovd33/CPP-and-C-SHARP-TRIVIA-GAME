@@ -38,7 +38,19 @@
             this.roomsItem = new System.Windows.Forms.Panel();
             this.sidebarItem1 = new System.Windows.Forms.Panel();
             this.tabs = new System.Windows.Forms.Panel();
+            this.settingsPanel = new System.Windows.Forms.Panel();
+            this.settingsFeedbackLabel = new System.Windows.Forms.Label();
+            this.saveSettingsBtn = new System.Windows.Forms.Button();
+            this.pornWrap = new System.Windows.Forms.Panel();
+            this.portBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.ipWrap = new System.Windows.Forms.Panel();
+            this.ipBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.roomsPanel = new System.Windows.Forms.Panel();
+            this.roomsListRefreshBtn = new System.Windows.Forms.Label();
+            this.roomsList = new System.Windows.Forms.Panel();
             this.gamePanel = new System.Windows.Forms.Panel();
             this.gameTimeProgressBar = new System.Windows.Forms.Panel();
             this.ProgressBarFill = new System.Windows.Forms.Panel();
@@ -55,9 +67,6 @@
             this.gameRoomTitle = new System.Windows.Forms.Label();
             this.profilePanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.roomsPanel = new System.Windows.Forms.Panel();
-            this.roomsListRefreshBtn = new System.Windows.Forms.Label();
-            this.roomsList = new System.Windows.Forms.Panel();
             this.leadboardPanel = new System.Windows.Forms.Panel();
             this.lastPlaceScore = new System.Windows.Forms.Label();
             this.secPlaceScore = new System.Windows.Forms.Label();
@@ -94,13 +103,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.currentRoomUsersList = new System.Windows.Forms.Panel();
             this.dragSection = new System.Windows.Forms.Panel();
-            this.settingsPanel = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.ipWrap = new System.Windows.Forms.Panel();
-            this.ipBox = new System.Windows.Forms.TextBox();
-            this.pornWrap = new System.Windows.Forms.Panel();
-            this.portBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.exitBtn = new System.Windows.Forms.PictureBox();
             this.leadeboardItemIcon = new System.Windows.Forms.PictureBox();
             this.createRoomIcon = new System.Windows.Forms.PictureBox();
@@ -109,18 +111,15 @@
             this.roomsIcon = new System.Windows.Forms.PictureBox();
             this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
             this.magshimimLogo = new System.Windows.Forms.PictureBox();
+            this.volumeSettings = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.leaveGame = new System.Windows.Forms.PictureBox();
+            this.onlineStatusCircle = new TransparentControl();
             this.profilePanelPic = new System.Windows.Forms.PictureBox();
             this.thirdPlacePic = new System.Windows.Forms.PictureBox();
             this.secPlacePic = new System.Windows.Forms.PictureBox();
             this.firstPlacePic = new System.Windows.Forms.PictureBox();
             this.roomExitBtn = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.volumeBar = new System.Windows.Forms.TrackBar();
-            this.saveSettingsBtn = new System.Windows.Forms.Button();
-            this.settingsFeedbackLabel = new System.Windows.Forms.Label();
-            this.onlineStatusCircle = new TransparentControl();
             this.container.SuspendLayout();
             this.sidebar.SuspendLayout();
             this.leadeboardItem.SuspendLayout();
@@ -129,10 +128,13 @@
             this.roomsItem.SuspendLayout();
             this.sidebarItem1.SuspendLayout();
             this.tabs.SuspendLayout();
+            this.settingsPanel.SuspendLayout();
+            this.pornWrap.SuspendLayout();
+            this.ipWrap.SuspendLayout();
+            this.roomsPanel.SuspendLayout();
             this.gamePanel.SuspendLayout();
             this.gameTopBarPanel.SuspendLayout();
             this.profilePanel.SuspendLayout();
-            this.roomsPanel.SuspendLayout();
             this.leadboardPanel.SuspendLayout();
             this.creRoomPanel.SuspendLayout();
             this.questionsTimeWrap.SuspendLayout();
@@ -141,9 +143,6 @@
             this.roomNameWrap.SuspendLayout();
             this.roomPanel.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.settingsPanel.SuspendLayout();
-            this.ipWrap.SuspendLayout();
-            this.pornWrap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).BeginInit();
@@ -152,6 +151,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
@@ -159,8 +159,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.secPlacePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstPlacePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.roomExitBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             this.SuspendLayout();
             // 
             // container
@@ -249,8 +247,8 @@
             // tabs
             // 
             this.tabs.BackColor = System.Drawing.Color.Transparent;
-            this.tabs.Controls.Add(this.settingsPanel);
             this.tabs.Controls.Add(this.mainPanel);
+            this.tabs.Controls.Add(this.settingsPanel);
             this.tabs.Controls.Add(this.roomsPanel);
             this.tabs.Controls.Add(this.gamePanel);
             this.tabs.Controls.Add(this.profilePanel);
@@ -263,12 +261,151 @@
             this.tabs.TabIndex = 12;
             this.tabs.Paint += new System.Windows.Forms.PaintEventHandler(this.tabs_Paint);
             // 
+            // settingsPanel
+            // 
+            this.settingsPanel.Controls.Add(this.settingsFeedbackLabel);
+            this.settingsPanel.Controls.Add(this.saveSettingsBtn);
+            this.settingsPanel.Controls.Add(this.volumeSettings);
+            this.settingsPanel.Controls.Add(this.pornWrap);
+            this.settingsPanel.Controls.Add(this.label6);
+            this.settingsPanel.Controls.Add(this.ipWrap);
+            this.settingsPanel.Controls.Add(this.label4);
+            this.settingsPanel.Location = new System.Drawing.Point(0, 0);
+            this.settingsPanel.Name = "settingsPanel";
+            this.settingsPanel.Size = new System.Drawing.Size(856, 596);
+            this.settingsPanel.TabIndex = 15;
+            // 
+            // settingsFeedbackLabel
+            // 
+            this.settingsFeedbackLabel.AutoSize = true;
+            this.settingsFeedbackLabel.BackColor = System.Drawing.Color.Transparent;
+            this.settingsFeedbackLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settingsFeedbackLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.settingsFeedbackLabel.Location = new System.Drawing.Point(21, 355);
+            this.settingsFeedbackLabel.Name = "settingsFeedbackLabel";
+            this.settingsFeedbackLabel.Size = new System.Drawing.Size(0, 16);
+            this.settingsFeedbackLabel.TabIndex = 8;
+            // 
+            // saveSettingsBtn
+            // 
+            this.saveSettingsBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(83)))), ((int)(((byte)(101)))));
+            this.saveSettingsBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.saveSettingsBtn.FlatAppearance.BorderSize = 0;
+            this.saveSettingsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveSettingsBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveSettingsBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.saveSettingsBtn.Location = new System.Drawing.Point(21, 312);
+            this.saveSettingsBtn.Name = "saveSettingsBtn";
+            this.saveSettingsBtn.Size = new System.Drawing.Size(155, 36);
+            this.saveSettingsBtn.TabIndex = 7;
+            this.saveSettingsBtn.TabStop = false;
+            this.saveSettingsBtn.Text = "Save Changes";
+            this.saveSettingsBtn.UseVisualStyleBackColor = false;
+            this.saveSettingsBtn.Click += new System.EventHandler(this.saveSettingsBtn_Click);
+            // 
+            // pornWrap
+            // 
+            this.pornWrap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.pornWrap.Controls.Add(this.portBox);
+            this.pornWrap.Location = new System.Drawing.Point(25, 178);
+            this.pornWrap.Name = "pornWrap";
+            this.pornWrap.Size = new System.Drawing.Size(772, 36);
+            this.pornWrap.TabIndex = 4;
+            this.pornWrap.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // portBox
+            // 
+            this.portBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.portBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.portBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.portBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.portBox.Location = new System.Drawing.Point(9, 7);
+            this.portBox.Name = "portBox";
+            this.portBox.Size = new System.Drawing.Size(400, 19);
+            this.portBox.TabIndex = 0;
+            this.portBox.TabStop = false;
+            this.portBox.Text = "8820";
+            // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label6.Location = new System.Drawing.Point(21, 148);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 23);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Server Port";
+            // 
+            // ipWrap
+            // 
+            this.ipWrap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.ipWrap.Controls.Add(this.ipBox);
+            this.ipWrap.Location = new System.Drawing.Point(25, 96);
+            this.ipWrap.Name = "ipWrap";
+            this.ipWrap.Size = new System.Drawing.Size(772, 36);
+            this.ipWrap.TabIndex = 2;
+            // 
+            // ipBox
+            // 
+            this.ipBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.ipBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ipBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ipBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.ipBox.Location = new System.Drawing.Point(9, 7);
+            this.ipBox.Name = "ipBox";
+            this.ipBox.Size = new System.Drawing.Size(400, 19);
+            this.ipBox.TabIndex = 0;
+            this.ipBox.TabStop = false;
+            this.ipBox.Text = "127.0.0.1";
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label4.Location = new System.Drawing.Point(21, 66);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(100, 23);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Server IP";
+            // 
             // mainPanel
             // 
             this.mainPanel.Location = new System.Drawing.Point(0, 0);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(856, 596);
             this.mainPanel.TabIndex = 2;
+            // 
+            // roomsPanel
+            // 
+            this.roomsPanel.BackColor = System.Drawing.Color.Transparent;
+            this.roomsPanel.Controls.Add(this.roomsListRefreshBtn);
+            this.roomsPanel.Controls.Add(this.roomsList);
+            this.roomsPanel.Font = new System.Drawing.Font("Vivaldi", 8.25F);
+            this.roomsPanel.Location = new System.Drawing.Point(0, 0);
+            this.roomsPanel.Name = "roomsPanel";
+            this.roomsPanel.Size = new System.Drawing.Size(853, 541);
+            this.roomsPanel.TabIndex = 12;
+            // 
+            // roomsListRefreshBtn
+            // 
+            this.roomsListRefreshBtn.AutoSize = true;
+            this.roomsListRefreshBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.roomsListRefreshBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(190)))), ((int)(((byte)(202)))));
+            this.roomsListRefreshBtn.Location = new System.Drawing.Point(14, 46);
+            this.roomsListRefreshBtn.Name = "roomsListRefreshBtn";
+            this.roomsListRefreshBtn.Size = new System.Drawing.Size(55, 16);
+            this.roomsListRefreshBtn.TabIndex = 2;
+            this.roomsListRefreshBtn.Text = "Refresh";
+            this.roomsListRefreshBtn.Click += new System.EventHandler(this.roomsListRefreshBtn_Click);
+            // 
+            // roomsList
+            // 
+            this.roomsList.AutoScroll = true;
+            this.roomsList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(190)))), ((int)(((byte)(202)))));
+            this.roomsList.Location = new System.Drawing.Point(17, 80);
+            this.roomsList.Name = "roomsList";
+            this.roomsList.Size = new System.Drawing.Size(827, 448);
+            this.roomsList.TabIndex = 1;
             // 
             // gamePanel
             // 
@@ -465,38 +602,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "info";
             this.label1.UseMnemonic = false;
-            // 
-            // roomsPanel
-            // 
-            this.roomsPanel.BackColor = System.Drawing.Color.Transparent;
-            this.roomsPanel.Controls.Add(this.roomsListRefreshBtn);
-            this.roomsPanel.Controls.Add(this.roomsList);
-            this.roomsPanel.Font = new System.Drawing.Font("Vivaldi", 8.25F);
-            this.roomsPanel.Location = new System.Drawing.Point(0, 0);
-            this.roomsPanel.Name = "roomsPanel";
-            this.roomsPanel.Size = new System.Drawing.Size(853, 541);
-            this.roomsPanel.TabIndex = 12;
-            // 
-            // roomsListRefreshBtn
-            // 
-            this.roomsListRefreshBtn.AutoSize = true;
-            this.roomsListRefreshBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.roomsListRefreshBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(190)))), ((int)(((byte)(202)))));
-            this.roomsListRefreshBtn.Location = new System.Drawing.Point(14, 46);
-            this.roomsListRefreshBtn.Name = "roomsListRefreshBtn";
-            this.roomsListRefreshBtn.Size = new System.Drawing.Size(55, 16);
-            this.roomsListRefreshBtn.TabIndex = 2;
-            this.roomsListRefreshBtn.Text = "Refresh";
-            this.roomsListRefreshBtn.Click += new System.EventHandler(this.roomsListRefreshBtn_Click);
-            // 
-            // roomsList
-            // 
-            this.roomsList.AutoScroll = true;
-            this.roomsList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(190)))), ((int)(((byte)(202)))));
-            this.roomsList.Location = new System.Drawing.Point(17, 80);
-            this.roomsList.Name = "roomsList";
-            this.roomsList.Size = new System.Drawing.Size(827, 448);
-            this.roomsList.TabIndex = 1;
             // 
             // leadboardPanel
             // 
@@ -909,86 +1014,6 @@
             this.dragSection.TabIndex = 9;
             this.dragSection.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dragContainerMouseMove);
             // 
-            // settingsPanel
-            // 
-            this.settingsPanel.Controls.Add(this.settingsFeedbackLabel);
-            this.settingsPanel.Controls.Add(this.saveSettingsBtn);
-            this.settingsPanel.Controls.Add(this.volumeBar);
-            this.settingsPanel.Controls.Add(this.pictureBox2);
-            this.settingsPanel.Controls.Add(this.pornWrap);
-            this.settingsPanel.Controls.Add(this.label6);
-            this.settingsPanel.Controls.Add(this.ipWrap);
-            this.settingsPanel.Controls.Add(this.label4);
-            this.settingsPanel.Location = new System.Drawing.Point(0, 0);
-            this.settingsPanel.Name = "settingsPanel";
-            this.settingsPanel.Size = new System.Drawing.Size(856, 596);
-            this.settingsPanel.TabIndex = 15;
-            // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label4.Location = new System.Drawing.Point(21, 66);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 23);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Server IP";
-            // 
-            // ipWrap
-            // 
-            this.ipWrap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.ipWrap.Controls.Add(this.ipBox);
-            this.ipWrap.Location = new System.Drawing.Point(25, 96);
-            this.ipWrap.Name = "ipWrap";
-            this.ipWrap.Size = new System.Drawing.Size(772, 36);
-            this.ipWrap.TabIndex = 2;
-            // 
-            // ipBox
-            // 
-            this.ipBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.ipBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ipBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ipBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.ipBox.Location = new System.Drawing.Point(9, 7);
-            this.ipBox.Name = "ipBox";
-            this.ipBox.Size = new System.Drawing.Size(400, 19);
-            this.ipBox.TabIndex = 0;
-            this.ipBox.TabStop = false;
-            this.ipBox.Text = "127.0.0.1";
-            // 
-            // pornWrap
-            // 
-            this.pornWrap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.pornWrap.Controls.Add(this.portBox);
-            this.pornWrap.Location = new System.Drawing.Point(25, 178);
-            this.pornWrap.Name = "pornWrap";
-            this.pornWrap.Size = new System.Drawing.Size(772, 36);
-            this.pornWrap.TabIndex = 4;
-            this.pornWrap.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // portBox
-            // 
-            this.portBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.portBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.portBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.portBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.portBox.Location = new System.Drawing.Point(9, 7);
-            this.portBox.Name = "portBox";
-            this.portBox.Size = new System.Drawing.Size(400, 19);
-            this.portBox.TabIndex = 0;
-            this.portBox.TabStop = false;
-            this.portBox.Text = "8820";
-            // 
-            // label6
-            // 
-            this.label6.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label6.Location = new System.Drawing.Point(21, 148);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 23);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Server Port";
-            // 
             // exitBtn
             // 
             this.exitBtn.BackColor = System.Drawing.Color.Transparent;
@@ -1076,6 +1101,17 @@
             this.magshimimLogo.TabIndex = 8;
             this.magshimimLogo.TabStop = false;
             // 
+            // volumeSettings
+            // 
+            this.volumeSettings.Image = global::Trivia_Client.Properties.Resources.sound;
+            this.volumeSettings.Location = new System.Drawing.Point(24, 243);
+            this.volumeSettings.Name = "volumeSettings";
+            this.volumeSettings.Size = new System.Drawing.Size(40, 40);
+            this.volumeSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.volumeSettings.TabIndex = 5;
+            this.volumeSettings.TabStop = false;
+            this.volumeSettings.Click += new System.EventHandler(this.volumeSettings_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Trivia_Client.Properties.Resources.clock;
@@ -1095,6 +1131,16 @@
             this.leaveGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.leaveGame.TabIndex = 1;
             this.leaveGame.TabStop = false;
+            // 
+            // onlineStatusCircle
+            // 
+            this.onlineStatusCircle.BackColor = System.Drawing.Color.Transparent;
+            this.onlineStatusCircle.Image = global::Trivia_Client.Properties.Resources.online;
+            this.onlineStatusCircle.Location = new System.Drawing.Point(-62, 26);
+            this.onlineStatusCircle.Name = "onlineStatusCircle";
+            this.onlineStatusCircle.Size = new System.Drawing.Size(15, 15);
+            this.onlineStatusCircle.TabIndex = 1;
+            this.onlineStatusCircle.Text = "transparentControl2";
             // 
             // profilePanelPic
             // 
@@ -1149,64 +1195,6 @@
             this.roomExitBtn.TabStop = false;
             this.roomExitBtn.Click += new System.EventHandler(this.roomExitBtn_Click);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::Trivia_Client.Properties.Resources.music;
-            this.pictureBox2.Location = new System.Drawing.Point(23, 233);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
-            // 
-            // volumeBar
-            // 
-            this.volumeBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(62)))), ((int)(((byte)(71)))));
-            this.volumeBar.Location = new System.Drawing.Point(89, 245);
-            this.volumeBar.Maximum = 100;
-            this.volumeBar.Name = "volumeBar";
-            this.volumeBar.Size = new System.Drawing.Size(154, 45);
-            this.volumeBar.TabIndex = 6;
-            this.volumeBar.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // saveSettingsBtn
-            // 
-            this.saveSettingsBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(83)))), ((int)(((byte)(101)))));
-            this.saveSettingsBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.saveSettingsBtn.FlatAppearance.BorderSize = 0;
-            this.saveSettingsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveSettingsBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveSettingsBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.saveSettingsBtn.Location = new System.Drawing.Point(21, 312);
-            this.saveSettingsBtn.Name = "saveSettingsBtn";
-            this.saveSettingsBtn.Size = new System.Drawing.Size(155, 36);
-            this.saveSettingsBtn.TabIndex = 7;
-            this.saveSettingsBtn.TabStop = false;
-            this.saveSettingsBtn.Text = "Save Changes";
-            this.saveSettingsBtn.UseVisualStyleBackColor = false;
-            this.saveSettingsBtn.Click += new System.EventHandler(this.saveSettingsBtn_Click);
-            // 
-            // settingsFeedbackLabel
-            // 
-            this.settingsFeedbackLabel.AutoSize = true;
-            this.settingsFeedbackLabel.BackColor = System.Drawing.Color.Transparent;
-            this.settingsFeedbackLabel.Font = new System.Drawing.Font("Open Sans Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.settingsFeedbackLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.settingsFeedbackLabel.Location = new System.Drawing.Point(21, 355);
-            this.settingsFeedbackLabel.Name = "settingsFeedbackLabel";
-            this.settingsFeedbackLabel.Size = new System.Drawing.Size(0, 18);
-            this.settingsFeedbackLabel.TabIndex = 8;
-            // 
-            // onlineStatusCircle
-            // 
-            this.onlineStatusCircle.BackColor = System.Drawing.Color.Transparent;
-            this.onlineStatusCircle.Image = global::Trivia_Client.Properties.Resources.online;
-            this.onlineStatusCircle.Location = new System.Drawing.Point(-62, 26);
-            this.onlineStatusCircle.Name = "onlineStatusCircle";
-            this.onlineStatusCircle.Size = new System.Drawing.Size(15, 15);
-            this.onlineStatusCircle.TabIndex = 1;
-            this.onlineStatusCircle.Text = "transparentControl2";
-            // 
             // MainLogged
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1231,13 +1219,19 @@
             this.roomsItem.ResumeLayout(false);
             this.sidebarItem1.ResumeLayout(false);
             this.tabs.ResumeLayout(false);
+            this.settingsPanel.ResumeLayout(false);
+            this.settingsPanel.PerformLayout();
+            this.pornWrap.ResumeLayout(false);
+            this.pornWrap.PerformLayout();
+            this.ipWrap.ResumeLayout(false);
+            this.ipWrap.PerformLayout();
+            this.roomsPanel.ResumeLayout(false);
+            this.roomsPanel.PerformLayout();
             this.gamePanel.ResumeLayout(false);
             this.gamePanel.PerformLayout();
             this.gameTopBarPanel.ResumeLayout(false);
             this.profilePanel.ResumeLayout(false);
             this.profilePanel.PerformLayout();
-            this.roomsPanel.ResumeLayout(false);
-            this.roomsPanel.PerformLayout();
             this.leadboardPanel.ResumeLayout(false);
             this.leadboardPanel.PerformLayout();
             this.creRoomPanel.ResumeLayout(false);
@@ -1253,12 +1247,6 @@
             this.roomPanel.ResumeLayout(false);
             this.roomPanel.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.settingsPanel.ResumeLayout(false);
-            this.settingsPanel.PerformLayout();
-            this.ipWrap.ResumeLayout(false);
-            this.ipWrap.PerformLayout();
-            this.pornWrap.ResumeLayout(false);
-            this.pornWrap.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leadeboardItemIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.createRoomIcon)).EndInit();
@@ -1267,6 +1255,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.roomsIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
@@ -1274,8 +1263,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.secPlacePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstPlacePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.roomExitBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1369,8 +1356,7 @@
         private System.Windows.Forms.Panel pornWrap;
         private System.Windows.Forms.TextBox portBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TrackBar volumeBar;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox volumeSettings;
         private System.Windows.Forms.Button saveSettingsBtn;
         private System.Windows.Forms.Label settingsFeedbackLabel;
     }

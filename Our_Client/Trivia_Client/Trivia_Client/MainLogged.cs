@@ -8,11 +8,13 @@ using System.Threading;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+//using System.Windows.Media;
 
 namespace Trivia_Client
 {
     public partial class MainLogged : Form
     {
+
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
         (
@@ -24,6 +26,10 @@ namespace Trivia_Client
             int nHeightEllipse // width of ellipse
         );
 
+        System.Media.SoundPlayer buttonsTheme = new System.Media.SoundPlayer(@"Sounds\click.wav");
+        System.Media.SoundPlayer mainTheme = new System.Media.SoundPlayer(@"Sounds\main_theme.wav");
+        System.Media.SoundPlayer swoosh = new System.Media.SoundPlayer(@"Sounds\swoosh.wav");
+
         TcpClient client;
         IPEndPoint serverEndPoint;
         NetworkStream clientStream;
@@ -34,6 +40,7 @@ namespace Trivia_Client
         bool inGame = false;
         bool exit = false;
         bool isLeaderBoardLoaded = false;
+        bool isMute = false;
 
         int roomQuestionTime;
         int roomQuestionsNumber;
@@ -41,13 +48,18 @@ namespace Trivia_Client
         int currentQuestionsCounter = 0;
         Thread questionsThread;
         Thread answerTimerThread;
+        Image sound = Trivia_Client.Properties.Resources.sound;
+        Image mute = Trivia_Client.Properties.Resources.mute;
 
         int answerSeconds = 0;
+
+
 
         public MainLogged(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream)
         {
             InitializeComponent();
-
+            if (!isMute)
+                mainTheme.Play();
             this.client = client;
             this.serverEndPoint = serverEndPoint;
             this.clientStream = clientStream;
@@ -66,7 +78,8 @@ namespace Trivia_Client
 
             ipBox.Text = getSettingValue("server_ip");
             portBox.Text = getSettingValue("port");
-            volumeBar.Value = Int32.Parse(getSettingValue("volume"));
+            volumeSettings.Image = getSettingValue("volume") == "sound" ? sound : mute; 
+           
 
             new Thread(() =>
             {
@@ -125,7 +138,9 @@ namespace Trivia_Client
             exitBtn.BackgroundImage = Trivia_Client.Properties.Resources.exitButton;
         }
 
-        private void exitBtn_Click(object sender, EventArgs e) {
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            
             try
             {
                 sendMessageToServer("299");
@@ -134,6 +149,8 @@ namespace Trivia_Client
             } catch (Exception ex) {
                 Console.WriteLine(ex);
             } finally {
+                if (!isMute)
+                    buttonsTheme.Play();
                 Application.Exit();
 
             }
@@ -226,6 +243,9 @@ namespace Trivia_Client
 
             Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
             animate.Start(newY);
+            if (!isMute)
+                swoosh.Play();
+
         }
 
 
@@ -492,7 +512,7 @@ namespace Trivia_Client
                     roomItem.Cursor = Cursors.Hand;
                     roomItem.Height = 66;
                     roomItem.Width = 805;
-                    roomItem.BackColor = Color.FromArgb(48, 56, 65);
+                    roomItem.BackColor = System.Drawing.Color.FromArgb(48, 56, 65);
                     roomItem.Location = new Point(0, currentYPos);
                     originalLocations[i] = roomItem.Location;
 
@@ -502,7 +522,7 @@ namespace Trivia_Client
                     Label roomItemName = new Label();
                     roomItemName.Name = "roomItemName";
                     roomItemName.Font = new Font("Open Sans Light", 12);
-                    roomItemName.ForeColor = Color.FromArgb(173, 190, 202);
+                    roomItemName.ForeColor = System.Drawing.Color.FromArgb(173, 190, 202);
                     roomItemName.Location = new Point(10, 21);
                     roomItemName.Text = roomName;
                     roomItem.Controls.Add(roomItemName);
@@ -702,7 +722,7 @@ namespace Trivia_Client
 
                     Label roomUserNameLabel = new Label();
                     roomUserNameLabel.Font = new Font("Open Sans Light", 10);
-                    roomUserNameLabel.ForeColor = Color.FromArgb(173, 190, 202);
+                    roomUserNameLabel.ForeColor = System.Drawing.Color.FromArgb(173, 190, 202);
                     roomUserNameLabel.Text = username;
                     roomUserNameLabel.Location = new Point(40, curRoomUsersCurYPos);
                     currentRoomUsersList.Controls.Add(roomUserNameLabel);
@@ -847,10 +867,10 @@ namespace Trivia_Client
 
         private void getQuestions ()
         {
-            firstAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
-            secondAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
-            thirdAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
-            fourthAnswerBtn.BackColor = Color.FromArgb(48, 56, 65);
+            firstAnswerBtn.BackColor = System.Drawing.Color.FromArgb(48, 56, 65);
+            secondAnswerBtn.BackColor = System.Drawing.Color.FromArgb(48, 56, 65);
+            thirdAnswerBtn.BackColor = System.Drawing.Color.FromArgb(48, 56, 65);
+            fourthAnswerBtn.BackColor = System.Drawing.Color.FromArgb(48, 56, 65);
 
             if (getResultFromServer(3) == "118")
             {
@@ -930,9 +950,9 @@ namespace Trivia_Client
 
             sendMessageToServer("219" + "1" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
-                firstAnswerBtn.BackColor = Color.Green;
+                firstAnswerBtn.BackColor = System.Drawing.Color.Green;
             } else {
-                firstAnswerBtn.BackColor = Color.Red;
+                firstAnswerBtn.BackColor = System.Drawing.Color.Red;
             }
 
             nextTour();
@@ -942,9 +962,9 @@ namespace Trivia_Client
             disableAllAnswerBtns();
             sendMessageToServer("219" + "2" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
-                secondAnswerBtn.BackColor = Color.Green;
+                secondAnswerBtn.BackColor = System.Drawing.Color.Green;
             } else {
-                secondAnswerBtn.BackColor = Color.Red;
+                secondAnswerBtn.BackColor = System.Drawing.Color.Red;
             }
 
             nextTour();
@@ -954,9 +974,9 @@ namespace Trivia_Client
             disableAllAnswerBtns();
             sendMessageToServer("219" + "3" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
-                thirdAnswerBtn.BackColor = Color.Green;
+                thirdAnswerBtn.BackColor = System.Drawing.Color.Green;
             } else {
-                thirdAnswerBtn.BackColor = Color.Red;
+                thirdAnswerBtn.BackColor = System.Drawing.Color.Red;
             }
 
             nextTour();
@@ -966,9 +986,9 @@ namespace Trivia_Client
             disableAllAnswerBtns();
             sendMessageToServer("219" + "4" + answerSeconds.ToString("D2"));
             if (getAnswerResponse()) {
-                fourthAnswerBtn.BackColor = Color.Green;
+                fourthAnswerBtn.BackColor = System.Drawing.Color.Green;
             } else {
-                fourthAnswerBtn.BackColor = Color.Red;
+                fourthAnswerBtn.BackColor = System.Drawing.Color.Red;
             }
 
             nextTour();
@@ -987,8 +1007,9 @@ namespace Trivia_Client
                 answerTimerThread.Abort(); // Stop timer thread
 
                 Scores scores = new Scores(client, serverEndPoint, clientStream);
+                mainPanel.BringToFront();
                 scores.ShowDialog();
-               
+                
             }
         }
 
@@ -1053,10 +1074,27 @@ namespace Trivia_Client
         // Save settings
         private void saveSettingsBtn_Click(object sender, EventArgs e) {
             using (StreamWriter writer = new StreamWriter("config.triv")) {
-                writer.WriteLine("server_ip=" + ipBox.Text + "\nport=" + portBox.Text + "\nvolume=" + volumeBar.Value);
+                writer.WriteLine("server_ip=" + ipBox.Text + "\nport=" + portBox.Text + "\nvolume" + (volumeSettings.Image == sound ? "sound" : "mute"));
                 settingsFeedbackLabel.Text = "Changes saved.";
                 writer.Close();
             }
+        }
+
+        private void volumeSettings_Click(object sender, EventArgs e)
+        {
+            if (isMute == false)
+                buttonsTheme.Play();
+            if (volumeSettings.Image == sound)
+            {
+                volumeSettings.Image = mute;
+                isMute = true;
+            }
+            else if (volumeSettings.Image == mute)
+            {
+                volumeSettings.Image = sound;
+                isMute = false;
+            }
+
         }
     }
 }

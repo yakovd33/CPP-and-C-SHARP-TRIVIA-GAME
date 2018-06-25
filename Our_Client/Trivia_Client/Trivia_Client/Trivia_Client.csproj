@@ -136,6 +136,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Pictures [Resources]\sound.png" />
+    <None Include="Pictures [Resources]\mute.png" />
+    <None Include="Pictures [Resources]\username.png" />
+    <None Include="Pictures [Resources]\score.png" />
+    <None Include="Pictures [Resources]\#.png" />
     <None Include="Pictures [Resources]\music.png" />
     <None Include="Pictures [Resources]\icon.png" />
     <None Include="Pictures [Resources]\Scoreboard.png" />

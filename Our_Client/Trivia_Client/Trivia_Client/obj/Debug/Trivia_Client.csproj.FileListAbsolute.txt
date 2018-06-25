@@ -12,3 +12,17 @@ C:\Users\yakov\Desktop\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\T
 C:\Users\yakov\Desktop\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.csprojResolveAssemblyReference.cache
 C:\Users\yakov\Desktop\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.Pass_Reset_Screen.resources
 C:\Users\yakov\Desktop\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.Scores.resources
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\bin\Debug\Trivia_Client.exe.config
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\bin\Debug\Trivia_Client.exe
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\bin\Debug\Trivia_Client.pdb
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.csprojResolveAssemblyReference.cache
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.Pass_Reset_Screen.resources
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.Scores.resources
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.Signup.resources
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.LogInScreen.resources
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.MainLogged.resources
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.Properties.Resources.resources
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.csproj.GenerateResource.Cache
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.csproj.CoreCompileInputs.cache
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.exe
+C:\Users\magshimim\Desktop\Codes\trivia\Our_Client\Trivia_Client\Trivia_Client\obj\Debug\Trivia_Client.pdb

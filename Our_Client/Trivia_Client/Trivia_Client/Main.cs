@@ -10,6 +10,9 @@ namespace Trivia_Client
 {
     public partial class LogInScreen : Form
     {
+        System.Media.SoundPlayer buttonsTheme = new System.Media.SoundPlayer(@"Sounds\click.wav");
+        System.Media.SoundPlayer mainTheme = new System.Media.SoundPlayer(@"Sounds\main_theme.wav");
+
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
         (
@@ -34,6 +37,10 @@ namespace Trivia_Client
         {
 
             InitializeComponent();
+
+            mainTheme.Play();
+            
+
             this.FormBorderStyle = FormBorderStyle.None;
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
 
@@ -126,6 +133,7 @@ namespace Trivia_Client
 
         private void exitBtn_Click(object sender, EventArgs e)
         {
+            buttonsTheme.Play();
             sendMessageToServer("299");
             Application.Exit();
         }
@@ -198,11 +206,14 @@ namespace Trivia_Client
             }
         }
 
-        private void loginBtn_Click(object sender, EventArgs e) {
+        private void loginBtn_Click(object sender, EventArgs e)
+        {
+            buttonsTheme.Play();
             login();
         }
 
         private void SignupBtn_Click(object sender, EventArgs e) {
+            buttonsTheme.Play();
             this.Hide();
             Signup signup = new Signup(client, serverEndPoint, clientStream);
             signup.ShowDialog();

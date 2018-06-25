@@ -34,7 +34,9 @@ namespace Trivia_Client
 
         public Scores(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream)
         {
-            this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
+            InitializeComponent();
+
+            //this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
             this.client = client;
             this.serverEndPoint = serverEndPoint;
             this.clientStream = clientStream;
@@ -42,15 +44,54 @@ namespace Trivia_Client
             {
                 int userNumber = Int32.Parse(getResultFromServer(1));
 
+                Dictionary<string, int> users = new Dictionary<string, int>();
+
                 for (int i = 0; i < userNumber; i++)
                 {
                     int usernameLength = Int32.Parse(getResultFromServer(2));
                     string username = getResultFromServer(usernameLength);
                     int score = Int32.Parse(getResultFromServer(2));
+                    users.Add(username, score);
                     Console.WriteLine("Username: " + username + " Score: " + score);
                 }
+
+                var usersSorted = users.ToList();
+                usersSorted.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
+
+                int currYPos = 21;
+                for (int i = 0; i < userNumber; i++)
+                {
+                    
+                    PictureBox profile = new PictureBox();
+                    profile.Name = "scoreItemProfile" + (i + 1);
+                    profile.Height = 40;
+                    profile.Width = 40;
+                    profile.Load(getUserProfilePicByUsername(usersSorted[i].Key));
+                    profile.Location = new Point(17, currYPos);
+                    profile.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, profile.Width, profile.Height, 40, 40));
+                    profile.SizeMode = PictureBoxSizeMode.StretchImage;
+                    scoresList.Controls.Add(profile);
+
+                    ///////
+                    Label usernameLabel = new Label();
+                    usernameLabel.Name = "scoreItemUsername" + (i + 1);
+                    usernameLabel.Text = usersSorted[i].Key;
+                    usernameLabel.Font = new Font("Open Sans Light", 18);
+                    usernameLabel.ForeColor = Color.FromArgb(173, 190, 202);
+                    usernameLabel.Location = new Point(202, currYPos);
+                    scoresList.Controls.Add(usernameLabel);
+                ///////
+                    Label scoreLabel = new Label();
+                    scoreLabel.Name = "scoreItemScore" + (i + 1);
+                    scoreLabel.Text = usersSorted[i].Value.ToString();
+                    scoreLabel.Font = new Font("Open Sans Light", 18);
+                    scoreLabel.ForeColor = Color.FromArgb(173, 190, 202);
+                    scoreLabel.Location = new Point(477, currYPos);
+                    scoresList.Controls.Add(scoreLabel);
+                    currYPos += 40;
+
+                }
             }
-            InitializeComponent();
         }
         private string getResultFromServer(int bytes)
         {
@@ -61,7 +102,22 @@ namespace Trivia_Client
             return result;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        string getUserProfilePicByUsername(string username)
+        {
+            string picture_url = "https://i.imgur.com/oeKRbhC.png";
+
+            sendMessageToServer("419" + username.Length.ToString("D2") + username);
+
+            if (getResultFromServer(3) == "189")
+            {
+                int pictureLength = Int32.Parse(getResultFromServer(3));
+                picture_url = getResultFromServer(pictureLength);
+            }
+
+            return picture_url;
+        }
+
+        private void exitBtn_Click(object sender, EventArgs e)
         {
             try
             {
