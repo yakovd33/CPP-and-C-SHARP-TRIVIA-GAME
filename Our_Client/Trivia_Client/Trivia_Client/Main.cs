@@ -96,9 +96,7 @@ namespace Trivia_Client
             }
         }
 
-        private void usernameBox_TextChanged(object sender, EventArgs e)
-        {
-        }        
+
 
         private void passwordBox_TextChanged(object sender, EventArgs e)
         {

@@ -46,7 +46,8 @@ TriviaServer::~TriviaServer()
 		// the only use of the destructor should be for freeing 
 		// resources that was allocated in the constructor
 		::closesocket(_socket);
-	} catch (...) {}
+	}
+	catch (...) {}
 }
 
 void TriviaServer::serve()
@@ -118,7 +119,8 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 		currRcvMsg = buildRecieveMessage(client_socket, msgCode);
 		addRecievedMessage(currRcvMsg);
 
-	} catch (const std::exception& e) {
+	}
+	catch (const std::exception& e) {
 		// Exit
 		//std::cout << "Exception was catch in function clientHandler. socket=" << client_socket << ", what=" << e.what() << std::endl;
 		currRcvMsg = buildRecieveMessage(client_socket, "299"); // Handle a socket disconnection
@@ -237,10 +239,10 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 	return msg;
 }
 
-void TriviaServer::handleForgot_pass(RecievedMessage * msg)
+void TriviaServer::handleForgotPassword(RecievedMessage * msg)
 {
 	/*if (!exit) {
-		sendMessageToSocket(msg->getSock(), "667");
+	sendMessageToSocket(msg->getSock(), "667");
 	}
 	*/
 	::CoInitialize(NULL);
@@ -248,12 +250,12 @@ void TriviaServer::handleForgot_pass(RecievedMessage * msg)
 	IMailPtr oSmtp = NULL;
 	oSmtp.CreateInstance("EASendMailObj.Mail");
 	oSmtp->LicenseCode = ("TryIt");
-	
+
 	cout << " ***** " << msg->getMessageCode() << " ****** " << endl;
 	// user gmail email address
 	oSmtp->FromAddr = ("lolpirt2@gmail.com");//meeeeeeee
 	oSmtp->AddRecipientEx(_T(msg->getValues().find("email")->second.c_str()), 0);//meeeee
-													//email subject
+																				 //email subject
 	oSmtp->Subject = ("Trivia++ notification: pass reset");
 	// Set email body
 	oSmtp->BodyText = ("this is a test email sent from Visual C++ project with Gmail");
@@ -280,12 +282,12 @@ void TriviaServer::handleForgot_pass(RecievedMessage * msg)
 
 	if (oSmtp->SendMail() == 0)
 	{
-		cout << "email was sent successfully!\r\n"<< endl;
+		cout << "email was sent successfully!\r\n" << endl;
 	}
 	else
 	{
 		cout << "failed to send email with the following error: %s\r\n" <<
-		(const TCHAR*)oSmtp->GetLastErrDescription()<< endl;
+			(const TCHAR*)oSmtp->GetLastErrDescription() << endl;
 	}
 
 	if (oSmtp != NULL)
@@ -300,7 +302,8 @@ void TriviaServer::sendMessageToSocket(SOCKET sock, string msg) {
 User* TriviaServer::handleSignin(RecievedMessage * msg) {
 	if (!_db->isUserExists(msg->getValues().find("username")->second)) {
 		sendMessageToSocket(msg->getSock(), "1021");
-	} else {
+	}
+	else {
 		if (_db->isUserAndPasswordMatch(msg->getValues().find("username")->second, msg->getValues().find("password")->second)) {
 			// Username and password are matching
 
@@ -309,10 +312,12 @@ User* TriviaServer::handleSignin(RecievedMessage * msg) {
 				_connectedUsers.insert(make_pair(msg->getSock(), new User(msg->getValues().find("username")->second, msg->getSock())));
 				sendMessageToSocket(msg->getSock(), "1020");
 				cout << "successsss" << endl;
-			} else {
+			}
+			else {
 				sendMessageToSocket(msg->getSock(), "1022"); // User is already connected
 			}
-		} else {
+		}
+		else {
 			sendMessageToSocket(msg->getSock(), "1021"); // Wrong details
 		}
 	}
@@ -336,7 +341,7 @@ void TriviaServer::handleSignout(RecievedMessage * msg) {
 	}
 
 	// TODO Close game
-	
+
 	safeDeleteUser(msg->getSock()); // Remove users from connected users
 }
 
@@ -351,16 +356,20 @@ bool TriviaServer::handleSignup(RecievedMessage * msg) {
 				if (_db->addNewUser(username, password, email)) {
 					// Success
 					sendMessageToSocket(msg->getSock(), "1040");
-				} else {
+				}
+				else {
 					sendMessageToSocket(msg->getSock(), "1044"); // Unsuccessful insertion
 				}
-			} else {
+			}
+			else {
 				sendMessageToSocket(msg->getSock(), "1042"); // User exists
 			}
-		} else {
+		}
+		else {
 			sendMessageToSocket(msg->getSock(), "1043"); // Invalid username
 		}
-	} else {
+	}
+	else {
 		sendMessageToSocket(msg->getSock(), "1041"); // Invalid password
 	}
 
@@ -394,13 +403,16 @@ bool TriviaServer::handleJoinRoom(RecievedMessage * msg) {
 				message += string(2 - to_string(room->getQuestionsNo()).length(), '0') + to_string(room->getQuestionsNo());
 				message += string(2 - to_string(room->getQuestionTime()).length(), '0') + to_string(room->getQuestionTime());
 				sendMessageToSocket(msg->getSock(), message);
-			} else {
+			}
+			else {
 				sendMessageToSocket(msg->getSock(), "1102"); // Unsuccessful join
 			}
-		} else {
+		}
+		else {
 			sendMessageToSocket(msg->getSock(), "1102"); // Room does not exist
 		}
-	} else {
+	}
+	else {
 		sendMessageToSocket(msg->getSock(), "1102"); // User is already in room
 	}
 
@@ -425,7 +437,8 @@ void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg) {
 		cout << "message: " << message << endl;
 
 		sendMessageToSocket(msg->getSock(), message);
-	} else {
+	}
+	else {
 		// Room does not exist
 		sendMessageToSocket(msg->getSock(), "1080");
 	}
@@ -433,22 +446,23 @@ void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg) {
 
 bool TriviaServer::handleLeaveRoom(RecievedMessage * msg) {
 	User* user = getUserBySocket(msg->getSock());
-	
+
 	if (user) {
 		Room* room = getRoomById(user->getRoomId());
 		user->leaveRoom();
-		
+
 		if (room) {
 			vector<User*> users = room->getUsers();
 			users.erase(std::remove(users.begin(), users.end(), user), users.end());
 			room->setUsers(users);
 			sendMessageToSocket(msg->getSock(), "1120");
-		} else {
+		}
+		else {
 			// Room not found
 		}
 	}
 
-return false;
+	return false;
 }
 
 bool TriviaServer::handleCreateRoom(RecievedMessage * msg) {
@@ -482,7 +496,8 @@ bool TriviaServer::handleCloseRoom(RecievedMessage * msg) {
 			// Remove room from list
 			_roomsList.erase(room->getId());
 			return true;
-		} else {
+		}
+		else {
 			// Room or user does not exist
 			return false;
 		}
@@ -509,8 +524,8 @@ void TriviaServer::handleStartGame(RecievedMessage * msg) {
 				}
 
 				/*if (room->closeRoom(user)) {
-					// Remove room from list
-					_roomsList.erase(room->getId());
+				// Remove room from list
+				_roomsList.erase(room->getId());
 				}*/
 				_roomsList.erase(room->getId());
 
@@ -559,7 +574,7 @@ void TriviaServer::handleGetBestScores(RecievedMessage * msg) {
 
 void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
 	User* user = getUserBySocket(msg->getSock());
-	
+
 	if (user) {
 		sendMessageToSocket(msg->getSock(), _db->getPersonalStatus(user->getUsername()));
 	}
@@ -576,7 +591,7 @@ void TriviaServer::handleGetProfilePic(RecievedMessage * msg) {
 void TriviaServer::handleChnageProfilePic(RecievedMessage * msg) {
 	cout << "url: " << msg->getValues().find("url")->second << endl;
 	_db->updateUserProfilePicByUsername(getUserBySocket(msg->getSock())->getUsername(), msg->getValues().find("url")->second);
-	
+
 }
 
 void TriviaServer::handleGetUserProfilePicByUsername(RecievedMessage * msg) {
@@ -610,33 +625,39 @@ void TriviaServer::handleUpdateProfileInfo(RecievedMessage * msg) {
 
 	if (email != _db->getUserColByUsername(user->getUsername(), "email") && _db->isEmailExists(email)) {
 		user->send("1091");
-	} else {
+	}
+	else {
 		_db->updateProfileInfoByUsername(user->getUsername(), email, password);
 		user->send("1090");
 	}
 }
 
 void TriviaServer::handleGetConnectedUsersList(RecievedMessage * msg) {
+	cout << "hehehe" << endl;
 	string usersCount = to_string(_connectedUsers.size());
 	usersCount = string(4 - usersCount.length(), '0') + usersCount; // Leading zeros
 	string message = "672" + usersCount;
 
-	for (auto const& room : _connectedUsers) {
-		message += string(3 - room.second->getUsername().length(), '0') + to_string(room.second->getUsername().length()); // Username length
-		message += room.second->getUsername(); // Username
+	for (auto const& user : _connectedUsers) {
+		cout << user.second->getUsername() << endl;
+		message += string(3 - to_string(user.second->getUsername().length()).length(), '0') + to_string(user.second->getUsername().length()); // Username length
+		message += user.second->getUsername(); // Username
 	}
 
+	cout << message << endl;
 	sendMessageToSocket(msg->getSock(), message);
 }
 
 void TriviaServer::handleInsertMessageToChat(RecievedMessage * msg) {
 	// 619
+	cout << "inserting message: " << endl;
+
 	User* user = getUserBySocket(msg->getSock());
 	string username = user->getUsername();
-	string usernameLength = string(3 - username.length(), '0') + to_string(username.length());
+	string usernameLength = string(3 - to_string(username.length()).length(), '0') + to_string(username.length());
+	cout << "username: " << usernameLength << endl;
 	string message = msg->getValues().find("message")->second;
 	string messageLength = string(3 - messageLength.length(), '0') + to_string(messageLength.length());
-
 
 	//_db->insertMessageToDB();
 
@@ -681,7 +702,8 @@ void TriviaServer::safeDeleteUser(SOCKET id)
 {
 	try {
 		_connectedUsers.erase(id);
-	} catch (...) {}
+	}
+	catch (...) {}
 
 }
 
@@ -690,7 +712,7 @@ void TriviaServer::handleRecievedMessages()
 	string msgCode = "";
 	SOCKET clientSock = 0;
 	string userName;
-	
+
 	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517", "395", "714", "185", "673" };
 
 	while (true) {
@@ -776,7 +798,7 @@ void TriviaServer::handleRecievedMessages()
 					}
 
 					if (msgCode == "666") {
-						handleForgot_pass(currMessage);
+						handleForgotPassword(currMessage);
 					}
 
 					if (msgCode == "419") {
@@ -808,9 +830,10 @@ void TriviaServer::handleRecievedMessages()
 					}
 
 					if (msgCode == "673") {
-						handleGetConnectedUsersList(currMessage);
+						handleInsertMessageToChat(currMessage);
 					}
-				} else if (msgCode != "") {
+				}
+				else if (msgCode != "") {
 					// Unknown message code
 					cout << "unknown message code: " << msgCode << endl;
 					msgCode = "";
@@ -819,7 +842,8 @@ void TriviaServer::handleRecievedMessages()
 			}
 
 			delete currMessage;
-		} catch (...) {
+		}
+		catch (...) {
 
 		}
 	}

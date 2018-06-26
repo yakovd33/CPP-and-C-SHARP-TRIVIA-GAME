@@ -61,7 +61,6 @@
             this.usernameBox.TabIndex = 0;
             this.usernameBox.TabStop = false;
             this.usernameBox.Text = "Username";
-            this.usernameBox.TextChanged += new System.EventHandler(this.usernameBox_TextChanged);
             this.usernameBox.Enter += new System.EventHandler(this.usernameBox_Enter);
             // 
             // usernameWrap

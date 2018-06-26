@@ -46,10 +46,23 @@
             this.sidebarIcon1 = new System.Windows.Forms.PictureBox();
             this.magshimimLogo = new System.Windows.Forms.PictureBox();
             this.tabs = new System.Windows.Forms.Panel();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.ChatPanel = new System.Windows.Forms.Panel();
+            this.userList = new System.Windows.Forms.Panel();
+            this.messagesList = new System.Windows.Forms.RichTextBox();
+            this.sendBtn = new System.Windows.Forms.Button();
+            this.messageWrap = new System.Windows.Forms.Panel();
+            this.letterCountdown = new System.Windows.Forms.Label();
+            this.messageBox = new System.Windows.Forms.TextBox();
             this.profilePanel = new System.Windows.Forms.Panel();
+            this.profileUpdateFeedbackLabel = new System.Windows.Forms.Label();
+            this.updateUserInfoBtn = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.emailEditBox = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.passEditBox = new System.Windows.Forms.TextBox();
             this.userStatsLabel = new System.Windows.Forms.Label();
             this.profilePanelPic = new System.Windows.Forms.PictureBox();
-            this.mainPanel = new System.Windows.Forms.Panel();
             this.roomPanel = new System.Windows.Forms.Panel();
             this.startGameBtn = new System.Windows.Forms.Button();
             this.closeRoomBtn = new System.Windows.Forms.Button();
@@ -119,12 +132,7 @@
             this.leaveGame = new System.Windows.Forms.PictureBox();
             this.gameRoomTitle = new System.Windows.Forms.Label();
             this.dragSection = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.passEditBox = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.emailEditBox = new System.Windows.Forms.TextBox();
-            this.updateUserInfoBtn = new System.Windows.Forms.Button();
-            this.profileUpdateFeedbackLabel = new System.Windows.Forms.Label();
+            this.loadingConnectedUsersLabel = new System.Windows.Forms.Label();
             this.container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             this.sidebar.SuspendLayout();
@@ -141,7 +149,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).BeginInit();
             this.tabs.SuspendLayout();
+            this.mainPanel.SuspendLayout();
+            this.ChatPanel.SuspendLayout();
+            this.userList.SuspendLayout();
+            this.messageWrap.SuspendLayout();
             this.profilePanel.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).BeginInit();
             this.roomPanel.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -164,8 +178,6 @@
             this.gameTopBarPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // container
@@ -341,8 +353,8 @@
             // tabs
             // 
             this.tabs.BackColor = System.Drawing.Color.Transparent;
-            this.tabs.Controls.Add(this.profilePanel);
             this.tabs.Controls.Add(this.mainPanel);
+            this.tabs.Controls.Add(this.profilePanel);
             this.tabs.Controls.Add(this.roomPanel);
             this.tabs.Controls.Add(this.leadboardPanel);
             this.tabs.Controls.Add(this.roomsPanel);
@@ -354,6 +366,101 @@
             this.tabs.Size = new System.Drawing.Size(856, 541);
             this.tabs.TabIndex = 12;
             this.tabs.Paint += new System.Windows.Forms.PaintEventHandler(this.tabs_Paint);
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Controls.Add(this.ChatPanel);
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(856, 596);
+            this.mainPanel.TabIndex = 2;
+            // 
+            // ChatPanel
+            // 
+            this.ChatPanel.Controls.Add(this.userList);
+            this.ChatPanel.Controls.Add(this.messagesList);
+            this.ChatPanel.Controls.Add(this.sendBtn);
+            this.ChatPanel.Controls.Add(this.messageWrap);
+            this.ChatPanel.Location = new System.Drawing.Point(28, 65);
+            this.ChatPanel.Name = "ChatPanel";
+            this.ChatPanel.Size = new System.Drawing.Size(789, 439);
+            this.ChatPanel.TabIndex = 0;
+            // 
+            // userList
+            // 
+            this.userList.AutoScroll = true;
+            this.userList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.userList.Controls.Add(this.loadingConnectedUsersLabel);
+            this.userList.Location = new System.Drawing.Point(587, 21);
+            this.userList.Name = "userList";
+            this.userList.Size = new System.Drawing.Size(144, 300);
+            this.userList.TabIndex = 6;
+            // 
+            // messagesList
+            // 
+            this.messagesList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.messagesList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.messagesList.Location = new System.Drawing.Point(55, 21);
+            this.messagesList.Name = "messagesList";
+            this.messagesList.ReadOnly = true;
+            this.messagesList.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.messagesList.Size = new System.Drawing.Size(528, 258);
+            this.messagesList.TabIndex = 5;
+            this.messagesList.Text = "";
+            // 
+            // sendBtn
+            // 
+            this.sendBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(83)))), ((int)(((byte)(101)))));
+            this.sendBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.sendBtn.FlatAppearance.BorderSize = 0;
+            this.sendBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sendBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sendBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.sendBtn.Location = new System.Drawing.Point(477, 285);
+            this.sendBtn.Name = "sendBtn";
+            this.sendBtn.Size = new System.Drawing.Size(106, 36);
+            this.sendBtn.TabIndex = 4;
+            this.sendBtn.TabStop = false;
+            this.sendBtn.Text = "Send!";
+            this.sendBtn.UseVisualStyleBackColor = false;
+            this.sendBtn.Click += new System.EventHandler(this.sendBtn_Click);
+            // 
+            // messageWrap
+            // 
+            this.messageWrap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.messageWrap.Controls.Add(this.letterCountdown);
+            this.messageWrap.Controls.Add(this.messageBox);
+            this.messageWrap.Location = new System.Drawing.Point(55, 285);
+            this.messageWrap.Name = "messageWrap";
+            this.messageWrap.Size = new System.Drawing.Size(416, 36);
+            this.messageWrap.TabIndex = 2;
+            // 
+            // letterCountdown
+            // 
+            this.letterCountdown.AutoSize = true;
+            this.letterCountdown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(96)))), ((int)(((byte)(104)))));
+            this.letterCountdown.Location = new System.Drawing.Point(384, 11);
+            this.letterCountdown.Name = "letterCountdown";
+            this.letterCountdown.Size = new System.Drawing.Size(31, 13);
+            this.letterCountdown.TabIndex = 1;
+            this.letterCountdown.Text = "1024";
+            // 
+            // messageBox
+            // 
+            this.messageBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.messageBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.messageBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.messageBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.messageBox.Location = new System.Drawing.Point(9, 8);
+            this.messageBox.MaxLength = 1024;
+            this.messageBox.Name = "messageBox";
+            this.messageBox.Size = new System.Drawing.Size(375, 19);
+            this.messageBox.TabIndex = 0;
+            this.messageBox.TabStop = false;
+            this.messageBox.Text = "Type your message here...";
+            this.messageBox.TextChanged += new System.EventHandler(this.messageBox_TextChanged);
+            this.messageBox.Enter += new System.EventHandler(this.messageBox_Enter);
+            this.messageBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.messageBox_KeyDown);
             // 
             // profilePanel
             // 
@@ -369,14 +476,85 @@
             this.profilePanel.Size = new System.Drawing.Size(856, 523);
             this.profilePanel.TabIndex = 11;
             // 
+            // profileUpdateFeedbackLabel
+            // 
+            this.profileUpdateFeedbackLabel.AutoSize = true;
+            this.profileUpdateFeedbackLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.profileUpdateFeedbackLabel.Location = new System.Drawing.Point(215, 370);
+            this.profileUpdateFeedbackLabel.Name = "profileUpdateFeedbackLabel";
+            this.profileUpdateFeedbackLabel.Size = new System.Drawing.Size(0, 13);
+            this.profileUpdateFeedbackLabel.TabIndex = 17;
+            // 
+            // updateUserInfoBtn
+            // 
+            this.updateUserInfoBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(83)))), ((int)(((byte)(101)))));
+            this.updateUserInfoBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.updateUserInfoBtn.FlatAppearance.BorderSize = 0;
+            this.updateUserInfoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.updateUserInfoBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateUserInfoBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.updateUserInfoBtn.Location = new System.Drawing.Point(218, 270);
+            this.updateUserInfoBtn.Name = "updateUserInfoBtn";
+            this.updateUserInfoBtn.Size = new System.Drawing.Size(371, 36);
+            this.updateUserInfoBtn.TabIndex = 16;
+            this.updateUserInfoBtn.TabStop = false;
+            this.updateUserInfoBtn.Text = "Update";
+            this.updateUserInfoBtn.UseVisualStyleBackColor = false;
+            this.updateUserInfoBtn.Click += new System.EventHandler(this.updateUserInfoBtn_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.panel2.Controls.Add(this.emailEditBox);
+            this.panel2.Location = new System.Drawing.Point(218, 159);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(371, 36);
+            this.panel2.TabIndex = 15;
+            // 
+            // emailEditBox
+            // 
+            this.emailEditBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.emailEditBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.emailEditBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.emailEditBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.emailEditBox.Location = new System.Drawing.Point(9, 7);
+            this.emailEditBox.Name = "emailEditBox";
+            this.emailEditBox.Size = new System.Drawing.Size(400, 19);
+            this.emailEditBox.TabIndex = 0;
+            this.emailEditBox.TabStop = false;
+            this.emailEditBox.Text = "Email";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.panel1.Controls.Add(this.passEditBox);
+            this.panel1.Location = new System.Drawing.Point(218, 220);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(371, 36);
+            this.panel1.TabIndex = 14;
+            // 
+            // passEditBox
+            // 
+            this.passEditBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
+            this.passEditBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.passEditBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passEditBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
+            this.passEditBox.Location = new System.Drawing.Point(9, 7);
+            this.passEditBox.Name = "passEditBox";
+            this.passEditBox.PasswordChar = '•';
+            this.passEditBox.Size = new System.Drawing.Size(400, 19);
+            this.passEditBox.TabIndex = 0;
+            this.passEditBox.TabStop = false;
+            this.passEditBox.Text = "Password";
+            // 
             // userStatsLabel
             // 
             this.userStatsLabel.AutoSize = true;
-            this.userStatsLabel.Font = new System.Drawing.Font("Open Sans Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userStatsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userStatsLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.userStatsLabel.Location = new System.Drawing.Point(220, 348);
             this.userStatsLabel.Name = "userStatsLabel";
-            this.userStatsLabel.Size = new System.Drawing.Size(37, 22);
+            this.userStatsLabel.Size = new System.Drawing.Size(35, 20);
             this.userStatsLabel.TabIndex = 2;
             this.userStatsLabel.Text = "info";
             this.userStatsLabel.UseMnemonic = false;
@@ -390,13 +568,6 @@
             this.profilePanelPic.TabIndex = 0;
             this.profilePanelPic.TabStop = false;
             this.profilePanelPic.Click += new System.EventHandler(this.profilePanelPic_Click);
-            // 
-            // mainPanel
-            // 
-            this.mainPanel.Location = new System.Drawing.Point(0, 0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(856, 596);
-            this.mainPanel.TabIndex = 2;
             // 
             // roomPanel
             // 
@@ -1197,76 +1368,16 @@
             this.dragSection.TabIndex = 9;
             this.dragSection.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dragContainerMouseMove);
             // 
-            // panel1
+            // loadingConnectedUsersLabel
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.panel1.Controls.Add(this.passEditBox);
-            this.panel1.Location = new System.Drawing.Point(218, 220);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(371, 36);
-            this.panel1.TabIndex = 14;
-            // 
-            // passEditBox
-            // 
-            this.passEditBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.passEditBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.passEditBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passEditBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.passEditBox.Location = new System.Drawing.Point(9, 7);
-            this.passEditBox.Name = "passEditBox";
-            this.passEditBox.PasswordChar = '•';
-            this.passEditBox.Size = new System.Drawing.Size(400, 19);
-            this.passEditBox.TabIndex = 0;
-            this.passEditBox.TabStop = false;
-            this.passEditBox.Text = "Password";
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.panel2.Controls.Add(this.emailEditBox);
-            this.panel2.Location = new System.Drawing.Point(218, 159);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(371, 36);
-            this.panel2.TabIndex = 15;
-            // 
-            // emailEditBox
-            // 
-            this.emailEditBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(56)))), ((int)(((byte)(65)))));
-            this.emailEditBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.emailEditBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.emailEditBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.emailEditBox.Location = new System.Drawing.Point(9, 7);
-            this.emailEditBox.Name = "emailEditBox";
-            this.emailEditBox.Size = new System.Drawing.Size(400, 19);
-            this.emailEditBox.TabIndex = 0;
-            this.emailEditBox.TabStop = false;
-            this.emailEditBox.Text = "Email";
-            // 
-            // updateUserInfoBtn
-            // 
-            this.updateUserInfoBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(83)))), ((int)(((byte)(101)))));
-            this.updateUserInfoBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.updateUserInfoBtn.FlatAppearance.BorderSize = 0;
-            this.updateUserInfoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.updateUserInfoBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateUserInfoBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(145)))), ((int)(((byte)(156)))));
-            this.updateUserInfoBtn.Location = new System.Drawing.Point(218, 270);
-            this.updateUserInfoBtn.Name = "updateUserInfoBtn";
-            this.updateUserInfoBtn.Size = new System.Drawing.Size(371, 36);
-            this.updateUserInfoBtn.TabIndex = 16;
-            this.updateUserInfoBtn.TabStop = false;
-            this.updateUserInfoBtn.Text = "Update";
-            this.updateUserInfoBtn.UseVisualStyleBackColor = false;
-            this.updateUserInfoBtn.Click += new System.EventHandler(this.updateUserInfoBtn_Click);
-            // 
-            // profileUpdateFeedbackLabel
-            // 
-            this.profileUpdateFeedbackLabel.AutoSize = true;
-            this.profileUpdateFeedbackLabel.ForeColor = System.Drawing.Color.Maroon;
-            this.profileUpdateFeedbackLabel.Location = new System.Drawing.Point(215, 370);
-            this.profileUpdateFeedbackLabel.Name = "profileUpdateFeedbackLabel";
-            this.profileUpdateFeedbackLabel.Size = new System.Drawing.Size(0, 13);
-            this.profileUpdateFeedbackLabel.TabIndex = 17;
+            this.loadingConnectedUsersLabel.AutoSize = true;
+            this.loadingConnectedUsersLabel.Font = new System.Drawing.Font("Open Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadingConnectedUsersLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.loadingConnectedUsersLabel.Location = new System.Drawing.Point(15, 21);
+            this.loadingConnectedUsersLabel.Name = "loadingConnectedUsersLabel";
+            this.loadingConnectedUsersLabel.Size = new System.Drawing.Size(95, 17);
+            this.loadingConnectedUsersLabel.TabIndex = 0;
+            this.loadingConnectedUsersLabel.Text = "Loading users...";
             // 
             // MainLogged
             // 
@@ -1300,8 +1411,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.sidebarIcon1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.magshimimLogo)).EndInit();
             this.tabs.ResumeLayout(false);
+            this.mainPanel.ResumeLayout(false);
+            this.ChatPanel.ResumeLayout(false);
+            this.userList.ResumeLayout(false);
+            this.userList.PerformLayout();
+            this.messageWrap.ResumeLayout(false);
+            this.messageWrap.PerformLayout();
             this.profilePanel.ResumeLayout(false);
             this.profilePanel.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePanelPic)).EndInit();
             this.roomPanel.ResumeLayout(false);
             this.roomPanel.PerformLayout();
@@ -1336,10 +1457,6 @@
             this.gameTopBarPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leaveGame)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1442,5 +1559,13 @@
         private System.Windows.Forms.TextBox passEditBox;
         private System.Windows.Forms.Button updateUserInfoBtn;
         private System.Windows.Forms.Label profileUpdateFeedbackLabel;
+        private System.Windows.Forms.Panel ChatPanel;
+        private System.Windows.Forms.Panel messageWrap;
+        private System.Windows.Forms.TextBox messageBox;
+        private System.Windows.Forms.RichTextBox messagesList;
+        private System.Windows.Forms.Button sendBtn;
+        private System.Windows.Forms.Label letterCountdown;
+        private System.Windows.Forms.Panel userList;
+        private System.Windows.Forms.Label loadingConnectedUsersLabel;
     }
 }

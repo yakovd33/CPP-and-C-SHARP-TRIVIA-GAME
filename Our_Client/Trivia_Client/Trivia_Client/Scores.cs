@@ -17,11 +17,6 @@ namespace Trivia_Client
         TcpClient client;
         IPEndPoint serverEndPoint;
         NetworkStream clientStream;
-
-        System.IO.Stream Swinner = Trivia_Client.Properties.Resources.winnerTheme;
-        System.IO.Stream Sloser = Trivia_Client.Properties.Resources.loseTheme;
-        System.IO.Stream SgameEnd = Trivia_Client.Properties.Resources.endgame;
-
         //System.IO.Stream Swinner = Trivia_Client.Properties.Resources.winnerTheme;
         //System.IO.Stream Sloser = Trivia_Client.Properties.Resources.loseTheme;
         //System.IO.Stream SgameEnd = Trivia_Client.Properties.Resources.endgame;
@@ -44,10 +39,6 @@ namespace Trivia_Client
         public Scores(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream, bool isMute, string myUser)
         {
             InitializeComponent();
-
-            System.Media.SoundPlayer winner = new System.Media.SoundPlayer(Swinner);
-            System.Media.SoundPlayer loser = new System.Media.SoundPlayer(Sloser);
-            System.Media.SoundPlayer endgame = new System.Media.SoundPlayer(SgameEnd);
 
             //System.Media.SoundPlayer winner = new System.Media.SoundPlayer(Swinner);
             //System.Media.SoundPlayer loser = new System.Media.SoundPlayer(Sloser);
@@ -95,7 +86,7 @@ namespace Trivia_Client
 
                     Label usernameLabel = new Label();
                     usernameLabel.Text = usersSorted[i].Key;
-                    usernameLabel.Font = new Font("Arial", 18);
+                    usernameLabel.Font = new Font("Open Sans Light", 18);
                     usernameLabel.ForeColor = Color.FromArgb(173, 190, 202);
                     usernameLabel.Location = new Point(110, currYPos);
                     scoresList.Controls.Add(usernameLabel);
@@ -104,43 +95,39 @@ namespace Trivia_Client
 
                     Label scoreLabel = new Label();
                     scoreLabel.Text = usersSorted[i].Value.ToString();
-                    scoreLabel.Font = new Font("Arial", 18);
+                    scoreLabel.Font = new Font("Open Sans Light", 18);
                     scoreLabel.ForeColor = Color.FromArgb(173, 190, 202);
                     scoreLabel.Location = new Point(443, currYPos);
                     scoresList.Controls.Add(scoreLabel);
 
                     currYPos += 48;
                 }
-
-                if (userNumber == 1)
+                if (usersSorted[0].Key == myUser && userNumber != 1)
                 {
-                    // User is playing alone
-                    stamp.Image = Trivia_Client.Properties.Resources.winser;
-                }
-                else
-                {
-                    if (usersSorted[0].Key == myUser)
+                    // Current user is the winner
                     {
-                        // Current user is the winner
                         if (!isMute)
                         {
-                            winner.Play();
+                            //winner.Play();
                         }
-
                         stamp.Image = Trivia_Client.Properties.Resources.winner;
                     }
-                    else
+                } else if(userNumber == 1)
+                {
+                    // User is playing alone
+                    if (!isMute)
                     {
-                        // Current user lost
-                        if (!isMute)
-                        {
-                            loser.Play();
-                        }
-                        stamp.Image = Trivia_Client.Properties.Resources.loser;
+                        System.Media.SoundPlayer buttonsTheme = new System.Media.SoundPlayer(SbuttonsTheme);
+                        buttonsTheme.Play();
                     }
-                }
+                    stamp.Image = Trivia_Client.Properties.Resources.winser;
 
-                currYPos += 45;
+                    currYPos += 40;
+                } else
+                {
+                    // Current player is the loser
+                    stamp.Image = Trivia_Client.Properties.Resources.loser;
+                }
             }
         }
         private string getResultFromServer(int bytes)

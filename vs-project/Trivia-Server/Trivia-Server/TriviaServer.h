@@ -39,7 +39,7 @@ private:
 	SOCKET getCurrentThreadSocket();
 	void addRecievedMessage(RecievedMessage*);
 	RecievedMessage* buildRecieveMessage(SOCKET userSock, string msgCode);
-	void handleForgot_pass(RecievedMessage*);
+	void handleForgotPassword(RecievedMessage*);
 
 	SOCKET _socket;
 	DataBase* _db;

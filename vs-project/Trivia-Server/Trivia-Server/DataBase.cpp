@@ -190,16 +190,6 @@ void DataBase::updateProfileInfoByUsername(string username, string newEmail, str
 	}
 }
 
-void DataBase::insertMessageToDB(string username, string message) {
-	string query = "INSERT INTO `t_chat_messages` (`username`, `message`) VALUES ('" + username + "', '" + message + "', '" + message + "')";
-
-	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
-
-	if (rc != SQLITE_OK) {
-		sqlite3_free(zErrMsg);
-	}
-}
-
 string DataBase::getBestScores() {
 	string message = "124";
 
