@@ -80,6 +80,8 @@ private:
 	void handleChnageProfilePic(RecievedMessage * msg);
 	void handleGetUserProfilePicByUsername(RecievedMessage * msg);
 	void handleGetCuruserRoomId(RecievedMessage * msg);
+	void handleGetCuruserDBCol(RecievedMessage * msg);
+	void handleUpdateProfileInfo(RecievedMessage * msg);
 
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);

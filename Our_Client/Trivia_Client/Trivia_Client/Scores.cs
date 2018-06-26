@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Net;
 using System.Runtime.InteropServices;
+
 
 namespace Trivia_Client
 {
@@ -18,7 +17,12 @@ namespace Trivia_Client
         TcpClient client;
         IPEndPoint serverEndPoint;
         NetworkStream clientStream;
+        //System.IO.Stream Swinner = Trivia_Client.Properties.Resources.winnerTheme;
+        //System.IO.Stream Sloser = Trivia_Client.Properties.Resources.loseTheme;
+        //System.IO.Stream SgameEnd = Trivia_Client.Properties.Resources.endgame;
+        System.IO.Stream SbuttonsTheme = Trivia_Client.Properties.Resources.click;
 
+        bool isMute;
         //Round Corners settings
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
@@ -32,11 +36,17 @@ namespace Trivia_Client
         );
 
 
-        public Scores(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream)
+        public Scores(TcpClient client, IPEndPoint serverEndPoint, NetworkStream clientStream, bool isMute, string myUser)
         {
             InitializeComponent();
 
+            //System.Media.SoundPlayer winner = new System.Media.SoundPlayer(Swinner);
+            //System.Media.SoundPlayer loser = new System.Media.SoundPlayer(Sloser);
+            //System.Media.SoundPlayer endgame = new System.Media.SoundPlayer(SgameEnd);
+
             //this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
+            this.isMute = isMute;
+
             this.client = client;
             this.serverEndPoint = serverEndPoint;
             this.clientStream = clientStream;
@@ -58,12 +68,12 @@ namespace Trivia_Client
                 var usersSorted = users.ToList();
                 usersSorted.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
 
+                usersSorted.Reverse();
+
                 int currYPos = 21;
                 for (int i = 0; i < userNumber; i++)
                 {
-                    
                     PictureBox profile = new PictureBox();
-                    profile.Name = "scoreItemProfile" + (i + 1);
                     profile.Height = 40;
                     profile.Width = 40;
                     profile.Load(getUserProfilePicByUsername(usersSorted[i].Key));
@@ -73,23 +83,50 @@ namespace Trivia_Client
                     scoresList.Controls.Add(profile);
 
                     ///////
+
                     Label usernameLabel = new Label();
-                    usernameLabel.Name = "scoreItemUsername" + (i + 1);
                     usernameLabel.Text = usersSorted[i].Key;
                     usernameLabel.Font = new Font("Open Sans Light", 18);
                     usernameLabel.ForeColor = Color.FromArgb(173, 190, 202);
-                    usernameLabel.Location = new Point(202, currYPos);
+                    usernameLabel.Location = new Point(110, currYPos);
                     scoresList.Controls.Add(usernameLabel);
-                ///////
+
+                    ///////
+
                     Label scoreLabel = new Label();
-                    scoreLabel.Name = "scoreItemScore" + (i + 1);
                     scoreLabel.Text = usersSorted[i].Value.ToString();
                     scoreLabel.Font = new Font("Open Sans Light", 18);
                     scoreLabel.ForeColor = Color.FromArgb(173, 190, 202);
-                    scoreLabel.Location = new Point(477, currYPos);
+                    scoreLabel.Location = new Point(443, currYPos);
                     scoresList.Controls.Add(scoreLabel);
-                    currYPos += 40;
 
+                    currYPos += 48;
+                }
+                if (usersSorted[0].Key == myUser && userNumber != 1)
+                {
+                    // Current user is the winner
+                    {
+                        if (!isMute)
+                        {
+                            //winner.Play();
+                        }
+                        stamp.Image = Trivia_Client.Properties.Resources.winner;
+                    }
+                } else if(userNumber == 1)
+                {
+                    // User is playing alone
+                    if (!isMute)
+                    {
+                        System.Media.SoundPlayer buttonsTheme = new System.Media.SoundPlayer(SbuttonsTheme);
+                        buttonsTheme.Play();
+                    }
+                    stamp.Image = Trivia_Client.Properties.Resources.winser;
+
+                    currYPos += 40;
+                } else
+                {
+                    // Current player is the loser
+                    stamp.Image = Trivia_Client.Properties.Resources.loser;
                 }
             }
         }
@@ -121,6 +158,11 @@ namespace Trivia_Client
         {
             try
             {
+                if (!isMute)
+                {
+                    System.Media.SoundPlayer buttonsTheme = new System.Media.SoundPlayer(SbuttonsTheme);
+                    buttonsTheme.Play();
+                }
                 sendMessageToServer("299");
             }
             catch (Exception ex)

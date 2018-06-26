@@ -17,7 +17,7 @@ namespace Trivia_Client
             errorStr.Add("1022", "User is already connected.");
             errorStr.Add("1040", "success");
             errorStr.Add("1041", "Pass illegal");
-            errorStr.Add("1042", "Username is already exists");
+            errorStr.Add("1042", "Username already exists");
             errorStr.Add("1043", "Username is illegal");
             errorStr.Add("1044", "Other");
             errorStr.Add("1100", "success");
@@ -26,6 +26,8 @@ namespace Trivia_Client
             errorStr.Add("1120", "success");
             errorStr.Add("1140", "success");
             errorStr.Add("1141", "Fail");
+            errorStr.Add("1090", "success");
+            errorStr.Add("1091", "Email already exists");
         }
 
         public string getCodeErrorMsg(string code) {

@@ -29,28 +29,44 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Scores));
-            this.hashtag = new System.Windows.Forms.PictureBox();
+            this.scoresList = new System.Windows.Forms.Panel();
+            this.stamp = new System.Windows.Forms.PictureBox();
+            this.usernameTitle = new System.Windows.Forms.PictureBox();
             this.exitBtn = new System.Windows.Forms.PictureBox();
             this.Scoreboard = new System.Windows.Forms.PictureBox();
-            this.usernameTitle = new System.Windows.Forms.PictureBox();
-            this.scoresList = new System.Windows.Forms.Panel();
             this.scoreTitle = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.hashtag)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stamp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usernameTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Scoreboard)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.usernameTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scoreTitle)).BeginInit();
             this.SuspendLayout();
             // 
-            // hashtag
+            // scoresList
             // 
-            this.hashtag.Image = global::Trivia_Client.Properties.Resources._;
-            this.hashtag.Location = new System.Drawing.Point(42, 55);
-            this.hashtag.Name = "hashtag";
-            this.hashtag.Size = new System.Drawing.Size(58, 71);
-            this.hashtag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.hashtag.TabIndex = 8;
-            this.hashtag.TabStop = false;
+            this.scoresList.Location = new System.Drawing.Point(42, 112);
+            this.scoresList.Name = "scoresList";
+            this.scoresList.Size = new System.Drawing.Size(659, 198);
+            this.scoresList.TabIndex = 10;
+            // 
+            // stamp
+            // 
+            this.stamp.Location = new System.Drawing.Point(281, 317);
+            this.stamp.Name = "stamp";
+            this.stamp.Size = new System.Drawing.Size(180, 85);
+            this.stamp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.stamp.TabIndex = 12;
+            this.stamp.TabStop = false;
+            // 
+            // usernameTitle
+            // 
+            this.usernameTitle.Image = global::Trivia_Client.Properties.Resources.username;
+            this.usernameTitle.Location = new System.Drawing.Point(152, 76);
+            this.usernameTitle.Name = "usernameTitle";
+            this.usernameTitle.Size = new System.Drawing.Size(148, 30);
+            this.usernameTitle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.usernameTitle.TabIndex = 9;
+            this.usernameTitle.TabStop = false;
             // 
             // exitBtn
             // 
@@ -75,29 +91,12 @@
             this.Scoreboard.TabIndex = 0;
             this.Scoreboard.TabStop = false;
             // 
-            // usernameTitle
-            // 
-            this.usernameTitle.Image = global::Trivia_Client.Properties.Resources.username;
-            this.usernameTitle.Location = new System.Drawing.Point(217, 55);
-            this.usernameTitle.Name = "usernameTitle";
-            this.usernameTitle.Size = new System.Drawing.Size(185, 71);
-            this.usernameTitle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.usernameTitle.TabIndex = 9;
-            this.usernameTitle.TabStop = false;
-            // 
-            // scoresList
-            // 
-            this.scoresList.Location = new System.Drawing.Point(42, 112);
-            this.scoresList.Name = "scoresList";
-            this.scoresList.Size = new System.Drawing.Size(659, 198);
-            this.scoresList.TabIndex = 10;
-            // 
             // scoreTitle
             // 
             this.scoreTitle.Image = global::Trivia_Client.Properties.Resources.score;
-            this.scoreTitle.Location = new System.Drawing.Point(502, 55);
+            this.scoreTitle.Location = new System.Drawing.Point(491, 76);
             this.scoreTitle.Name = "scoreTitle";
-            this.scoreTitle.Size = new System.Drawing.Size(154, 70);
+            this.scoreTitle.Size = new System.Drawing.Size(78, 30);
             this.scoreTitle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.scoreTitle.TabIndex = 11;
             this.scoreTitle.TabStop = false;
@@ -108,9 +107,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(60)))), ((int)(((byte)(86)))));
             this.ClientSize = new System.Drawing.Size(741, 414);
+            this.Controls.Add(this.stamp);
             this.Controls.Add(this.scoresList);
             this.Controls.Add(this.usernameTitle);
-            this.Controls.Add(this.hashtag);
             this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.Scoreboard);
             this.Controls.Add(this.scoreTitle);
@@ -118,10 +117,10 @@
             this.Name = "Scores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Scores";
-            ((System.ComponentModel.ISupportInitialize)(this.hashtag)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stamp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usernameTitle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Scoreboard)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.usernameTitle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scoreTitle)).EndInit();
             this.ResumeLayout(false);
 
@@ -131,9 +130,9 @@
 
         private System.Windows.Forms.PictureBox Scoreboard;
         private System.Windows.Forms.PictureBox exitBtn;
-        private System.Windows.Forms.PictureBox hashtag;
         private System.Windows.Forms.PictureBox usernameTitle;
         private System.Windows.Forms.Panel scoresList;
         private System.Windows.Forms.PictureBox scoreTitle;
+        private System.Windows.Forms.PictureBox stamp;
     }
 }

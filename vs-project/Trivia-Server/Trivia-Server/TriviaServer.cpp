@@ -36,6 +36,8 @@ TriviaServer::TriviaServer()
 	_roomsList.insert(make_pair(318, new Room(5, 20, 20, "room8", 318)));
 	_roomsList.insert(make_pair(319, new Room(5, 20, 20, "room9", 319)));
 	_roomsList.insert(make_pair(320, new Room(5, 20, 20, "room10", 320)));
+
+	cout << _db->getPersonalStatus("yakovd33") << endl;
 }
 
 TriviaServer::~TriviaServer()
@@ -211,6 +213,20 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		// Profile picture update
 		int pictureLength = atoi(Helper::getStringPartFromSocket(client_socket, 3).c_str());
 		values.insert(make_pair("url", Helper::getStringPartFromSocket(client_socket, pictureLength).c_str()));
+	}
+
+	if (msgCode == "395") {
+		// Get user database column
+		int colLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		values.insert(make_pair("col", Helper::getStringPartFromSocket(client_socket, colLength)));
+	}
+
+	if (msgCode == "714") {
+		// Get user database column
+		int emailLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		values.insert(make_pair("email", Helper::getStringPartFromSocket(client_socket, emailLength)));
+		int passwordLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
+		values.insert(make_pair("password", Helper::getStringPartFromSocket(client_socket, passwordLength)));
 	}
 
 	msg = new RecievedMessage(client_socket, msgCode, values);
@@ -573,6 +589,29 @@ void TriviaServer::handleGetCuruserRoomId(RecievedMessage * msg) {
 	user->send(string(4 - to_string(user->getRoomId()).length(), '0') + to_string(user->getRoomId()));
 }
 
+void TriviaServer::handleGetCuruserDBCol(RecievedMessage * msg) {
+	string col = msg->getValues().find("col")->second;
+	User* user = getUserBySocket(msg->getSock());
+	string ans = _db->getUserColByUsername(user->getUsername(), col);
+	string message = string(3 - to_string(ans.length()).length(), '0') + to_string(ans.length()) + ans;
+	cout << message << endl;
+	sendMessageToSocket(msg->getSock(), message);
+}
+
+void TriviaServer::handleUpdateProfileInfo(RecievedMessage * msg) {
+	string email = msg->getValues().find("email")->second;
+	string password = msg->getValues().find("password")->second;
+
+	User* user = getUserBySocket(msg->getSock());
+
+	if (email != _db->getUserColByUsername(user->getUsername(), "email") && _db->isEmailExists(email)) {
+		user->send("1091");
+	} else {
+		_db->updateProfileInfoByUsername(user->getUsername(), email, password);
+		user->send("1090");
+	}
+}
+
 Room * TriviaServer::getRoomById(int id) {
 	for (auto const& room : _roomsList) {
 		if (room.first == id) {
@@ -618,7 +657,7 @@ void TriviaServer::handleRecievedMessages()
 	SOCKET clientSock = 0;
 	string userName;
 	
-	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517" };
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517", "395", "714" };
 
 	while (true) {
 		try {
@@ -720,6 +759,14 @@ void TriviaServer::handleRecievedMessages()
 
 					if (msgCode == "381") {
 						handleChnageProfilePic(currMessage);
+					}
+
+					if (msgCode == "395") {
+						handleGetCuruserDBCol(currMessage);
+					}
+
+					if (msgCode == "714") {
+						handleUpdateProfileInfo(currMessage);
 					}
 				} else if (msgCode != "") {
 					// Unknown message code

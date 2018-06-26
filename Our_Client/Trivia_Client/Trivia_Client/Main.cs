@@ -32,14 +32,18 @@ namespace Trivia_Client
         Timer timer1 = new Timer();
         int opacity = 255;
         Image original;
+        bool isMute;
 
         public LogInScreen()
         {
 
             InitializeComponent();
 
-            mainTheme.Play();
-            
+            isMute = getSettingValue("volume") != "sound";
+
+            if (!isMute) {
+                mainTheme.Play();
+            }
 
             this.FormBorderStyle = FormBorderStyle.None;
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
@@ -173,7 +177,7 @@ namespace Trivia_Client
                     if (errorMsg == "success") {
                         // Login
                         loginFeedbackLabel.Hide();
-                        MainLogged main = new MainLogged(client, serverEndPoint, clientStream);
+                        MainLogged main = new MainLogged(client, serverEndPoint, clientStream, username);
                         this.Hide();
                         main.ShowDialog();
                         this.Close();
@@ -253,6 +257,23 @@ namespace Trivia_Client
             string result = new ASCIIEncoding().GetString(bufferIn);
 
             return result;
+        }
+
+        private string getSettingValue(string key) {
+            System.IO.StreamReader file = new System.IO.StreamReader(@"config.triv");
+            string line = "";
+
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Split('=')[0] == key)
+                {
+                    file.Close();
+                    return line.Split('=')[1];
+                }
+            }
+
+            file.Close();
+            return "";
         }
     }
 }

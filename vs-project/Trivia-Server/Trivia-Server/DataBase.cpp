@@ -29,6 +29,21 @@ bool DataBase::isUserExists(string name) {
 	return false;
 }
 
+bool DataBase::isEmailExists(string email) {
+	string query = "SELECT * FROM `t_users` WHERE `email` = '" + email + "'";
+
+	int rowCount = 0;
+	sqlite3_stmt *stmt;
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+	rc = sqlite3_step(stmt);
+
+	if (rc != SQLITE_DONE && rc != SQLITE_OK) {
+		return true;
+	}
+
+	return false;
+}
+
 bool DataBase::isUserAndPasswordMatch(string username, string password) {
 	string query = "SELECT * FROM `t_users` WHERE `username` = '" + username + "' AND `password` = '" + password + "'";
 
@@ -149,6 +164,28 @@ void DataBase::updateUserProfilePicByUsername(string username, string url) {
 
 	if (rc != SQLITE_OK) {
 		cout << "error" << endl;
+		sqlite3_free(zErrMsg);
+	}
+}
+
+string DataBase::getUserColByUsername(string username, string col) {
+	string query = "SELECT `" + col + "` FROM `t_users` WHERE `username` = '" + username + "'";
+	sqlite3_stmt *stmt;
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+
+	if (sqlite3_step(stmt) == SQLITE_ROW) {
+		return std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+	} else {
+		return "";
+	}
+}
+
+void DataBase::updateProfileInfoByUsername(string username, string newEmail, string newPassword) {
+	string query = "UPDATE `t_users` SET `email` = '" + newEmail + "', `password` = '" + newPassword + "' WHERE `username` = '" + username + "'";
+
+	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
 		sqlite3_free(zErrMsg);
 	}
 }

@@ -28,6 +28,7 @@ public:
 
 	// Functions
 	bool isUserExists(string name);
+	bool isEmailExists(string email);
 	bool isUserAndPasswordMatch(string username, string password);
 	bool addNewUser(string username, string password, string email);
 	int insertNewGame();
@@ -39,6 +40,8 @@ public:
 	void insertUserGameResult(string username, int gameId, int result);
 	string getUserProfilePicUrlByUsername(string username);
 	void updateUserProfilePicByUsername(string username, string url);
+	string getUserColByUsername(string username, string col);
+	void updateProfileInfoByUsername(string username, string newEmail, string newPassword);
 private:
 	sqlite3 *db;
 	char *zErrMsg = 0;

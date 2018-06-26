@@ -55,6 +55,11 @@
     <Compile Include="forget_password.Designer.cs">
       <DependentUpon>forget_password.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scores.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,14 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -135,6 +135,19 @@
     <None Include="Pictures [Resources]\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Pictures [Resources]\closeBtn.png" />
+    <None Include="Pictures [Resources]\winser.png" />
+    <None Include="Pictures [Resources]\winner.png" />
+    <None Include="Pictures [Resources]\loser.png" />
+    <None Include="bin\Debug\Sounds\click.wav" />
+    <None Include="bin\Debug\Sounds\correct_ans.wav" />
+    <None Include="bin\Debug\Sounds\countdown.wav" />
+    <None Include="bin\Debug\Sounds\endgame.wav" />
+    <None Include="bin\Debug\Sounds\loseTheme.wav" />
+    <None Include="bin\Debug\Sounds\main_theme.wav" />
+    <None Include="bin\Debug\Sounds\swoosh.wav" />
+    <None Include="bin\Debug\Sounds\winnerTheme.wav" />
+    <None Include="bin\Debug\Sounds\wrong_answer.wav" />
     <Content Include="icon.ico" />
     <None Include="Pictures [Resources]\sound.png" />
     <None Include="Pictures [Resources]\mute.png" />
