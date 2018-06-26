@@ -82,6 +82,8 @@ private:
 	void handleGetCuruserRoomId(RecievedMessage * msg);
 	void handleGetCuruserDBCol(RecievedMessage * msg);
 	void handleUpdateProfileInfo(RecievedMessage * msg);
+	void handleGetConnectedUsersList(RecievedMessage * msg);
+	void handleInsertMessageToChat(RecievedMessage * msg);
 
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);

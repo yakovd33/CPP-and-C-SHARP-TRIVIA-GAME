@@ -36,8 +36,6 @@ TriviaServer::TriviaServer()
 	_roomsList.insert(make_pair(318, new Room(5, 20, 20, "room8", 318)));
 	_roomsList.insert(make_pair(319, new Room(5, 20, 20, "room9", 319)));
 	_roomsList.insert(make_pair(320, new Room(5, 20, 20, "room10", 320)));
-
-	cout << _db->getPersonalStatus("yakovd33") << endl;
 }
 
 TriviaServer::~TriviaServer()
@@ -227,6 +225,12 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		values.insert(make_pair("email", Helper::getStringPartFromSocket(client_socket, emailLength)));
 		int passwordLength = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
 		values.insert(make_pair("password", Helper::getStringPartFromSocket(client_socket, passwordLength)));
+	}
+
+	if (msgCode == "673") {
+		// Insert chat message
+		int messageLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("message", Helper::getStringPartFromSocket(client_socket, messageLength)));
 	}
 
 	msg = new RecievedMessage(client_socket, msgCode, values);
@@ -612,6 +616,36 @@ void TriviaServer::handleUpdateProfileInfo(RecievedMessage * msg) {
 	}
 }
 
+void TriviaServer::handleGetConnectedUsersList(RecievedMessage * msg) {
+	string usersCount = to_string(_connectedUsers.size());
+	usersCount = string(4 - usersCount.length(), '0') + usersCount; // Leading zeros
+	string message = "672" + usersCount;
+
+	for (auto const& room : _connectedUsers) {
+		message += string(3 - room.second->getUsername().length(), '0') + to_string(room.second->getUsername().length()); // Username length
+		message += room.second->getUsername(); // Username
+	}
+
+	sendMessageToSocket(msg->getSock(), message);
+}
+
+void TriviaServer::handleInsertMessageToChat(RecievedMessage * msg) {
+	// 619
+	User* user = getUserBySocket(msg->getSock());
+	string username = user->getUsername();
+	string usernameLength = string(3 - username.length(), '0') + to_string(username.length());
+	string message = msg->getValues().find("message")->second;
+	string messageLength = string(3 - messageLength.length(), '0') + to_string(messageLength.length());
+
+
+	//_db->insertMessageToDB();
+
+	// Send 619 message to every user
+	for (auto const& curUser : _connectedUsers) {
+		curUser.second->send("619" + usernameLength + username + messageLength + message);
+	}
+}
+
 Room * TriviaServer::getRoomById(int id) {
 	for (auto const& room : _roomsList) {
 		if (room.first == id) {
@@ -657,7 +691,7 @@ void TriviaServer::handleRecievedMessages()
 	SOCKET clientSock = 0;
 	string userName;
 	
-	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517", "395", "714" };
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517", "395", "714", "185", "673" };
 
 	while (true) {
 		try {
@@ -767,6 +801,14 @@ void TriviaServer::handleRecievedMessages()
 
 					if (msgCode == "714") {
 						handleUpdateProfileInfo(currMessage);
+					}
+
+					if (msgCode == "185") {
+						handleGetConnectedUsersList(currMessage);
+					}
+
+					if (msgCode == "673") {
+						handleGetConnectedUsersList(currMessage);
 					}
 				} else if (msgCode != "") {
 					// Unknown message code

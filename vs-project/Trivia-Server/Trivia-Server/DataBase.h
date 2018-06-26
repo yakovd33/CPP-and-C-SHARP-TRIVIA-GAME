@@ -42,6 +42,7 @@ public:
 	void updateUserProfilePicByUsername(string username, string url);
 	string getUserColByUsername(string username, string col);
 	void updateProfileInfoByUsername(string username, string newEmail, string newPassword);
+	void insertMessageToDB(string username, string message);
 private:
 	sqlite3 *db;
 	char *zErrMsg = 0;

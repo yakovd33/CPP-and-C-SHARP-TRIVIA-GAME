@@ -11,6 +11,8 @@
 
 void main()
 {
+	srand(time(NULL));
+
 	// Q: why is this try necessarily ?
 	// A: we want to know what happened that made the server crush
 	try {

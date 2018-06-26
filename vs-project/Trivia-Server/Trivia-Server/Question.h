@@ -5,6 +5,9 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <algorithm> 
+#include <array>
+#include <chrono>
 
 using std::string;
 

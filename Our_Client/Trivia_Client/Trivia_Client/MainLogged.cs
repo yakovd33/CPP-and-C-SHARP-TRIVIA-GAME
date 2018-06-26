@@ -47,7 +47,7 @@ namespace Trivia_Client
         Thread answerTimerThread;
         Image sound = Trivia_Client.Properties.Resources.sound;
         Image mute = Trivia_Client.Properties.Resources.mute;
-
+        System.IO.Stream SmainTheme = Trivia_Client.Properties.Resources.main_theme;
         //System.IO.Stream SmainTheme = Trivia_Client.Properties.Resources.main_theme;
         System.IO.Stream SbuttonsTheme = Trivia_Client.Properties.Resources.click;
         System.IO.Stream Sswoosh = Trivia_Client.Properties.Resources.swoosh;
@@ -72,6 +72,7 @@ namespace Trivia_Client
 
             // Define music
             buttonsTheme = new System.Media.SoundPlayer(SbuttonsTheme);
+            mainTheme = new System.Media.SoundPlayer(SmainTheme);
             //mainTheme = new System.Media.SoundPlayer(SmainTheme);
             swoosh = new System.Media.SoundPlayer(Sswoosh);
             countdown = new System.Media.SoundPlayer(Scountdown);
