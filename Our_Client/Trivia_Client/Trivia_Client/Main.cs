@@ -174,6 +174,10 @@ namespace Trivia_Client
 
                     if (errorMsg == "success") {
                         // Login
+
+                        // Send the client version to the server
+                        sendMessageToServer("984" + "2.0");
+
                         loginFeedbackLabel.Hide();
                         MainLogged main = new MainLogged(client, serverEndPoint, clientStream, username);
                         this.Hide();

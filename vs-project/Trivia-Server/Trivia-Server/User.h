@@ -30,11 +30,14 @@ public:
 	void clearRoom();
 	Game* getGame();
 	string getUsername();
+	double getClientVersion();
+	void setClientVersion(double version);
 	SOCKET getSock();
 private:
 	string _username;
 	bool isInRoom;
 	int roomId;
+	double clientVersion;
 	//Room* _currRoom;
 	Game* _currGame;
 	SOCKET _sock;

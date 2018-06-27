@@ -190,6 +190,29 @@ void DataBase::updateProfileInfoByUsername(string username, string newEmail, str
 	}
 }
 
+void DataBase::insertNewQuestion(string question, string correctAns, string secAns, string thirdAns, string fourthAns, string hint) {
+	string query = "INSERT INTO `t_questions` (`question`, `correct_ans`, `ans2`, `ans3`, `ans4`, `hint`) VALUES('" + question + "', '" + correctAns + "', '" + secAns + "', '" + thirdAns + "', '" + fourthAns + "', '" + hint + "')";
+
+	rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
+		cout << "insertion error" << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
+	}
+}
+
+string DataBase::getQuestionHint(string question) {
+	string query = "SELECT `hint` FROM `t_questions` WHERE `question` = '" + question + "'";
+	sqlite3_stmt *stmt;
+	sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+
+	if (sqlite3_step(stmt) == SQLITE_ROW) {
+		return std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+	} else {
+		return "";
+	}
+}
+
 string DataBase::getBestScores() {
 	string message = "124";
 

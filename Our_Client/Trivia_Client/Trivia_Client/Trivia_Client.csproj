@@ -135,6 +135,11 @@
     <None Include="Pictures [Resources]\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Pictures [Resources]\plus30disabled.png" />
+    <None Include="Pictures [Resources]\bulb-disabled.png" />
+    <None Include="Pictures [Resources]\plus30.png" />
+    <None Include="Pictures [Resources]\bulb.png" />
+    <None Include="Pictures [Resources]\add.png" />
     <None Include="Pictures [Resources]\closeBtn.png" />
     <None Include="Pictures [Resources]\winser.png" />
     <None Include="Pictures [Resources]\winner.png" />

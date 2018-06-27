@@ -84,6 +84,9 @@ private:
 	void handleUpdateProfileInfo(RecievedMessage * msg);
 	void handleGetConnectedUsersList(RecievedMessage * msg);
 	void handleInsertMessageToChat(RecievedMessage * msg);
+	void handleSetClientVersion(RecievedMessage * msg);
+	void handleInsertNewQuestion(RecievedMessage * msg);
+	void handleGetMessageHint(RecievedMessage * msg);
 
 	Room* getRoomById(int id);
 	User* getUserBySocket(SOCKET sock);

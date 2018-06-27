@@ -5,6 +5,7 @@ User::User(string username, SOCKET sock) {
 	this->_sock = sock;
 	//this->_currRoom = NULL;
 	isInRoom = false;
+	clientVersion = 1.0;
 }
 
 User::~User() {
@@ -63,6 +64,14 @@ Game * User::getGame() {
 string User::getUsername()
 {
 	return this->_username;
+}
+
+double User::getClientVersion() {
+	return this->clientVersion;
+}
+
+void User::setClientVersion(double version) {
+	this->clientVersion = version;
 }
 
 SOCKET User::getSock() {

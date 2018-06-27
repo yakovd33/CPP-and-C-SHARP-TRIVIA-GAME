@@ -235,6 +235,33 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 		values.insert(make_pair("message", Helper::getStringPartFromSocket(client_socket, messageLength)));
 	}
 
+	if (msgCode == "984") {
+		// Set client version
+		values.insert(make_pair("version", Helper::getStringPartFromSocket(client_socket, 3)));
+	}
+
+	if (msgCode == "529") {
+		// Insert new question
+		int questionLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("question", Helper::getStringPartFromSocket(client_socket, questionLength)));
+		int correctAnsLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("correct_ans", Helper::getStringPartFromSocket(client_socket, correctAnsLength)));
+		int secAnsLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("sec_ans", Helper::getStringPartFromSocket(client_socket, secAnsLength)));
+		int thirdAnsLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("third_ans", Helper::getStringPartFromSocket(client_socket, thirdAnsLength)));
+		int fourthAnsLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("fourth_ans", Helper::getStringPartFromSocket(client_socket, fourthAnsLength)));
+		int hintLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("hint", Helper::getStringPartFromSocket(client_socket, hintLength)));
+	}
+
+	if (msgCode == "803") {
+		// Get question hint
+		int questionLength = atoi(Helper::getStringPartFromSocket(client_socket, 4).c_str());
+		values.insert(make_pair("question", Helper::getStringPartFromSocket(client_socket, questionLength)));
+	}
+
 	msg = new RecievedMessage(client_socket, msgCode, values);
 	return msg;
 }
@@ -403,6 +430,22 @@ bool TriviaServer::handleJoinRoom(RecievedMessage * msg) {
 				message += string(2 - to_string(room->getQuestionsNo()).length(), '0') + to_string(room->getQuestionsNo());
 				message += string(2 - to_string(room->getQuestionTime()).length(), '0') + to_string(room->getQuestionTime());
 				sendMessageToSocket(msg->getSock(), message);
+
+				// Send 108 message to other room players
+				string roomListMessage = "108";
+				roomListMessage += to_string(room->getJoinedUsersCount()); // Room users count
+				vector<User*> usersList = room->getUsers();
+
+				for (auto curUser : usersList) {
+					roomListMessage += string(2 - to_string(curUser->getUsername().length()).length(), '0') + to_string(curUser->getUsername().length());
+					roomListMessage += curUser->getUsername();
+				}
+
+				for (auto curUser : usersList) {
+					if (curUser != user) {
+						curUser->send(roomListMessage);
+					}
+				}
 			}
 			else {
 				sendMessageToSocket(msg->getSock(), "1102"); // Unsuccessful join
@@ -433,8 +476,6 @@ void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg) {
 			message += string(2 - to_string(curUser->getUsername().length()).length(), '0') + to_string(curUser->getUsername().length());
 			message += curUser->getUsername();
 		}
-
-		cout << "message: " << message << endl;
 
 		sendMessageToSocket(msg->getSock(), message);
 	}
@@ -633,18 +674,15 @@ void TriviaServer::handleUpdateProfileInfo(RecievedMessage * msg) {
 }
 
 void TriviaServer::handleGetConnectedUsersList(RecievedMessage * msg) {
-	cout << "hehehe" << endl;
 	string usersCount = to_string(_connectedUsers.size());
 	usersCount = string(4 - usersCount.length(), '0') + usersCount; // Leading zeros
 	string message = "672" + usersCount;
-
 	for (auto const& user : _connectedUsers) {
 		cout << user.second->getUsername() << endl;
 		message += string(3 - to_string(user.second->getUsername().length()).length(), '0') + to_string(user.second->getUsername().length()); // Username length
 		message += user.second->getUsername(); // Username
 	}
 
-	cout << message << endl;
 	sendMessageToSocket(msg->getSock(), message);
 }
 
@@ -654,17 +692,45 @@ void TriviaServer::handleInsertMessageToChat(RecievedMessage * msg) {
 
 	User* user = getUserBySocket(msg->getSock());
 	string username = user->getUsername();
-	string usernameLength = string(3 - to_string(username.length()).length(), '0') + to_string(username.length());
-	cout << "username: " << usernameLength << endl;
+	string usernameLength = string(2 - to_string(username.length()).length(), '0') + to_string(username.length());
 	string message = msg->getValues().find("message")->second;
-	string messageLength = string(3 - messageLength.length(), '0') + to_string(messageLength.length());
+	string messageLength = string(3 - to_string(message.length()).length(), '0') + to_string(message.length());
 
+	cout << "new message message: " << "619" + usernameLength + username + messageLength + message << endl;
 	//_db->insertMessageToDB();
 
 	// Send 619 message to every user
 	for (auto const& curUser : _connectedUsers) {
-		curUser.second->send("619" + usernameLength + username + messageLength + message);
+		// Check if user client supports 619 message
+		if (curUser.second->getClientVersion() > 1) {
+			curUser.second->send("619" + usernameLength + username + messageLength + message);
+		}
 	}
+}
+
+void TriviaServer::handleSetClientVersion(RecievedMessage * msg) {
+	string versionStr = msg->getValues().find("version")->second;
+	double version = std::stod(versionStr);
+	User* user = getUserBySocket(msg->getSock());
+	user->setClientVersion(version);
+}
+
+void TriviaServer::handleInsertNewQuestion(RecievedMessage * msg) {
+	string question = msg->getValues().find("question")->second;
+	string correctAns = msg->getValues().find("correct_ans")->second;
+	string secAns = msg->getValues().find("sec_ans")->second;
+	string thirdAns = msg->getValues().find("third_ans")->second;
+	string fourthAns = msg->getValues().find("fourth_ans")->second;
+	string hint = msg->getValues().find("hint")->second;
+
+	_db->insertNewQuestion(question, correctAns, secAns, thirdAns, fourthAns, hint);
+}
+
+void TriviaServer::handleGetMessageHint(RecievedMessage * msg) {
+	cout << "question to hint: " << msg->getValues().find("question")->second << endl;
+	string hint = _db->getQuestionHint(msg->getValues().find("question")->second);
+	string hintLength = string(3 - to_string(hint.length()).length(), '0') + to_string(hint.length());
+	sendMessageToSocket(msg->getSock(), hintLength + hint);
 }
 
 Room * TriviaServer::getRoomById(int id) {
@@ -713,7 +779,7 @@ void TriviaServer::handleRecievedMessages()
 	SOCKET clientSock = 0;
 	string userName;
 
-	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517", "395", "714", "185", "673" };
+	string messageCodes[] = { "200", "201", "203", "205", "207", "209", "211", "213", "215", "217", "219", "222", "223", "225", "299", "666", "543", "381", "419", "517", "395", "714", "185", "673", "984", "529", "803" };
 
 	while (true) {
 		try {
@@ -831,6 +897,18 @@ void TriviaServer::handleRecievedMessages()
 
 					if (msgCode == "673") {
 						handleInsertMessageToChat(currMessage);
+					}
+
+					if (msgCode == "984") {
+						handleSetClientVersion(currMessage);
+					}
+
+					if (msgCode == "529") {
+						handleInsertNewQuestion(currMessage);
+					}
+
+					if (msgCode == "803") {
+						handleGetMessageHint(currMessage);
 					}
 				}
 				else if (msgCode != "") {
