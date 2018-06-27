@@ -26,6 +26,7 @@ TriviaServer::TriviaServer()
 	// Create DataBase Instance
 	_db = new DataBase();
 
+	// Adding rooms for testing
 	_roomsList.insert(make_pair(203, new Room(5, 20, 20, "room1", 203)));
 	_roomsList.insert(make_pair(1235, new Room(5, 20, 20, "room2", 1235)));
 	_roomsList.insert(make_pair(123, new Room(5, 20, 20, "room3", 1235)));
@@ -104,8 +105,6 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 		// get the first message code
 		string msgCode = "";
 
-		//cout << "Message: " << msgCode << endl;
-
 		while (true) {
 			msgCode = Helper::getMessageTypeCode(client_socket);
 			if (msgCode != "") {
@@ -144,6 +143,7 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 	RecievedMessage* msg = nullptr;
 	map<string, string> values;
 
+	// Adding extra values to messages
 	if (msgCode == "200") {
 		// Login
 		int usernameSize = atoi(Helper::getStringPartFromSocket(client_socket, 2).c_str());
@@ -268,58 +268,59 @@ RecievedMessage* TriviaServer::buildRecieveMessage(SOCKET client_socket, string 
 
 void TriviaServer::handleForgotPassword(RecievedMessage * msg)
 {
-	/*if (!exit) {
-	sendMessageToSocket(msg->getSock(), "667");
-	}
-	*/
+	cout << msg->getValues().find("email")->second << endl;
 	::CoInitialize(NULL);
 
-	IMailPtr oSmtp = NULL;
-	oSmtp.CreateInstance("EASendMailObj.Mail");
-	oSmtp->LicenseCode = ("TryIt");
+	try {
+		IMailPtr oSmtp = NULL;
+		oSmtp.CreateInstance("EASendMailObj.Mail");
+		oSmtp->LicenseCode = ("TryIt");
 
-	cout << " ***** " << msg->getMessageCode() << " ****** " << endl;
-	// user gmail email address
-	oSmtp->FromAddr = ("lolpirt2@gmail.com");//meeeeeeee
-	oSmtp->AddRecipientEx(_T(msg->getValues().find("email")->second.c_str()), 0);//meeeee
-																				 //email subject
-	oSmtp->Subject = ("Trivia++ notification: pass reset");
-	// Set email body
-	oSmtp->BodyText = ("this is a test email sent from Visual C++ project with Gmail");
-	// Gmail SMTP server address
-	oSmtp->ServerAddr = ("smtp.gmail.com");
+		// Set your gmail email address
+		oSmtp->FromAddr = ("lolpirt2@gmail.com");
 
-	// If you want to use direct SSL 465 port,
-	// Please add this line, otherwise TLS will be used.
-	// oSmtp->ServerPort = 465;
+		// Add recipient email address
+		oSmtp->AddRecipientEx(_T("yakovd33@gmail.com"), 0);
 
-	// Set 25 or 587 SMTP port
-	oSmtp->ServerPort = 587;
+		// Set email subject
+		oSmtp->Subject = ("simple email from Visual C++ with gmail account");
 
-	// detect SSL/TLS automatically
-	oSmtp->SSL_init();
+		// Set email body
+		oSmtp->BodyText = ("this is a test email sent from Visual C++ project with Gmail");
 
-	// Gmail user authentication should use your
-	// Gmail email address as the user name.
-	// For example: your email is "gmailid@gmail.com", then the user should be "gmailid@gmail.com"
-	oSmtp->UserName = ("lolpirt2@gmail.com");
-	oSmtp->Password = ("lolpirt.3692");
+		// Gmail SMTP server address
+		oSmtp->ServerAddr = ("smtp.gmail.com");
 
-	cout << ("Start to send email via gmail account ...\r\n") << endl;
+		// If you want to use direct SSL 465 port,
+		// Please add this line, otherwise TLS will be used.
+		oSmtp->ServerPort = 465;
 
-	if (oSmtp->SendMail() == 0)
-	{
-		cout << "email was sent successfully!\r\n" << endl;
+		// detect SSL/TLS automatically
+		oSmtp->SSL_init();
+
+		// Gmail user authentication should use your
+		// Gmail email address as the user name.
+		// For example: your email is "gmailid@gmail.com", then the user should be "gmailid@gmail.com"
+		oSmtp->UserName = _T("lolpirt2@gmail.com");
+		oSmtp->Password = ("lolpirt.3692");
+
+		printf("Start to send email via gmail account ...\r\n");
+
+		if (oSmtp->SendMail() == 0)//program crashes here
+		{
+			_tprintf(_T("email was sent successfully!\r\n"));
+		} else {
+			_tprintf(_T("failed to send email with the following error: %s\r\n"),
+				(const TCHAR*)oSmtp->GetLastErrDescription());
+		}
+
+		if (oSmtp != NULL)
+			oSmtp.Release();
 	}
-	else
-	{
-		cout << "failed to send email with the following error: %s\r\n" <<
-			(const TCHAR*)oSmtp->GetLastErrDescription() << endl;
-	}
 
-	if (oSmtp != NULL)
-		oSmtp.Release();
-	//system("PAUSE"); 
+	catch (_com_error &ep) {
+		_tprintf(_T("Error: %s"), (const TCHAR*)ep.Description());
+	}
 }
 
 void TriviaServer::sendMessageToSocket(SOCKET sock, string msg) {
@@ -608,11 +609,11 @@ void TriviaServer::handleLeaveGame(RecievedMessage * msg) {
 		}
 	}
 }
-
+//get (from db) and send best scores
 void TriviaServer::handleGetBestScores(RecievedMessage * msg) {
 	sendMessageToSocket(msg->getSock(), _db->getBestScores());
 }
-
+//get (from db) and send pers stat
 void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
 	User* user = getUserBySocket(msg->getSock());
 
@@ -621,6 +622,7 @@ void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg) {
 	}
 }
 
+// personal prof pic
 void TriviaServer::handleGetProfilePic(RecievedMessage * msg) {
 	string picture_url = _db->getUserProfilePicUrlByUsername(getUserBySocket(msg->getSock())->getUsername());
 	string picture_length = to_string(picture_url.length());
@@ -629,12 +631,14 @@ void TriviaServer::handleGetProfilePic(RecievedMessage * msg) {
 	sendMessageToSocket(msg->getSock(), string("189" + picture_length + picture_url));
 }
 
+//chng prof pic
 void TriviaServer::handleChnageProfilePic(RecievedMessage * msg) {
 	cout << "url: " << msg->getValues().find("url")->second << endl;
 	_db->updateUserProfilePicByUsername(getUserBySocket(msg->getSock())->getUsername(), msg->getValues().find("url")->second);
 
 }
 
+//get other usrs prof pic
 void TriviaServer::handleGetUserProfilePicByUsername(RecievedMessage * msg) {
 	string picture_url = _db->getUserProfilePicUrlByUsername(msg->getValues().find("username")->second);
 	string picture_length = to_string(picture_url.length());
@@ -658,6 +662,7 @@ void TriviaServer::handleGetCuruserDBCol(RecievedMessage * msg) {
 	sendMessageToSocket(msg->getSock(), message);
 }
 
+// update email and pass accessed from prof pic
 void TriviaServer::handleUpdateProfileInfo(RecievedMessage * msg) {
 	string email = msg->getValues().find("email")->second;
 	string password = msg->getValues().find("password")->second;
@@ -708,6 +713,7 @@ void TriviaServer::handleInsertMessageToChat(RecievedMessage * msg) {
 	}
 }
 
+// mag client and our client diff
 void TriviaServer::handleSetClientVersion(RecievedMessage * msg) {
 	string versionStr = msg->getValues().find("version")->second;
 	double version = std::stod(versionStr);
@@ -715,6 +721,7 @@ void TriviaServer::handleSetClientVersion(RecievedMessage * msg) {
 	user->setClientVersion(version);
 }
 
+//ins New Q 
 void TriviaServer::handleInsertNewQuestion(RecievedMessage * msg) {
 	string question = msg->getValues().find("question")->second;
 	string correctAns = msg->getValues().find("correct_ans")->second;
@@ -773,6 +780,7 @@ void TriviaServer::safeDeleteUser(SOCKET id)
 
 }
 
+//recive and handle msg by id
 void TriviaServer::handleRecievedMessages()
 {
 	string msgCode = "";

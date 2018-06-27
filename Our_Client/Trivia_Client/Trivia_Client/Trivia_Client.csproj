@@ -153,6 +153,7 @@
     <None Include="bin\Debug\Sounds\swoosh.wav" />
     <None Include="bin\Debug\Sounds\winnerTheme.wav" />
     <None Include="bin\Debug\Sounds\wrong_answer.wav" />
+    <None Include="bin\Debug\Sounds\loserTheme.wav" />
     <Content Include="icon.ico" />
     <None Include="Pictures [Resources]\sound.png" />
     <None Include="Pictures [Resources]\mute.png" />

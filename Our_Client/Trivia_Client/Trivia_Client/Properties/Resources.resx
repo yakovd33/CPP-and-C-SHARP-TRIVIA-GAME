@@ -241,4 +241,13 @@
   <data name="plus30disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Pictures [Resources]\plus30disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="loserTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Sounds\loserTheme.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="main_theme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Sounds\main_theme.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="winnerTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Sounds\winnerTheme.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

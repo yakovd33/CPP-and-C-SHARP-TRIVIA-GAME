@@ -17,14 +17,14 @@ namespace Trivia_Client
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
-        (
-            int nLeftRect,     // x-coordinate of upper-left corner
-            int nTopRect,      // y-coordinate of upper-left corner
-            int nRightRect,    // x-coordinate of lower-right corner
-            int nBottomRect,   // y-coordinate of lower-right corner
-            int nWidthEllipse, // height of ellipse
-            int nHeightEllipse // width of ellipse
-        );
+         (
+          int nLeftRect, // x-coordinate of upper-left corner
+          int nTopRect, // y-coordinate of upper-left corner
+          int nRightRect, // x-coordinate of lower-right corner
+          int nBottomRect, // y-coordinate of lower-right corner
+          int nWidthEllipse, // height of ellipse
+          int nHeightEllipse // width of ellipse
+         );
 
         TcpClient client;
         IPEndPoint serverEndPoint;
@@ -86,26 +86,25 @@ namespace Trivia_Client
             this.serverEndPoint = serverEndPoint;
             this.clientStream = clientStream;
 
+            // Round controls corners
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
-
             roomNameWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, roomNameWrap.Width, roomNameWrap.Height, 5, 5));
             numPlayersWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, numPlayersWrap.Width, numPlayersWrap.Height, 5, 5));
             numQuestWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, numQuestWrap.Width, numQuestWrap.Height, 5, 5));
             questionsTimeWrap.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, questionsTimeWrap.Width, questionsTimeWrap.Height, 5, 5));
             createRoomBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, createRoomBtn.Width, createRoomBtn.Height, 5, 5));
             saveSettingsBtn.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, saveSettingsBtn.Width, saveSettingsBtn.Height, 5, 5));
-
             mainProfilePicture.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, mainProfilePicture.Width, mainProfilePicture.Height, 49, 49));
             Sidebar();
 
+            // Set settings controls with values
             ipBox.Text = getSettingValue("server_ip");
             portBox.Text = getSettingValue("port");
             volumeSettings.Image = getSettingValue("volume") == "sound" ? sound : mute;
             isMute = getSettingValue("volume") != "sound";
 
-            
-            new Thread(() =>
-            {
+            // Get sidebar profile pic from files server
+            new Thread(() => {
                 try
                 {
                     Thread.Sleep(1000);
@@ -116,90 +115,27 @@ namespace Trivia_Client
                 {
                     //
                 }
-            }){ IsBackground = true }.Start();
-
-            new Thread(() =>
+            })
             {
-                while (true)
-                {
-                    Byte[] peekBuffer = new byte[3];
-                    client.Client.Receive(peekBuffer, SocketFlags.Peek);
-                    Console.WriteLine(new ASCIIEncoding().GetString(peekBuffer));
-                    if (new ASCIIEncoding().GetString(peekBuffer).Substring(0, 3) == "619")
-                    {
-                        Console.WriteLine("message recieved");
-                        // New message recieved
-                        getResultFromServer(3);
-                        int usernameLength = Int32.Parse(getResultFromServer(2));
-                        string username = getResultFromServer(usernameLength);
-                        int messageLength = Int32.Parse(getResultFromServer(3));
-                        string message = getResultFromServer(messageLength);
-                        bool isSelf = (username == myUser);
+                IsBackground = true
+            }.Start();
 
-                        Panel messageItem = new Panel();
-                        messageItem.Width = 400;
 
-                        if (message.Length <= 45)
-                        {
-                            messageItem.Height = 50;
-                        }
-
-                        messageItem.AutoSize = true;
-                        messageItem.MaximumSize = new Size(400, 2000);
-                        messageItem.Margin = new Padding(10);
-
-                        if (isSelf) {
-                            messageItem.BackColor = System.Drawing.Color.FromArgb(128, 144, 161);
-                            messageItem.Location = new Point(160, currentChatMessageYPos + chatMessagesList.AutoScrollPosition.Y);
-                        }
-                        else
-                        {
-                            messageItem.BackColor = System.Drawing.Color.FromArgb(120, 120, 120);
-                            messageItem.Location = new Point(5, currentChatMessageYPos + chatMessagesList.AutoScrollPosition.Y);
-                        }
-
-                        // Make panel rounder
-                        messageItem.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, messageItem.Width, messageItem.Height, 6, 6));
-
-                        Label messageUsernameLabel = new Label();
-                        messageUsernameLabel.Name = "roomItemName";
-                        messageUsernameLabel.Font = new Font("Open Sans Light", 9);
-                        messageUsernameLabel.ForeColor = System.Drawing.Color.FromArgb(50, 50, 50);
-                        messageUsernameLabel.Location = new Point(295, messageItem.Height - 25);
-                        messageUsernameLabel.AutoSize = false;
-                        messageUsernameLabel.TextAlign = ContentAlignment.MiddleRight;
-                        messageUsernameLabel.Text = username + " at 00:00";
-                        messageItem.Controls.Add(messageUsernameLabel);
-
-                        Label messageTextLabel = new Label();
-                        messageTextLabel.Name = "roomItemName";
-                        messageTextLabel.Font = new Font("Open Sans Light", 11);
-                        messageTextLabel.ForeColor = System.Drawing.Color.FromArgb(173, 190, 202);
-                        messageTextLabel.Location = new Point(10, 5);
-                        messageTextLabel.Text = message;
-                        messageTextLabel.AutoSize = true;
-                        messageTextLabel.MaximumSize = new Size(370, 2000);
-                        messageItem.Controls.Add(messageTextLabel);
-
-                        chatMessagesList.Invoke((MethodInvoker)delegate {
-                            chatMessagesList.Controls.Add(messageItem);
-                        });
-
-                        Console.WriteLine(chatMessagesList.AutoScrollPosition.Y);
-                        currentChatMessageYPos += messageItem.Height + 10;
-                    }
-                    Thread.Sleep(1000);
-                }
-            }){ IsBackground = true }.Start();
-
-            getConnectedUsersList();
+            // Listen to new chat messages
+            Thread getMessagesThread = new Thread(listenToChatMessage);
+            getMessagesThread.IsBackground = true;
+            getMessagesThread.Start();
         }
 
         private void MainLogged_Load(object sender, EventArgs e)
         {
+            // Starts the answer timer thread
             answerTimerThread = new Thread(answerTimer);
             answerTimerThread.IsBackground = true;
             answerTimerThread.Start();
+
+            // Getting the connected users list
+            getConnectedUsersList();
         }
 
         private void answerTimer()
@@ -222,10 +158,10 @@ namespace Trivia_Client
 
                     if (answerSeconds >= roomQuestionTime)
                     {
+                        // Question timeout
                         disableAllAnswerBtns();
-                        Console.WriteLine("timeouttttt");
                         answerSeconds = 0;
-                        sendMessageToServer("219" + "5" + answerSeconds.ToString("D2")); // Question timeout
+                        sendMessageToServer("219" + "5" + answerSeconds.ToString("D2"));
                         getAnswerResponse();
                         nextTour();
                     }
@@ -247,6 +183,7 @@ namespace Trivia_Client
 
         private void exitBtn_Click(object sender, EventArgs e)
         {
+            // Close the client
             try
             {
                 sendMessageToServer("299");
@@ -313,6 +250,8 @@ namespace Trivia_Client
 
             isMainPanel = false;
             int newY = sidebarActivePanelIndicator.Location.Y;
+
+            // Decide what to do after sidebar item clicked
             if (ctrl.Name == "sidebarItem1" || ctrl.Name == "sidebarIcon1")
             {
                 sidebarItem1.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
@@ -365,7 +304,8 @@ namespace Trivia_Client
                 addQuestionPanel.BringToFront();
             }
 
-            if (!isSidebarAnimating) {
+            if (!isSidebarAnimating)
+            {
                 Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
                 animate.Start(newY);
             }
@@ -377,6 +317,7 @@ namespace Trivia_Client
 
         protected void animateSlidebarSelectionBar(object Y)
         {
+            // Function animates the sidebar item indicator position
             bool isPos = (sidebarActivePanelIndicator.Location.Y < (int)Y);
             isSidebarAnimating = true;
 
@@ -401,6 +342,7 @@ namespace Trivia_Client
 
         string getUserProfilePic()
         {
+            // Getting the current user profile pic
             string picture_url = "";
 
             sendMessageToServer("543");
@@ -472,11 +414,14 @@ namespace Trivia_Client
                 string R_ans = Int32.Parse(getResultFromServer(6)).ToString();
                 string W_ans = Int32.Parse(getResultFromServer(6)).ToString();
 
-                if (numGames != "0") {
+                if (numGames != "0")
+                {
                     string AVG_t_f = Int32.Parse(getResultFromServer(2)).ToString();
                     string AVG_t_s = Int32.Parse(getResultFromServer(2)).ToString();
                     userStatsLabel.Text = "Number of games: " + numGames + "\nRight answers: " + R_ans + "\nWrong answers: " + W_ans + "\nAverage time to answer: " + AVG_t_f + "." + AVG_t_s;
-                } else {
+                }
+                else
+                {
                     userStatsLabel.Text = "Number of games: " + numGames + "\nRight answers: " + R_ans + "\nWrong answers: " + W_ans + "\nAverage time to answer: 0";
                     getResultFromServer(1);
                 }
@@ -566,7 +511,7 @@ namespace Trivia_Client
                 numQuestBox.TabStop = true;
             }
         }
-
+        //create room
         protected void createRoom()
         {
             string roomName = roomNameBox.Text;
@@ -575,7 +520,7 @@ namespace Trivia_Client
             string questionsTime = questionsTimeBox.Text;
 
             if (Int32.Parse(numPlayers) < 10 && Int32.Parse(numPlayers) > 0 && roomName != "" && numPlayers != "" && numQuest != "" && questionsTime != "" &&
-                roomName != "Room Name" && numPlayers != "No. Players" && numQuest != "No. Questions" && questionsTime != "Time Per Question")
+             roomName != "Room Name" && numPlayers != "No. Players" && numQuest != "No. Questions" && questionsTime != "Time Per Question")
             {
                 try
                 {
@@ -584,8 +529,7 @@ namespace Trivia_Client
                     roomQuestionsNumber = questionsNum;
                     roomQuestionTime = timeQuestions;
 
-                    string message = "213" + roomName.Length.ToString("D2") + roomName + numPlayers
-                        + questionsNum.ToString("D2") + timeQuestions.ToString("D2"); //D2 for 2 decimal digits format.
+                    string message = "213" + roomName.Length.ToString("D2") + roomName + numPlayers + questionsNum.ToString("D2") + timeQuestions.ToString("D2"); //D2 for 2 decimal digits format.
                     sendMessageToServer(message);
                     string resultCode = getResultFromServer(4);
                     string errorMsg = protocol.getCodeErrorMsg(resultCode);
@@ -651,14 +595,14 @@ namespace Trivia_Client
 
         private void questionsTimeBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == 13) // Enter
+            if (e.KeyValue == 13) // Enter key
             {
                 createRoom();
             }
         }
 
         private void listRooms()
-        {
+        {//dinamiclly create room
             roomsList.Controls.Clear();
             sendMessageToServer("205");
 
@@ -778,10 +722,10 @@ namespace Trivia_Client
                     roomItem.Controls.Add(roomIsUsersListOpen);
 
                     roomItem.Click += delegate (object sender, EventArgs e) {
+                        // Toggles the users list in room
                         if (((Panel)sender).Controls["roomIsUsersListOpen"].Text == "true")
                         {
                             // Panel is already open
-
                             bool beenAlready = false;
                             for (int j = 0; j < roomItemsWraps.Length; j++)
                             {
@@ -800,7 +744,7 @@ namespace Trivia_Client
                                 }
                             }
 
-                            ((Panel)sender).Controls["roomIsUsersListOpen"].Text = "false";
+                         ((Panel)sender).Controls["roomIsUsersListOpen"].Text = "false";
                         }
                         else
                         {
@@ -843,7 +787,7 @@ namespace Trivia_Client
                                     }
                                 }
 
-                            ((Panel)sender).Controls["roomIsUsersListOpen"].Text = "true";
+                             ((Panel)sender).Controls["roomIsUsersListOpen"].Text = "true";
                             }
                         }
                     };
@@ -856,7 +800,7 @@ namespace Trivia_Client
             }
         }
 
-        private void disableSidebarTabs ()
+        private void disableSidebarTabs()
         {
             sidebarItem1.Invoke((MethodInvoker)delegate {
                 mainProfilePicture.Enabled = false;
@@ -932,13 +876,14 @@ namespace Trivia_Client
         void listRoomUsers()
         {
             // Clear current room list
-            new Thread(() =>
-            {
+            new Thread(() => {
                 currentRoomUsersList.Invoke((MethodInvoker)delegate {
-                   currentRoomUsersList.Controls.Clear(); ;
+                    currentRoomUsersList.Controls.Clear(); ;
                 });
             })
-            { IsBackground = true }.Start();
+            {
+                IsBackground = true
+            }.Start();
 
             if (getResultFromServer(3) == "108")
             {
@@ -959,13 +904,14 @@ namespace Trivia_Client
                     roomUserNameLabel.Text = username;
                     roomUserNameLabel.Location = new Point(40, curRoomUsersCurYPos);
 
-                    new Thread(() =>
-                    {
+                    new Thread(() => {
                         currentRoomUsersList.Invoke((MethodInvoker)delegate {
                             currentRoomUsersList.Controls.Add(roomUserNameLabel);
                         });
                     })
-                    { IsBackground = true }.Start();
+                    {
+                        IsBackground = true
+                    }.Start();
 
                     curRoomUsersCurYPos += 43;
                 }
@@ -995,11 +941,15 @@ namespace Trivia_Client
                             curUserPicYPos += 40;
                         }
                     }
-                }){ IsBackground = true }.Start();
+                })
+                {
+                    IsBackground = true
+                }.Start();
             }
         }
 
-        void getLeaderboard() {
+        void getLeaderboard()
+        {
             firstPlacePic.Invoke((MethodInvoker)delegate {
                 firstPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, firstPlacePic.Width, firstPlacePic.Height, firstPlacePic.Height, firstPlacePic.Width));
                 secPlacePic.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, secPlacePic.Width, secPlacePic.Height, secPlacePic.Height, secPlacePic.Width));
@@ -1076,13 +1026,15 @@ namespace Trivia_Client
                         getResultFromServer(16); // Ignore 16 zeros
                     }
                 }
-                else {
+                else
+                {
                     getResultFromServer(24); // Ignore 24 zeros
                 }
 
                 // Get leaderboard users pics
                 new Thread(() => {
-                    if (isFirst) {
+                    if (isFirst)
+                    {
                         firstPlacePic.Invoke((MethodInvoker)delegate {
                             firstPlacePic.Load(getUserProfilePicByUsername(firstUsername));
                         });
@@ -1090,7 +1042,8 @@ namespace Trivia_Client
 
                     Thread.Sleep(1000);
 
-                    if (isSec) {
+                    if (isSec)
+                    {
                         secPlacePic.Invoke((MethodInvoker)delegate {
                             secPlacePic.Load(getUserProfilePicByUsername(secUsername));
                         });
@@ -1098,12 +1051,16 @@ namespace Trivia_Client
 
                     Thread.Sleep(1000);
 
-                    if (isThird) {
+                    if (isThird)
+                    {
                         thirdPlacePic.Invoke((MethodInvoker)delegate {
                             thirdPlacePic.Load(getUserProfilePicByUsername(thirdUsername));
                         });
                     }
-                }){ IsBackground = true }.Start();
+                })
+                {
+                    IsBackground = true
+                }.Start();
             }
         }
 
@@ -1133,10 +1090,8 @@ namespace Trivia_Client
             thirdAnswerBtn.BackColor = System.Drawing.Color.FromArgb(48, 56, 65);
             fourthAnswerBtn.BackColor = System.Drawing.Color.FromArgb(48, 56, 65);
 
-            if (getResultFromServer(3) == "118")
+            if (inGame && getResultFromServer(3) == "118")
             {
-                Console.WriteLine("getting questions");
-
                 inGame = true;
                 currentQuestionsCounter++;
                 answerSeconds = 0;
@@ -1148,41 +1103,34 @@ namespace Trivia_Client
                 string fourthAnswer = getResultFromServer(Int32.Parse(getResultFromServer(3)));
 
                 // Update answer buttons
-                questionLabel.Invoke((MethodInvoker)delegate
-                {
+                questionLabel.Invoke((MethodInvoker)delegate {
                     questionLabel.Text = question;
                 });
 
 
-                firstAnswerBtn.Invoke((MethodInvoker)delegate
-                {
+                firstAnswerBtn.Invoke((MethodInvoker)delegate {
                     firstAnswerBtn.Text = firstAnswer;
                 });
 
-                secondAnswerBtn.Invoke((MethodInvoker)delegate
-                {
+                secondAnswerBtn.Invoke((MethodInvoker)delegate {
                     secondAnswerBtn.Text = secondAnswer;
                 });
 
-                thirdAnswerBtn.Invoke((MethodInvoker)delegate
-                {
+                thirdAnswerBtn.Invoke((MethodInvoker)delegate {
                     thirdAnswerBtn.Text = thirdAnswer;
                 });
 
-                fourthAnswerBtn.Invoke((MethodInvoker)delegate
-                {
+                fourthAnswerBtn.Invoke((MethodInvoker)delegate {
                     fourthAnswerBtn.Text = fourthAnswer;
                 });
 
                 // Update question counter
-                questionInformer.Invoke((MethodInvoker)delegate
-                {
+                questionInformer.Invoke((MethodInvoker)delegate {
                     questionInformer.Text = "Question " + currentQuestionsCounter.ToString() + "/" + roomQuestionsNumber.ToString();
                 });
 
                 // Update score counter
-                gameScore.Invoke((MethodInvoker)delegate
-                {
+                gameScore.Invoke((MethodInvoker)delegate {
                     gameScore.Text = "Score: " + currentScore.ToString();
                 });
 
@@ -1194,24 +1142,24 @@ namespace Trivia_Client
 
                 // Empty the hint label
                 hintLabel.Invoke((MethodInvoker)delegate {
-                   hintLabel.Text = "";
+                    hintLabel.Text = "";
                 });
             }
         }
 
         private void disableAllAnswerBtns()
         {
-            new Thread(() =>
-            {
-                firstAnswerBtn.Invoke((MethodInvoker)delegate
-               {
-                   firstAnswerBtn.Enabled = false;
-                   secondAnswerBtn.Enabled = false;
-                   thirdAnswerBtn.Enabled = false;
-                   fourthAnswerBtn.Enabled = false;
-               });
+            new Thread(() => {
+                firstAnswerBtn.Invoke((MethodInvoker)delegate {
+                    firstAnswerBtn.Enabled = false;
+                    secondAnswerBtn.Enabled = false;
+                    thirdAnswerBtn.Enabled = false;
+                    fourthAnswerBtn.Enabled = false;
+                });
             })
-            { IsBackground = true }.Start();
+            {
+                IsBackground = true
+            }.Start();
         }
 
         private void enableAllAnswerBtns()
@@ -1223,7 +1171,10 @@ namespace Trivia_Client
                     thirdAnswerBtn.Enabled = true;
                     fourthAnswerBtn.Enabled = true;
                 });
-            }){ IsBackground = true }.Start();
+            })
+            {
+                IsBackground = true
+            }.Start();
         }
 
         private void firstAnswerBtn_Click(object sender, EventArgs e)
@@ -1293,15 +1244,21 @@ namespace Trivia_Client
 
         private void nextTour()
         {
-            Console.WriteLine("next tour");
-            if (currentQuestionsCounter < roomQuestionsNumber) {
+            // Check is question is last
+            if (currentQuestionsCounter < roomQuestionsNumber)
+            {
                 // Get next question
                 new Thread(() => {
                     Thread.Sleep(1500);
                     getQuestions();
                     enableAllAnswerBtns();
-                }){ IsBackground = true }.Start();
-            } else {
+                })
+                {
+                    IsBackground = true
+                }.Start();
+            }
+            else
+            {
                 // Game finished
                 answerTimerThread.Abort(); // Stop timer thread
                 enableSidebarTabs();
@@ -1312,8 +1269,10 @@ namespace Trivia_Client
             }
         }
 
-        private bool getAnswerResponse() {
-            if (getResultFromServer(4) == "1201") {
+        private bool getAnswerResponse()
+        {
+            if (getResultFromServer(4) == "1201")
+            {
                 // Correct answer
                 if (!isMute)
                 {
@@ -1321,7 +1280,10 @@ namespace Trivia_Client
                 }
                 currentScore++;
                 return true;
-            } else {
+            }
+            else
+            {
+                // Wrong answer
                 if (!isMute)
                     wrongAns.Play();
             }
@@ -1338,7 +1300,6 @@ namespace Trivia_Client
 
                 if (new ASCIIEncoding().GetString(peekBuffer).Substring(0, 3) == "118")
                 {
-                    Console.WriteLine("starting game");
                     // Start game
                     gamePanel.Invoke((MethodInvoker)delegate {
                         gamePanel.BringToFront();
@@ -1371,7 +1332,7 @@ namespace Trivia_Client
             }
         }
 
-        private void listenToRoomUserJoin ()
+        private void listenToRoomUserJoin()
         {
             while (!inGame)
             {
@@ -1389,7 +1350,82 @@ namespace Trivia_Client
 
         private void listenToChatMessage()
         {
-            
+            new Thread(() => {
+                while (true)
+                {
+                    Byte[] peekBuffer = new byte[3];
+                    client.Client.Receive(peekBuffer, SocketFlags.Peek);
+                    Console.WriteLine(new ASCIIEncoding().GetString(peekBuffer));
+                    if (new ASCIIEncoding().GetString(peekBuffer).Substring(0, 3) == "619")
+                    {
+                        Console.WriteLine("message recieved");
+                        // New message recieved
+                        getResultFromServer(3);
+                        int usernameLength = Int32.Parse(getResultFromServer(2));
+                        string username = getResultFromServer(usernameLength);
+                        int messageLength = Int32.Parse(getResultFromServer(3));
+                        string message = getResultFromServer(messageLength);
+                        bool isSelf = (username == myUser);
+
+                        Panel messageItem = new Panel();
+                        messageItem.Width = 400;
+
+                        if (message.Length <= 45)
+                        {
+                            messageItem.Height = 50;
+                        }
+
+                        messageItem.AutoSize = true;
+                        messageItem.MaximumSize = new Size(400, 2000);
+                        messageItem.Margin = new Padding(10);
+
+                        if (isSelf)
+                        {
+                            messageItem.BackColor = System.Drawing.Color.FromArgb(128, 144, 161);
+                            messageItem.Location = new Point(160, currentChatMessageYPos + chatMessagesList.AutoScrollPosition.Y);
+                        }
+                        else
+                        {
+                            messageItem.BackColor = System.Drawing.Color.FromArgb(120, 120, 120);
+                            messageItem.Location = new Point(5, currentChatMessageYPos + chatMessagesList.AutoScrollPosition.Y);
+                        }
+
+                        // Make panel rounder
+                        messageItem.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, messageItem.Width, messageItem.Height, 6, 6));
+
+                        Label messageUsernameLabel = new Label();
+                        messageUsernameLabel.Name = "roomItemName";
+                        messageUsernameLabel.Font = new Font("Open Sans Light", 9);
+                        messageUsernameLabel.ForeColor = System.Drawing.Color.FromArgb(50, 50, 50);
+                        messageUsernameLabel.Location = new Point(295, messageItem.Height - 25);
+                        messageUsernameLabel.AutoSize = false;
+                        messageUsernameLabel.TextAlign = ContentAlignment.MiddleRight;
+                        messageUsernameLabel.Text = username + " at 00:00";
+                        messageItem.Controls.Add(messageUsernameLabel);
+
+                        Label messageTextLabel = new Label();
+                        messageTextLabel.Name = "roomItemName";
+                        messageTextLabel.Font = new Font("Open Sans Light", 11);
+                        messageTextLabel.ForeColor = System.Drawing.Color.FromArgb(173, 190, 202);
+                        messageTextLabel.Location = new Point(10, 5);
+                        messageTextLabel.Text = message;
+                        messageTextLabel.AutoSize = true;
+                        messageTextLabel.MaximumSize = new Size(370, 2000);
+                        messageItem.Controls.Add(messageTextLabel);
+
+                        chatMessagesList.Invoke((MethodInvoker)delegate {
+                            chatMessagesList.Controls.Add(messageItem);
+                        });
+
+                        Console.WriteLine(chatMessagesList.AutoScrollPosition.Y);
+                        currentChatMessageYPos += messageItem.Height + 10;
+                    }
+                    Thread.Sleep(1000);
+                }
+            })
+            {
+                IsBackground = true
+            }.Start();
         }
 
         [DllImportAttribute("user32.dll")]
@@ -1412,6 +1448,7 @@ namespace Trivia_Client
 
         private string getSettingValue(string key)
         {
+            // Getting a setting from config.triv file
             System.IO.StreamReader file = new System.IO.StreamReader(@"config.triv");
             string line = "";
 
@@ -1443,6 +1480,7 @@ namespace Trivia_Client
 
         private void volumeSettings_Click(object sender, EventArgs e)
         {
+            // Sets the volume setting
             if (isMute == false)
                 buttonsTheme.Play();
             if (volumeSettings.Image == sound)
@@ -1461,7 +1499,7 @@ namespace Trivia_Client
         {
             if (!isMute)
                 buttonsTheme.Play();
-            sendMessageToServer("215");//close room msg
+            sendMessageToServer("215"); //close room msg
             getResultFromServer(3); // Get rid of 116 message
             enableSidebarTabs();
             mainPanel.BringToFront();
@@ -1487,12 +1525,16 @@ namespace Trivia_Client
 
         }
 
-        private string getUserCol(string col) {
+        private string getUserCol(string col)
+        {
+            // Getting current user database column
             sendMessageToServer("395" + col.Length.ToString("D2") + col);
             return getResultFromServer(Int32.Parse(getResultFromServer(3)));
         }
 
-        private void updateUserInfoBtn_Click(object sender, EventArgs e) {
+        private void updateUserInfoBtn_Click(object sender, EventArgs e)
+        {
+            // Update user info
             sendMessageToServer("714" + emailEditBox.Text.Length.ToString("D2") + emailEditBox.Text + passEditBox.Text.Length.ToString("D2") + passEditBox.Text);
             profileUpdateFeedbackLabel.Text = protocol.getCodeErrorMsg(getResultFromServer(4));
         }
@@ -1507,6 +1549,7 @@ namespace Trivia_Client
 
         private void messageBox_KeyDown(object sender, KeyEventArgs e)
         {
+            // sending chat message
             if (e.KeyValue == 13) // Enter
             {
                 enterMessage();
@@ -1515,11 +1558,13 @@ namespace Trivia_Client
 
         private void sendBtn_Click(object sender, EventArgs e)
         {
+            // sending chat message
             enterMessage();
         }
 
-        private void enterMessage ()
+        private void enterMessage()
         {
+            // Sends the message to the server
             if (messageBox.Text != "Type your message here..." && messageBox.Text != "")
             {
                 sendMessageToServer("673" + messageBox.Text.Length.ToString("D4") + messageBox.Text);
@@ -1529,19 +1574,18 @@ namespace Trivia_Client
 
         private void messageBox_TextChanged(object sender, EventArgs e)
         {
+            // Updates the chat message letter count
             letterCountdown.Text = (1024 - messageBox.Text.Length).ToString();
-
         }
 
-        private void getConnectedUsersList ()
+        private void getConnectedUsersList()
         {
-            new Thread(() =>
-            {
+            // Getting the connected users list
+            new Thread(() => {
                 if (isMainPanel)
                 {
                     // Clear unconnected users list
-                    userList.BeginInvoke((MethodInvoker)delegate
-                    {
+                    userList.BeginInvoke((MethodInvoker)delegate {
                         userList.Controls.Clear();
                     });
 
@@ -1557,15 +1601,17 @@ namespace Trivia_Client
                             Label usrLabel = new Label();
                             usrLabel.Text = connectedUsername;
                             usrLabel.Font = new Font("Arial", 14);
-                            if (i == 0) {
+                            if (i == 0)
+                            {
                                 usrLabel.ForeColor = Color.FromArgb(180, 46, 24);
-                            } else {
+                            }
+                            else
+                            {
                                 usrLabel.ForeColor = Color.FromArgb(173, 190, 202);
                             }
 
                             usrLabel.Location = new Point(5, currYPos);
-                            userList.BeginInvoke((MethodInvoker)delegate
-                            {
+                            userList.BeginInvoke((MethodInvoker)delegate {
                                 userList.Controls.Add(usrLabel);
                             });
 
@@ -1573,7 +1619,10 @@ namespace Trivia_Client
                         }
                     }
                 }
-            }){ IsBackground = true }.Start();
+            })
+            {
+                IsBackground = true
+            }.Start();
         }
 
         private void logoutBtn_Click(object sender, EventArgs e)
@@ -1597,12 +1646,12 @@ namespace Trivia_Client
             string hint = newQuestionHint.Text;
 
             sendMessageToServer(
-                "529" + question.Length.ToString("D4") + question +
-                correctAns.Length.ToString("D4") + correctAns +
-                secAns.Length.ToString("D4") + secAns +
-                thirdAns.Length.ToString("D4") + thirdAns +
-                lastAns.Length.ToString("D4") + lastAns +
-                hint.Length.ToString("D4") + hint
+             "529" + question.Length.ToString("D4") + question +
+             correctAns.Length.ToString("D4") + correctAns +
+             secAns.Length.ToString("D4") + secAns +
+             thirdAns.Length.ToString("D4") + thirdAns +
+             lastAns.Length.ToString("D4") + lastAns +
+             hint.Length.ToString("D4") + hint
             );
         }
 
@@ -1612,6 +1661,7 @@ namespace Trivia_Client
             gameHintBtn.Enabled = false;
             gameHintBtn.Image = Trivia_Client.Properties.Resources.bulb_disabled;
 
+            // Get the hint
             string question = questionLabel.Text;
             sendMessageToServer("803" + question.Length.ToString("D4") + question);
             int hintLength = Int32.Parse(getResultFromServer(3));
@@ -1625,6 +1675,39 @@ namespace Trivia_Client
             plus30btn.Enabled = false;
             plus30btn.Image = Trivia_Client.Properties.Resources.plus30disabled;
             answerSeconds -= 30;
+        }
+
+        private void leaveGame_Click(object sender, EventArgs e)
+        {
+            if (!isMute)
+                buttonsTheme.Play();
+            new Thread(() => {
+                sendMessageToServer("222"); //leave room msg
+            }){ IsBackground = true }.Start();
+
+            answerTimerThread.Abort(); // Stop timer thread
+
+            //getResultFromServer(3); // Get rid of 116 message
+            enableSidebarTabs();
+            mainPanel.BringToFront();
+            inRoom = false;
+            isMainPanel = true;
+            inGame = false;
+            enableSidebarTabs();
+
+            // Go back to main tab
+            Control[] sidebarItems = { sidebarItem1, createRoomItem, roomsItem };
+            for (int i = 0; i < sidebarItems.Length; i++)
+            {
+                sidebarItems[i].BackColor = System.Drawing.Color.FromArgb(1, 48, 56, 65);
+            }
+
+            int newY = sidebarActivePanelIndicator.Location.Y;
+            sidebarItem1.BackColor = System.Drawing.Color.FromArgb(54, 62, 71);
+            newY = sidebarItem1.Location.Y;
+
+            Thread animate = new Thread(new ParameterizedThreadStart(animateSlidebarSelectionBar));
+            animate.Start(newY);
         }
     }
 }

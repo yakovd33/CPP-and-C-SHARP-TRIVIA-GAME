@@ -56,7 +56,8 @@ namespace Trivia_Client
             try
             {
                 client = new TcpClient();
-                serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8820);
+                //serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8820);
+                serverEndPoint = new IPEndPoint(IPAddress.Parse(getSettingValue("server_ip")), Int32.Parse(getSettingValue("port")));
                 client.Connect(serverEndPoint);
 
                 clientStream = client.GetStream();

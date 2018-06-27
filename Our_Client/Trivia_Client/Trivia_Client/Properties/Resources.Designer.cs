@@ -287,12 +287,30 @@ namespace Trivia_Client.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream loserTheme {
+            get {
+                return ResourceManager.GetStream("loserTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap magshimim {
             get {
                 object obj = ResourceManager.GetObject("magshimim", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream main_theme {
+            get {
+                return ResourceManager.GetStream("main_theme", resourceCulture);
             }
         }
         
@@ -442,6 +460,15 @@ namespace Trivia_Client.Properties {
             get {
                 object obj = ResourceManager.GetObject("winner", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream winnerTheme {
+            get {
+                return ResourceManager.GetStream("winnerTheme", resourceCulture);
             }
         }
         

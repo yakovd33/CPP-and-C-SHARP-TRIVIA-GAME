@@ -19,7 +19,7 @@ namespace Trivia_Client
         NetworkStream clientStream;
 
         //System.IO.Stream Swinner = Trivia_Client.Properties.Resources.winnerTheme;
-        //System.IO.Stream Sloser = Trivia_Client.Properties.Resources.loseTheme;
+        //System.IO.Stream Sloser = Trivia_Client.Properties.Resources.loserTheme;
         //System.IO.Stream SgameEnd = Trivia_Client.Properties.Resources.endgame;
         System.IO.Stream SbuttonsTheme = Trivia_Client.Properties.Resources.click;
 
@@ -168,7 +168,6 @@ namespace Trivia_Client
                     System.Media.SoundPlayer buttonsTheme = new System.Media.SoundPlayer(SbuttonsTheme);
                     buttonsTheme.Play();
                 }
-                sendMessageToServer("299");
             }
             catch (Exception ex)
             {
